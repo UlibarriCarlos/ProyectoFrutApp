@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@drawable/verduras"
+        android:label="FrutApp"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.MyApplication"
+        tools:targetApi="31">
+
+        <activity
+            android:name=".Vistas.FrutasActivity"
+            android:exported="true" />
+        <activity
+            android:name=".Vistas.CompraStockActivity"
+            android:exported="true" />
+        <activity
+            android:name=".Vistas.CestaCompraActvity"
+            android:exported="true" />
+        <activity
+            android:name=".Vistas.PrincipalActivity"
+            android:exported="true" />
+        <activity
+            android:name=".Vistas.RegistroActivity"
+            android:exported="true" />
+        <activity
+            android:name=".Vistas.UsuarioActivity"
+            android:exported="true" />
+        <activity
+            android:name=".Vistas.VerdurasActivity"
+            android:exported="true" />
+        <activity
+            android:name=".Vistas.VariosActivity"
+            android:exported="true" />
+        <activity
+            android:name=".Vistas.MainActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>
