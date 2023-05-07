@@ -90,6 +90,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
 
 
         void bindData(final ListElement item) {
+            //Añadido Drawable para ver iconos
             Drawable cn = getDrawableByName(context, item.getImagen());
             iconImage.setImageDrawable(cn);
             nombre.setText(item.getNombreProducto());
