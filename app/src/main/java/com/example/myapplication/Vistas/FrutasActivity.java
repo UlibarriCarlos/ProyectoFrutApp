@@ -1,6 +1,7 @@
 package com.example.myapplication.Vistas;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -48,18 +49,16 @@ public class FrutasActivity extends AppCompatActivity {
                 //Iniciamos la nueva actividad
                 Intent intentVerduras = new Intent(FrutasActivity.this, VerdurasActivity.class);
                 startActivity(intentVerduras);
-                finish();
                 break;
             case R.id.Varios:
                 //Iniciamos la nueva actividad
                 Intent intentVarios = new Intent(FrutasActivity.this, VariosActivity.class);
                 startActivity(intentVarios);
-                finish();
+                break;
             case R.id.Login:
                 //Iniciamos la nueva actividad
                 Intent intentAnadir = new Intent(FrutasActivity.this, UsuarioActivity.class);
                 startActivity(intentAnadir);
-                finish();
                 break;
             case R.id.Salir:
                 finishAffinity(); // Cierra todas las actividades
@@ -78,7 +77,7 @@ public class FrutasActivity extends AppCompatActivity {
         List<ListElement> elementos = new ArrayList<>();
         for (tbProducto producto : listaProductos) {
             String color = "#775447";
-            elementos.add(new ListElement( producto.getNombreProducto(), producto.getDescripcion(), String.valueOf(producto.getPrecio())));
+            elementos.add(new ListElement(producto.getNombreProducto(), producto.getDescripcion(), String.valueOf(producto.getPrecio()),producto.getImagen()));
         }
         ListAdapter listAdapter = new ListAdapter(elementos, this);
         RecyclerView recyclerView = findViewById(R.id.listRecyclerView);

@@ -3,6 +3,7 @@ package com.example.myapplication.Controlador;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.R;
 
+import java.io.File;
 import java.util.List;
 
 public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
@@ -30,7 +32,10 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
         this.context = context;
         this.mData = itemList;
     }
-
+    private static Drawable getDrawableByName(Context context, String nombreImagen) {
+        int resId = context.getResources().getIdentifier(nombreImagen, "drawable", context.getPackageName());
+        return context.getResources().getDrawable(resId);
+    }
     public void setOnItemClickListener(OnItemClickListener listener) {
         mListener = listener;
     }
@@ -76,6 +81,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
 
         ViewHolder(View itemView) {
             super(itemView);
+
             iconImage = itemView.findViewById(R.id.iconImageView);
             nombre = itemView.findViewById(R.id.nombre);
             descripcion = itemView.findViewById(R.id.descripcion);
@@ -84,7 +90,8 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
 
 
         void bindData(final ListElement item) {
-           // iconImage.setColorFilter(Color.parseColor(item.getColor()), PorterDuff.Mode.SRC_IN);
+            Drawable cn = getDrawableByName(context, item.getImagen());
+            iconImage.setImageDrawable(cn);
             nombre.setText(item.getNombreProducto());
             descripcion.setText(item.getDescripcion());
             precio.setText(item.getPrecio());

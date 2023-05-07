@@ -48,19 +48,17 @@ public class VerdurasActivity extends AppCompatActivity {
                 //Iniciamos la nueva actividad
                 Intent intentFrutas = new Intent(VerdurasActivity.this, FrutasActivity.class);
                 startActivity(intentFrutas);
-                finish();
                 break;
             case R.id.Varios:
                 //Iniciamos la nueva actividad
                 Intent intentVarios = new Intent(VerdurasActivity.this, VariosActivity.class);
                 startActivity(intentVarios);
-                finish();
+
                 break;
             case R.id.Login:
                 //Iniciamos la nueva actividad
                 Intent intentAnadir = new Intent(VerdurasActivity.this, UsuarioActivity.class);
                 startActivity(intentAnadir);
-                finish();
                 break;
             case R.id.Salir:
                 finishAffinity(); // Cierra todas las actividades
@@ -79,7 +77,7 @@ public class VerdurasActivity extends AppCompatActivity {
         List<ListElement> elementos = new ArrayList<>();
         for (tbProducto producto : listaProductos) {
             String color = "#607d8b";
-            elementos.add(new ListElement( producto.getNombreProducto(), producto.getDescripcion(), String.valueOf(producto.getPrecio())));
+            elementos.add(new ListElement(producto.getNombreProducto(), producto.getDescripcion(), String.valueOf(producto.getPrecio()),producto.getImagen()));
         }
         ListAdapter listAdapter = new ListAdapter(elementos, this);
         RecyclerView recyclerView = findViewById(R.id.listRecyclerView);
