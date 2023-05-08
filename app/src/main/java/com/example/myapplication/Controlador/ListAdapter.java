@@ -13,6 +13,7 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.R;
+import com.google.android.material.internal.ThemeEnforcement;
 
 import java.io.File;
 import java.util.List;
@@ -95,7 +96,13 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
             iconImage.setImageDrawable(cn);
             nombre.setText(item.getNombreProducto());
             descripcion.setText(item.getDescripcion());
-            precio.setText(item.getPrecio());
+            if (item.getEstado()) {
+                precio.setText(item.getPrecio()+" €/Kg");
+            }else {
+                precio.setText(item.getPrecio()+" €/Und");
+            }
+
+
         }
     }
 }

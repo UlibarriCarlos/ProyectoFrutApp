@@ -3,8 +3,10 @@ package com.example.myapplication.Vistas;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -20,39 +22,32 @@ public class CestaCompraActvity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.cestacompra);
-        // Crear el cuadro de diálogo
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Introducir datos de compra");
+        // Crear el cuadro de diálogo y obtener el layout personalizado
+        LayoutInflater inflater = LayoutInflater.from(this);
+        View dialogView = inflater.inflate(R.layout.dialog_compra, null);
 
-// Crear los campos de texto para introducir los datos de compra
-        final TextView nombreText = new TextView(this);
+// Obtener las vistas del layout personalizado
+        TextView nombreText = dialogView.findViewById(R.id.tv_nombre);
+        TextView descripcionText = dialogView.findViewById(R.id.tv_descripcion);
+        TextView precioText = dialogView.findViewById(R.id.tv_precio);
+        EditText cantidadEditText = dialogView.findViewById(R.id.et_cantidad);
+
+// Configurar el contenido de las vistas con los datos del producto
         nombreText.setText(getIntent().getStringExtra("nombreProducto"));
-        final TextView descripcionText = new TextView(this);
-        descripcionText.setHint(getIntent().getStringExtra("descripcionProducto"));
-        final TextView precioText = new TextView(this);
-        precioText.setHint("Precio del producto");
-        final EditText cantidadEditText = new EditText(this);
-        precioText.setHint("Elige Cantidad");
+        descripcionText.setText(getIntent().getStringExtra("descripcionProducto"));
+        precioText.setText(getIntent().getStringExtra("precio"));
 
-// Agregar los campos de texto al cuadro de diálogo
-        LinearLayout layout = new LinearLayout(this);
-        layout.setOrientation(LinearLayout.VERTICAL);
-        layout.addView(nombreText);
-        layout.addView(descripcionText);
-        layout.addView(precioText);
-        layout.addView(cantidadEditText);
-        builder.setView(layout);
-
-// Agregar los botones para aceptar y cancelar
-        builder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+// Crear el cuadro de diálogo con el layout personalizado
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setView(dialogView);
+        builder.setPositiveButton("Agregar al carrito", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                // Obtener los valores introducidos por el usuario
                 String nombre = nombreText.getText().toString();
                 String descripcion = descripcionText.getText().toString();
                 String precio = precioText.getText().toString();
-                String cantidad =cantidadEditText.getText().toString();
-                // Hacer algo con los valores obtenidos, como agregarlos a la lista de la cesta de la compra
+                String cantidad = cantidadEditText.getText().toString();
+                // Hacer algo con los valores obtenidos
             }
         });
         builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
@@ -61,9 +56,10 @@ public class CestaCompraActvity extends AppCompatActivity {
                 dialog.dismiss();
             }
         });
-
-// Mostrar el cuadro de diálogo
         builder.show();
+
+
+
     }
 
     @Override

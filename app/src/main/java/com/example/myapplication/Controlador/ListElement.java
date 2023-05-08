@@ -8,11 +8,14 @@ public class ListElement {
     public String Precio;
     public String Imagen;
 
-    public ListElement( String nombreProducto, String Descripcion, String Precio,String Imagen) {
+    public Boolean Estado;
+
+    public ListElement(String nombreProducto, String Descripcion, String Precio, String Imagen, Boolean Estado) {
         this.nombreProducto = nombreProducto;
         this.Descripcion = Descripcion;
         this.Precio = Precio;
         this.Imagen = Imagen;
+        this.Estado = Estado;
     }
 
     public ListElement() {
@@ -48,5 +51,13 @@ public class ListElement {
 
     public void setImagen(String Imagen) {
         this.Imagen = Imagen;
+    }
+
+    public Boolean getEstado() {
+        return Estado;
+    }
+
+    public void setEstado(Boolean Estado) {
+        this.Estado = Estado;
     }
 }

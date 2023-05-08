@@ -100,7 +100,7 @@ public class tbProducto {
         this.imagen = imagen;
     }
 
-    public boolean isEstado() {
+    public boolean getEstado() {
         return estado;
     }
 

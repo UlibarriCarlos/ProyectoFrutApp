@@ -77,7 +77,7 @@ public class FrutasActivity extends AppCompatActivity {
         List<ListElement> elementos = new ArrayList<>();
         for (tbProducto producto : listaProductos) {
             String color = "#775447";
-            elementos.add(new ListElement(producto.getNombreProducto(), producto.getDescripcion(), String.valueOf(producto.getPrecio()),producto.getImagen()));
+            elementos.add(new ListElement(producto.getNombreProducto(), producto.getDescripcion(), String.valueOf(producto.getPrecio()),producto.getImagen(),producto.getEstado()));
         }
         ListAdapter listAdapter = new ListAdapter(elementos, this);
         RecyclerView recyclerView = findViewById(R.id.listRecyclerView);
@@ -96,7 +96,12 @@ public class FrutasActivity extends AppCompatActivity {
                 Intent intent = new Intent(FrutasActivity.this, CestaCompraActvity.class);
                 intent.putExtra("nombreProducto", elementoSeleccionado.getNombreProducto());
                 intent.putExtra("descripcionProducto", elementoSeleccionado.getDescripcion());
-                intent.putExtra("precio", elementoSeleccionado.getPrecio());
+                if (elementoSeleccionado.getEstado()) {
+                    intent.putExtra("precio", elementoSeleccionado.getPrecio()+" €/Kg");
+                }else {
+                    intent.putExtra("precio", elementoSeleccionado.getPrecio()+" €/Und");
+                }
+
                 startActivity(intent);
             }
         });
