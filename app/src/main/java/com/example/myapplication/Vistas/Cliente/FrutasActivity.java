@@ -1,7 +1,6 @@
-package com.example.myapplication.Vistas;
+package com.example.myapplication.Vistas.Cliente;
 
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -16,6 +15,7 @@ import com.example.myapplication.Controlador.ListAdapter;
 import com.example.myapplication.Controlador.ListElement;
 import com.example.myapplication.Modelos.tbProducto;
 import com.example.myapplication.R;
+import com.example.myapplication.Vistas.UsuarioActivity;
 
 import java.util.ArrayList;
 import java.util.List;

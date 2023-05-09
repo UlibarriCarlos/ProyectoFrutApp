@@ -1,4 +1,4 @@
-package com.example.myapplication.Vistas;
+package com.example.myapplication.Vistas.Cliente;
 
 import android.os.Bundle;
 

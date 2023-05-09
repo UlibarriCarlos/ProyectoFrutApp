@@ -1,7 +1,10 @@
 package com.example.myapplication.Modelos;
 
+import android.icu.text.DecimalFormat;
+
 import com.example.myapplication.Controlador.ConexionBD;
 
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -218,6 +221,26 @@ public class tbProducto {
             }
         }
         return productos;
+    }
+
+    // Método para guardar un registro
+    public void guardarFrutas(String nombreProducto, double precio, int cantidad, String descripcion) throws SQLException {
+        BigDecimal precioVenta = new BigDecimal(precio);
+        String query = "INSERT INTO tbProducto(idCategoria, codigoTienda, nombre, precio_Venta, stock, descripcion, imagen, estado) VALUES(?,?,?,?,?,?,?,?)";
+        try (Connection connection = ConexionBD.conexionBD(); PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setInt(1, 1);
+            statement.setString(2, "F00");
+            statement.setString(3, nombreProducto);
+            statement.setBigDecimal(4, precioVenta);
+            statement.setInt(5, cantidad);
+            statement.setString(6, descripcion);
+            statement.setString(7, "");
+            statement.setBoolean(8, true);
+            statement.executeUpdate();
+            ConexionBD.conexionBD().close();
+        } catch (SQLException ex) {
+            throw new SQLException(ex);
+        }
     }
 
 

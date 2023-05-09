@@ -10,6 +10,9 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.myapplication.R;
+import com.example.myapplication.Vistas.Cliente.FrutasActivity;
+import com.example.myapplication.Vistas.Cliente.VariosActivity;
+import com.example.myapplication.Vistas.Cliente.VerdurasActivity;
 
 public class PrincipalActivity extends AppCompatActivity {
     private Button btnFrutas;

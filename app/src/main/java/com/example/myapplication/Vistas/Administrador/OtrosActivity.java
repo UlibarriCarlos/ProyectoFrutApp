@@ -1,4 +1,4 @@
-package com.example.myapplication.Vistas;
+package com.example.myapplication.Vistas.Administrador;
 
 import android.os.Bundle;
 
@@ -6,10 +6,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.myapplication.R;
 
-public class CompraStockActivity extends AppCompatActivity {
+public class OtrosActivity extends AppCompatActivity {
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.compra_stock);
+        setContentView(R.layout.otros);
+
+
     }
 }

@@ -18,6 +18,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.myapplication.Controlador.Email;
 import com.example.myapplication.Modelos.tbClientes;
 import com.example.myapplication.R;
+import com.example.myapplication.Vistas.Administrador.AdministradorActivity;
 
 import java.sql.SQLException;
 
@@ -93,7 +94,10 @@ public class UsuarioActivity extends AppCompatActivity {
                         Toast.makeText(UsuarioActivity.this, "No existe usuario o contraseña mal introducida", Toast.LENGTH_LONG).show();
 
                     } else {
-                        if (cliente.getNombre().equals(et_nombre.getText().toString()) && cliente.getContraseña().equals(et_contraseña.getText().toString()) && cliente.getEstado() == true) {
+                        if (cliente.getNombre().equals(et_nombre.getText().toString()) && cliente.getContraseña().equals(et_contraseña.getText().toString()) && et_nombre.getText().toString().equals("admin") && et_contraseña.getText().toString().equals("admin") && cliente.getEstado() == true) {
+                            Intent intent1 = new Intent(UsuarioActivity.this, AdministradorActivity.class);
+                            startActivity(intent1);
+                        } else if (cliente.getNombre().equals(et_nombre.getText().toString()) && cliente.getContraseña().equals(et_contraseña.getText().toString()) && cliente.getEstado() == true) {
                             Intent intent1 = new Intent(UsuarioActivity.this, PrincipalActivity.class);
                             startActivity(intent1);
                             Email correo = new Email();
@@ -103,9 +107,6 @@ public class UsuarioActivity extends AppCompatActivity {
                             Toast.makeText(UsuarioActivity.this, "Tienes que activar usuario, mira tu correo", Toast.LENGTH_LONG).show();
 
                         } else {
-                            Toast.makeText(UsuarioActivity.this, "Usuarioy/o contraseña erroneo", Toast.LENGTH_LONG).show();
-                        }
-                        {
                             Toast.makeText(UsuarioActivity.this, "Usuarioy/o contraseña erroneo", Toast.LENGTH_LONG).show();
                         }
                     }

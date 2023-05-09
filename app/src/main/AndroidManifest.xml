@@ -15,13 +15,22 @@
         tools:targetApi="31">
 
         <activity
-            android:name=".Vistas.FrutasActivity"
+            android:name=".Vistas.Administrador.CompraStockActivity"
             android:exported="true" />
         <activity
-            android:name=".Vistas.CompraStockActivity"
+        android:name=".Vistas.Administrador.AltaProductoActivity"
+        android:exported="true" />
+        <activity
+            android:name=".Vistas.Administrador.OtrosActivity"
             android:exported="true" />
         <activity
-            android:name=".Vistas.CestaCompraActvity"
+            android:name=".Vistas.Cliente.FrutasActivity"
+            android:exported="true" />
+        <activity
+            android:name=".Vistas.Administrador.AdministradorActivity"
+            android:exported="true" />
+        <activity
+            android:name=".Vistas.Cliente.CestaCompraActvity"
             android:exported="true" />
         <activity
             android:name=".Vistas.PrincipalActivity"
@@ -33,10 +42,10 @@
             android:name=".Vistas.UsuarioActivity"
             android:exported="true" />
         <activity
-            android:name=".Vistas.VerdurasActivity"
+            android:name=".Vistas.Cliente.VerdurasActivity"
             android:exported="true" />
         <activity
-            android:name=".Vistas.VariosActivity"
+            android:name=".Vistas.Cliente.VariosActivity"
             android:exported="true" />
         <activity
             android:name=".Vistas.MainActivity"
