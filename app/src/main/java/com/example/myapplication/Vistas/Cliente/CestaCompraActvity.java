@@ -13,15 +13,25 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.myapplication.Controlador.CarritoAdapter;
+import com.example.myapplication.Controlador.CestaCompraDBHelper;
+import com.example.myapplication.Controlador.ProductoCarrito;
 import com.example.myapplication.R;
 import com.example.myapplication.Vistas.UsuarioActivity;
+
+import java.util.List;
 
 public class CestaCompraActvity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.cestacompra);
+
+
+
         // Crear el cuadro de diálogo y obtener el layout personalizado
         LayoutInflater inflater = LayoutInflater.from(this);
         View dialogView = inflater.inflate(R.layout.dialog_compra, null);
@@ -43,11 +53,21 @@ public class CestaCompraActvity extends AppCompatActivity {
         builder.setPositiveButton("Agregar al carrito", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+
+
                 String nombre = nombreText.getText().toString();
                 String descripcion = descripcionText.getText().toString();
-                String precio = precioText.getText().toString();
-                String cantidad = cantidadEditText.getText().toString();
+                String precioString = precioText.getText().toString().replaceAll("[^\\d.]", "");
+                double precio = Double.parseDouble(precioString);
+                int cantidad = Integer.parseInt(cantidadEditText.getText().toString());
+
+                CestaCompraDBHelper dbHelper = new CestaCompraDBHelper(getApplicationContext());
+                long newRowId = dbHelper.insertProducto(nombre, precio, cantidad);
+
                 // Hacer algo con los valores obtenidos
+                // Obtener productos de la base de datos y pasarlos a un adaptador
+
+
             }
         });
         builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {

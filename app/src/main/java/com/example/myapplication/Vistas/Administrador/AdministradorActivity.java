@@ -19,7 +19,8 @@ public class AdministradorActivity extends AppCompatActivity {
     private Button btnCompraStock;
     private Button btnAltaProducto;
     private Button btnOtros;
-tbProducto producto=new tbProducto();
+    tbProducto producto = new tbProducto();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,11 +33,7 @@ tbProducto producto=new tbProducto();
         btnCompraStock.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                try {
-                    producto.guardarFrutas( "Nectarina",15.64, 150, "Fresquitas");
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }
+
                 Intent intent1 = new Intent(AdministradorActivity.this, CompraStockActivity.class);
                 startActivity(intent1);
 
