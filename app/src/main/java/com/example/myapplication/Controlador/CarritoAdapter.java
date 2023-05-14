@@ -1,56 +1,108 @@
 package com.example.myapplication.Controlador;
 
+import android.content.Context;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.R;
+import com.google.android.material.internal.ThemeEnforcement;
 
+import java.io.File;
 import java.util.List;
 
-public class CarritoAdapter extends RecyclerView.Adapter<CarritoAdapter.CarritoViewHolder> {
-    private List<ProductoCarrito> productos;
+public class CarritoAdapter extends RecyclerView.Adapter<CarritoAdapter.ViewHolder> {
+    private List<ListElement> mData;
+    private LayoutInflater mInflater;
+    private Context context;
+    private OnItemClickListener mListener;
 
-    public CarritoAdapter(List<ProductoCarrito> productos) {
-        this.productos = productos;
+    public interface OnItemClickListener {
+        void onItemClick(int position);
     }
 
-
-    @NonNull
-    @Override
-    public CarritoViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_carrito, parent, false);
-        return new CarritoViewHolder(itemView);
+    public CarritoAdapter(List<ListElement> itemList, Context context) {
+        this.mInflater = LayoutInflater.from(context);
+        this.context = context;
+        this.mData = itemList;
+    }
+    private static Drawable getDrawableByName(Context context, String nombreImagen) {
+        int resId = context.getResources().getIdentifier(nombreImagen, "drawable", context.getPackageName());
+        return context.getResources().getDrawable(resId);
+    }
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        mListener = listener;
     }
 
-    @Override
-    public void onBindViewHolder(@NonNull CarritoViewHolder holder, int position) {
-        ProductoCarrito producto = productos.get(position);
-        holder.nombreTextView.setText(producto.getNombre());
-        holder.precioTextView.setText(String.format("%.2f €", producto.getPrecio()));
-        holder.cantidadTextView.setText(String.valueOf(producto.getCantidad()));
-    }
 
     @Override
     public int getItemCount() {
-        return productos.size();
+        return mData.size();
     }
 
-    public static class CarritoViewHolder extends RecyclerView.ViewHolder {
-        public TextView nombreTextView;
-        public TextView precioTextView;
-        public TextView cantidadTextView;
 
-        public CarritoViewHolder(View view) {
-            super(view);
-            nombreTextView = view.findViewById(R.id.nombre_text_view);
-            precioTextView = view.findViewById(R.id.precio_text_view);
-            cantidadTextView = view.findViewById(R.id.cantidad_text_view);
+    @Override
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = mInflater.inflate(R.layout.list_element, null);
+        return new ViewHolder(view);
+    }
+
+
+    @Override
+    public void onBindViewHolder(final ViewHolder holder, final int position) {
+        holder.bindData(mData.get(position));
+
+        // Agrega el OnClickListener a la vista raíz del elemento
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mListener != null) {
+                    mListener.onItemClick(position);
+                }
+            }
+        });
+    }
+
+
+    public void setItems(List<ListElement> items) {
+        mData = items;
+    }
+
+
+    public class ViewHolder extends RecyclerView.ViewHolder {
+        ImageView iconImage;
+        TextView nombre, descripcion, precio;
+
+        ViewHolder(View itemView) {
+            super(itemView);
+
+            iconImage = itemView.findViewById(R.id.iconImageView);
+            nombre = itemView.findViewById(R.id.nombre);
+            descripcion = itemView.findViewById(R.id.descripcion);
+            precio = itemView.findViewById(R.id.precio_Venta);
+        }
+
+
+        void bindData(final ListElement item) {
+            //Añadido Drawable para ver iconos
+            Drawable cn = getDrawableByName(context, item.getImagen());
+            iconImage.setImageDrawable(cn);
+            nombre.setText(item.getNombreProducto());
+            descripcion.setText(item.getDescripcion());
+            if (item.getEstado()) {
+                precio.setText(item.getPrecio()+" €/Kg");
+            }else {
+                precio.setText(item.getPrecio()+" €/Und");
+            }
+
+
         }
     }
 }

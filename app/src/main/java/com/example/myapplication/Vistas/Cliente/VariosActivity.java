@@ -100,7 +100,11 @@ public class VariosActivity extends AppCompatActivity {
                     intent.putExtra("precio", elementoSeleccionado.getPrecio()+" €/Kg");
                 }else {
                     intent.putExtra("precio", elementoSeleccionado.getPrecio()+" €/Und");
-                }                startActivity(intent);
+                }
+                intent.putExtra("imagen", elementoSeleccionado.getImagen());
+
+                intent.putExtra("estado", elementoSeleccionado.getEstado());
+                        startActivity(intent);
             }
         });
 

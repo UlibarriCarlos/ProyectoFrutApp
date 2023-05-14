@@ -15,6 +15,7 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.myapplication.Controlador.ControladorContraseñas;
 import com.example.myapplication.Controlador.Email;
 import com.example.myapplication.Modelos.tbClientes;
 import com.example.myapplication.R;
@@ -98,6 +99,7 @@ public class UsuarioActivity extends AppCompatActivity {
                             Intent intent1 = new Intent(UsuarioActivity.this, AdministradorActivity.class);
                             startActivity(intent1);
                         } else if (cliente.getNombre().equals(et_nombre.getText().toString()) && cliente.getContraseña().equals(et_contraseña.getText().toString()) && cliente.getEstado() == true) {
+                        //} else if (cliente.getNombre().equals(et_nombre.getText().toString()) && cliente.getContraseña().equals(ControladorContraseñas.encrypt(et_contraseña.getText().toString())) && cliente.getEstado() == true) {
                             Intent intent1 = new Intent(UsuarioActivity.this, PrincipalActivity.class);
                             startActivity(intent1);
                             Email correo = new Email();

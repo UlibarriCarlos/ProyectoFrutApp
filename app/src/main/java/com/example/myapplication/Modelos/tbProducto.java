@@ -194,7 +194,6 @@ public class tbProducto {
         }
         return productos;
     }
-
     public List<tbProducto> getListaVarios() {
         List<tbProducto> productos = new ArrayList<>();
         Connection cn = null;
@@ -222,6 +221,35 @@ public class tbProducto {
         }
         return productos;
     }
+
+    public List<tbProducto> getListaSoloNombreProducto() {
+        List<tbProducto> productos = new ArrayList<>();
+        Connection cn = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+
+        try {
+            cn = ConexionBD.conexionBD();
+            pst = cn.prepareStatement("SELECT * FROM tbProducto WHERE idCategoria = 3");
+            rs = pst.executeQuery();
+            while (rs.next()) {
+                tbProducto producto = new tbProducto(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getString(4), rs.getDouble(5), rs.getInt(6), rs.getString(7), rs.getString(8), rs.getBoolean(9));
+                productos.add(producto);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (pst != null) pst.close();
+                if (cn != null) cn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return productos;
+    }
+
 
     // Método para guardar un registro
     public void guardarFrutas(String nombreProducto, double precio, int cantidad, String descripcion) throws SQLException {

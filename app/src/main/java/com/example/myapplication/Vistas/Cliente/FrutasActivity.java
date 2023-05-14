@@ -29,8 +29,6 @@ public class FrutasActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.frutas);
         init();
-        //vList<tbProducto> productos = tbProducto.obtenerProductos();
-        // Crear una instancia de ProductAdapter y pasar la lista de productos
 
     }
 
@@ -76,8 +74,7 @@ public class FrutasActivity extends AppCompatActivity {
 
         List<ListElement> elementos = new ArrayList<>();
         for (tbProducto producto : listaProductos) {
-            String color = "#775447";
-            elementos.add(new ListElement(producto.getNombreProducto(), producto.getDescripcion(), String.valueOf(producto.getPrecio()),producto.getImagen(),producto.getEstado()));
+            elementos.add(new ListElement(producto.getNombreProducto(), producto.getDescripcion(), String.valueOf(producto.getPrecio()), producto.getImagen(), producto.getEstado()));
         }
         ListAdapter listAdapter = new ListAdapter(elementos, this);
         RecyclerView recyclerView = findViewById(R.id.listRecyclerView);
@@ -97,10 +94,13 @@ public class FrutasActivity extends AppCompatActivity {
                 intent.putExtra("nombreProducto", elementoSeleccionado.getNombreProducto());
                 intent.putExtra("descripcionProducto", elementoSeleccionado.getDescripcion());
                 if (elementoSeleccionado.getEstado()) {
-                    intent.putExtra("precio", elementoSeleccionado.getPrecio()+" €/Kg");
-                }else {
-                    intent.putExtra("precio", elementoSeleccionado.getPrecio()+" €/Und");
+                    intent.putExtra("precio", elementoSeleccionado.getPrecio() + " €/Kg");
+                } else {
+                    intent.putExtra("precio", elementoSeleccionado.getPrecio() + " €/Und");
                 }
+                intent.putExtra("imagen", elementoSeleccionado.getImagen());
+
+                intent.putExtra("estado", elementoSeleccionado.getEstado());
 
                 startActivity(intent);
             }

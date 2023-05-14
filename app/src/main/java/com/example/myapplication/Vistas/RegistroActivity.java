@@ -14,6 +14,7 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.myapplication.Controlador.ControladorContraseñas;
 import com.example.myapplication.Modelos.tbClientes;
 import com.example.myapplication.R;
 
@@ -124,6 +125,7 @@ public class RegistroActivity extends AppCompatActivity {
                     } else {
                         tbClientes cliente = new tbClientes();
                         try {
+                            String contraseñaEncriptada = ControladorContraseñas.encrypt(etContraseña1.getText().toString());
                             cliente.guardar(etAlias.getText().toString(), etDNI.getText().toString(), etDireccion.getText().toString(), etTelefono.getText().toString(), etEmail1.getText().toString(), etContraseña1.getText().toString());
 
                             Toast.makeText(RegistroActivity.this, "Los datos se han guardado correctamente, recibiras email para activarlo", Toast.LENGTH_LONG).show();

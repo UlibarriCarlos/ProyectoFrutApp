@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.myapplication.Controlador.CarritoAdapter;
 import com.example.myapplication.Controlador.CestaCompraDBHelper;
 import com.example.myapplication.Controlador.ProductoCarrito;
+import com.example.myapplication.Modelos.tbProducto;
 import com.example.myapplication.R;
 import com.example.myapplication.Vistas.UsuarioActivity;
 
@@ -30,6 +31,12 @@ public class CestaCompraActvity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.cestacompra);
 
+
+// Obtener productos de la base de datos y pasarlos a un adaptador
+        CestaCompraDBHelper dbHelper = new CestaCompraDBHelper(getApplicationContext());
+        //List<ProductoCarrito> productos = dbHelper.getAllProductos();
+        // CarritoAdapter adapter = new CarritoAdapter(productos);
+        //recyclerView.setAdapter(adapter);
 
 
         // Crear el cuadro de diálogo y obtener el layout personalizado
@@ -47,6 +54,7 @@ public class CestaCompraActvity extends AppCompatActivity {
         descripcionText.setText(getIntent().getStringExtra("descripcionProducto"));
         precioText.setText(getIntent().getStringExtra("precio"));
 
+
 // Crear el cuadro de diálogo con el layout personalizado
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setView(dialogView);
@@ -58,14 +66,21 @@ public class CestaCompraActvity extends AppCompatActivity {
                 String nombre = nombreText.getText().toString();
                 String descripcion = descripcionText.getText().toString();
                 String precioString = precioText.getText().toString().replaceAll("[^\\d.]", "");
+                String imagen = getIntent().getStringExtra("imagen");
+                boolean estado = getIntent().getBooleanExtra("estado", false);
                 double precio = Double.parseDouble(precioString);
                 int cantidad = Integer.parseInt(cantidadEditText.getText().toString());
 
                 CestaCompraDBHelper dbHelper = new CestaCompraDBHelper(getApplicationContext());
-                long newRowId = dbHelper.insertProducto(nombre, precio, cantidad);
+                long newRowId = dbHelper.insertProducto(nombre, precio, cantidad,imagen,estado);
 
                 // Hacer algo con los valores obtenidos
                 // Obtener productos de la base de datos y pasarlos a un adaptador
+
+
+// Obtener productos de la base de datos y pasarlos a un adaptador
+                //List<ProductoCarrito> listaProductos = new tbProducto().getListaFrutas();                CarritoAdapter adapter = new CarritoAdapter(productos);
+                // recyclerView.setAdapter(adapter);
 
 
             }
@@ -77,7 +92,6 @@ public class CestaCompraActvity extends AppCompatActivity {
             }
         });
         builder.show();
-
 
 
     }
