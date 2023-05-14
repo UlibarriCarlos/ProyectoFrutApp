@@ -1,8 +1,11 @@
 package com.example.myapplication.Vistas.Cliente;
 
+import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -13,17 +16,10 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.myapplication.Controlador.CarritoAdapter;
 import com.example.myapplication.Controlador.CestaCompraDBHelper;
-import com.example.myapplication.Controlador.ProductoCarrito;
-import com.example.myapplication.Modelos.tbProducto;
 import com.example.myapplication.R;
 import com.example.myapplication.Vistas.UsuarioActivity;
-
-import java.util.List;
 
 public class CestaCompraActvity extends AppCompatActivity {
     @Override
@@ -72,11 +68,31 @@ public class CestaCompraActvity extends AppCompatActivity {
                 int cantidad = Integer.parseInt(cantidadEditText.getText().toString());
 
                 CestaCompraDBHelper dbHelper = new CestaCompraDBHelper(getApplicationContext());
-                long newRowId = dbHelper.insertProducto(nombre, precio, cantidad,imagen,estado);
+                long newRowId = dbHelper.insertProducto(nombre, precio, cantidad, imagen, estado);
 
                 // Hacer algo con los valores obtenidos
                 // Obtener productos de la base de datos y pasarlos a un adaptador
+// Obtener productos de la base de datos
+                CestaCompraDBHelper ObtenerDatos = new CestaCompraDBHelper(getApplicationContext());
+                Cursor cursor = ObtenerDatos.getAllProductos();
 
+// Mostrar los productos en el log
+                if (cursor.moveToFirst()) {
+                    do {
+                        @SuppressLint("Range") int id1 = cursor.getInt(cursor.getColumnIndex(CestaCompraDBHelper.COLUMN_ID));
+                        @SuppressLint("Range") String nombre1 = cursor.getString(cursor.getColumnIndex(CestaCompraDBHelper.COLUMN_NOMBRE));
+                        @SuppressLint("Range") double precio1 = cursor.getDouble(cursor.getColumnIndex(CestaCompraDBHelper.COLUMN_PRECIO));
+                        @SuppressLint("Range") String imagen1 = cursor.getString(cursor.getColumnIndex(CestaCompraDBHelper.COLUMN_IMAGEN));
+                        @SuppressLint("Range") boolean estado1 = cursor.getInt(cursor.getColumnIndex(CestaCompraDBHelper.COLUMN_ESTADO)) == 1;
+                        @SuppressLint("Range") double cantidad1 = cursor.getDouble(cursor.getColumnIndex(CestaCompraDBHelper.COLUMN_CANTIDAD));
+
+                        Log.d("CestaCompraActivity", "Producto: " + id1 + " " + nombre1 + " " + precio1 + " " + imagen1 + " " + estado1 + " " + cantidad1);
+                    } while (cursor.moveToNext());
+                }
+
+// Cerrar el cursor y el dbHelper
+                cursor.close();
+                dbHelper.close();
 
 // Obtener productos de la base de datos y pasarlos a un adaptador
                 //List<ProductoCarrito> listaProductos = new tbProducto().getListaFrutas();                CarritoAdapter adapter = new CarritoAdapter(productos);
@@ -84,8 +100,7 @@ public class CestaCompraActvity extends AppCompatActivity {
 
 
             }
-        });
-        builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+        }).setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
