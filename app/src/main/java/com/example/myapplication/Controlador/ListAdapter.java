@@ -1,5 +1,6 @@
 package com.example.myapplication.Controlador;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
@@ -33,10 +34,12 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
         this.context = context;
         this.mData = itemList;
     }
+
     private static Drawable getDrawableByName(Context context, String nombreImagen) {
         int resId = context.getResources().getIdentifier(nombreImagen, "drawable", context.getPackageName());
         return context.getResources().getDrawable(resId);
     }
+
     public void setOnItemClickListener(OnItemClickListener listener) {
         mListener = listener;
     }
@@ -56,7 +59,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
 
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder, final int position) {
+    public void onBindViewHolder(final ViewHolder holder, @SuppressLint("RecyclerView") final int position) {
         holder.bindData(mData.get(position));
 
         // Agrega el OnClickListener a la vista raíz del elemento
@@ -96,10 +99,15 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
             iconImage.setImageDrawable(cn);
             nombre.setText(item.getNombreProducto());
             descripcion.setText(item.getDescripcion());
-            if (item.getEstado()) {
-                precio.setText(item.getPrecio()+" €/Kg");
-            }else {
-                precio.setText(item.getPrecio()+" €/Und");
+
+            try {
+                if (item.getEstado() == true) {
+                    precio.setText(item.getPrecio() + " €/Kg");
+                } else if (item.getEstado() == false) {
+                    precio.setText(item.getPrecio() + " €/Und");
+                }
+            }catch (Exception e){
+                    precio.setText(item.getPrecio()+" €");
             }
 
 

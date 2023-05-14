@@ -16,90 +16,131 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.Controlador.CestaCompraDBHelper;
+import com.example.myapplication.Controlador.ListAdapter;
+import com.example.myapplication.Controlador.ListElement;
 import com.example.myapplication.R;
 import com.example.myapplication.Vistas.UsuarioActivity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class CestaCompraActvity extends AppCompatActivity {
+
+
+    //Elementos Diseño
+    private TextView txtImporteTotal;
+    private TextView nombreText;
+    private TextView descripcionText;
+    private TextView precioText;
+    private EditText cantidadEditText;
+
+    //Variables para BBDD Sqlite
+    private String nombre;
+    private String descripcion;
+    private String precioString;
+    private String imagen;
+    private boolean estado;
+    private double precio;
+    private int cantidad;
+    private long newRowId;
+
+    //Variables para Recyclerview
+    private String unidades;
+    private double importeTotal;
+    List<ListElement> elementos = new ArrayList<>();
+
+    private int id;
+    private String nombreTicket;
+    private double precioTicket;
+    private String imagenTicket;
+    private boolean estadoTicket;
+    private double cantidadTicket;
+    private String importe;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.cestacompra);
 
 
-// Obtener productos de la base de datos y pasarlos a un adaptador
-        CestaCompraDBHelper dbHelper = new CestaCompraDBHelper(getApplicationContext());
-        //List<ProductoCarrito> productos = dbHelper.getAllProductos();
-        // CarritoAdapter adapter = new CarritoAdapter(productos);
-        //recyclerView.setAdapter(adapter);
-
-
         // Crear el cuadro de diálogo y obtener el layout personalizado
         LayoutInflater inflater = LayoutInflater.from(this);
         View dialogView = inflater.inflate(R.layout.dialog_compra, null);
 
-// Obtener las vistas del layout personalizado
-        TextView nombreText = dialogView.findViewById(R.id.tv_nombre);
-        TextView descripcionText = dialogView.findViewById(R.id.tv_descripcion);
-        TextView precioText = dialogView.findViewById(R.id.tv_precio);
-        EditText cantidadEditText = dialogView.findViewById(R.id.et_cantidad);
+        // Obtener las vistas del layout personalizado
+        nombreText = dialogView.findViewById(R.id.tv_nombre);
+        descripcionText = dialogView.findViewById(R.id.tv_descripcion);
+        precioText = dialogView.findViewById(R.id.tv_precio);
+        cantidadEditText = dialogView.findViewById(R.id.et_cantidad);
 
-// Configurar el contenido de las vistas con los datos del producto
+        // Configurar el contenido de las vistas con los datos del producto
         nombreText.setText(getIntent().getStringExtra("nombreProducto"));
         descripcionText.setText(getIntent().getStringExtra("descripcionProducto"));
         precioText.setText(getIntent().getStringExtra("precio"));
 
 
-// Crear el cuadro de diálogo con el layout personalizado
+        // Crear el cuadro de diálogo con el layout personalizado
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setView(dialogView);
         builder.setPositiveButton("Agregar al carrito", new DialogInterface.OnClickListener() {
+            @SuppressLint("Range")
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
+                nombre = nombreText.getText().toString();
+                descripcion = descripcionText.getText().toString();
+                precioString = precioText.getText().toString().replaceAll("[^\\d.]", "");
+                imagen = getIntent().getStringExtra("imagen");
+                estado = getIntent().getBooleanExtra("estado", false);
+                precio = Double.parseDouble(precioString);
+                cantidad = Integer.parseInt(cantidadEditText.getText().toString());
 
-                String nombre = nombreText.getText().toString();
-                String descripcion = descripcionText.getText().toString();
-                String precioString = precioText.getText().toString().replaceAll("[^\\d.]", "");
-                String imagen = getIntent().getStringExtra("imagen");
-                boolean estado = getIntent().getBooleanExtra("estado", false);
-                double precio = Double.parseDouble(precioString);
-                int cantidad = Integer.parseInt(cantidadEditText.getText().toString());
-
+                // Objeto base de datos
                 CestaCompraDBHelper dbHelper = new CestaCompraDBHelper(getApplicationContext());
-                long newRowId = dbHelper.insertProducto(nombre, precio, cantidad, imagen, estado);
 
-                // Hacer algo con los valores obtenidos
-                // Obtener productos de la base de datos y pasarlos a un adaptador
-// Obtener productos de la base de datos
-                CestaCompraDBHelper ObtenerDatos = new CestaCompraDBHelper(getApplicationContext());
-                Cursor cursor = ObtenerDatos.getAllProductos();
+                // Obtener guardar de la base de datos
+                newRowId = dbHelper.insertProducto(nombre, precio, cantidad, imagen, estado);
+                // Obtener productos de la base de datos
+                Cursor cursor = dbHelper.getAllProductos();
 
-// Mostrar los productos en el log
+
+                importeTotal = 0;
+                // Mostrar los productos en el log
                 if (cursor.moveToFirst()) {
                     do {
-                        @SuppressLint("Range") int id1 = cursor.getInt(cursor.getColumnIndex(CestaCompraDBHelper.COLUMN_ID));
-                        @SuppressLint("Range") String nombre1 = cursor.getString(cursor.getColumnIndex(CestaCompraDBHelper.COLUMN_NOMBRE));
-                        @SuppressLint("Range") double precio1 = cursor.getDouble(cursor.getColumnIndex(CestaCompraDBHelper.COLUMN_PRECIO));
-                        @SuppressLint("Range") String imagen1 = cursor.getString(cursor.getColumnIndex(CestaCompraDBHelper.COLUMN_IMAGEN));
-                        @SuppressLint("Range") boolean estado1 = cursor.getInt(cursor.getColumnIndex(CestaCompraDBHelper.COLUMN_ESTADO)) == 1;
-                        @SuppressLint("Range") double cantidad1 = cursor.getDouble(cursor.getColumnIndex(CestaCompraDBHelper.COLUMN_CANTIDAD));
+                        id = cursor.getInt(cursor.getColumnIndex(CestaCompraDBHelper.COLUMN_ID));
+                        nombreTicket = cursor.getString(cursor.getColumnIndex(CestaCompraDBHelper.COLUMN_NOMBRE));
+                        precioTicket = cursor.getDouble(cursor.getColumnIndex(CestaCompraDBHelper.COLUMN_PRECIO));
+                        imagenTicket = cursor.getString(cursor.getColumnIndex(CestaCompraDBHelper.COLUMN_IMAGEN));
+                        estadoTicket = cursor.getInt(cursor.getColumnIndex(CestaCompraDBHelper.COLUMN_ESTADO)) == 1;
+                        cantidadTicket = cursor.getDouble(cursor.getColumnIndex(CestaCompraDBHelper.COLUMN_CANTIDAD));
 
-                        Log.d("CestaCompraActivity", "Producto: " + id1 + " " + nombre1 + " " + precio1 + " " + imagen1 + " " + estado1 + " " + cantidad1);
+                        Log.d("CestaCompraActivity", "Producto: " + id + " " + nombreTicket + " " + precioTicket + " " + imagenTicket + " " + estadoTicket + " " + cantidadTicket);
+
+                        if (estadoTicket) {
+                            unidades = " Kg";
+                        } else {
+                            unidades = " Uds";
+                        }
+                        importe = String.valueOf(precioTicket * cantidadTicket);
+                        importeTotal = importeTotal + precioTicket * cantidadTicket;
+                        elementos.add(new ListElement(nombreTicket, String.valueOf(cantidadTicket + unidades), importe, imagenTicket, null));
                     } while (cursor.moveToNext());
                 }
+                txtImporteTotal = findViewById(R.id.txtImporteTotal);
+                txtImporteTotal.setText(String.valueOf(importeTotal + " €"));
 
-// Cerrar el cursor y el dbHelper
+                // Cerrar el cursor y el dbHelper
                 cursor.close();
                 dbHelper.close();
 
-// Obtener productos de la base de datos y pasarlos a un adaptador
-                //List<ProductoCarrito> listaProductos = new tbProducto().getListaFrutas();                CarritoAdapter adapter = new CarritoAdapter(productos);
-                // recyclerView.setAdapter(adapter);
-
 
             }
+
         }).setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -108,7 +149,12 @@ public class CestaCompraActvity extends AppCompatActivity {
         });
         builder.show();
 
+        ListAdapter listAdapter = new ListAdapter(elementos, this);
+        RecyclerView recyclerView = findViewById(R.id.listRecyclerView);
 
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(listAdapter);
     }
 
     @Override

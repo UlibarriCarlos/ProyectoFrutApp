@@ -7,7 +7,6 @@ public class ListElement {
     public String Descripcion;
     public String Precio;
     public String Imagen;
-
     public Boolean Estado;
 
     public ListElement(String nombreProducto, String Descripcion, String Precio, String Imagen, Boolean Estado) {
