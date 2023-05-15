@@ -219,8 +219,6 @@ public class CestaCompraActvity extends AppCompatActivity {
                      String nombre3= (String) nombreText.getText();
                         CestaCompraDBHelper dbHelper = new CestaCompraDBHelper(getApplicationContext());
                         dbHelper.actualizarCantidadPrueba(nombre3, cantidad3);
-
-
                     }
                 }).setNegativeButton("Eliminar producto", new DialogInterface.OnClickListener() {
                     @Override
