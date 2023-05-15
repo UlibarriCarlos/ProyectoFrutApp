@@ -1,5 +1,7 @@
 package com.example.myapplication.Vistas.Cliente;
 
+import static com.example.myapplication.Controlador.CestaCompraDBHelper.COLUMN_CANTIDAD;
+
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -61,6 +63,8 @@ public class CestaCompraActvity extends AppCompatActivity {
     private double cantidadTicket;
     private String importe;
 
+    private  Cursor cursor;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,6 +90,8 @@ public class CestaCompraActvity extends AppCompatActivity {
         // Crear el cuadro de diálogo con el layout personalizado
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setView(dialogView);
+
+
         builder.setPositiveButton("Agregar al carrito", new DialogInterface.OnClickListener() {
             @SuppressLint("Range")
             @Override
@@ -102,14 +108,33 @@ public class CestaCompraActvity extends AppCompatActivity {
                 // Objeto base de datos
                 CestaCompraDBHelper dbHelper = new CestaCompraDBHelper(getApplicationContext());
 
-                // Obtener guardar de la base de datos
-                newRowId = dbHelper.insertProducto(nombre, precio, cantidad, imagen, estado);
+                //Verificar si hay ya un producto en la tabla
+
+                 cursor = dbHelper.getProductoCantidad(nombre);
+
+                if (cursor != null && cursor.moveToFirst()) {
+                    int cantidadPrueba = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_CANTIDAD));
+                    cursor.close();
+
+                    // Hacer algo con la cantidad del producto obtenida
+                    dbHelper.actualizarCantidadPrueba(nombre, cantidad+cantidadPrueba);
+
+
+
+                } else {
+                    // El producto no existe en la base de datos
+                    // Obtener guardar de la base de datos
+                    newRowId = dbHelper.insertProducto(nombre, precio, cantidad, imagen, estado);
+                }
+
+
+
                 // Obtener productos de la base de datos
-                Cursor cursor = dbHelper.getAllProductos();
+                 cursor = dbHelper.getAllProductos();
 
 
                 importeTotal = 0;
-                // Mostrar los productos en el log
+                // Mostrar los productos
                 if (cursor.moveToFirst()) {
                     do {
                         id = cursor.getInt(cursor.getColumnIndex(CestaCompraDBHelper.COLUMN_ID));
@@ -117,8 +142,9 @@ public class CestaCompraActvity extends AppCompatActivity {
                         precioTicket = cursor.getDouble(cursor.getColumnIndex(CestaCompraDBHelper.COLUMN_PRECIO));
                         imagenTicket = cursor.getString(cursor.getColumnIndex(CestaCompraDBHelper.COLUMN_IMAGEN));
                         estadoTicket = cursor.getInt(cursor.getColumnIndex(CestaCompraDBHelper.COLUMN_ESTADO)) == 1;
-                        cantidadTicket = cursor.getDouble(cursor.getColumnIndex(CestaCompraDBHelper.COLUMN_CANTIDAD));
+                        cantidadTicket = cursor.getDouble(cursor.getColumnIndex(COLUMN_CANTIDAD));
 
+                        //En el log
                         Log.d("CestaCompraActivity", "Producto: " + id + " " + nombreTicket + " " + precioTicket + " " + imagenTicket + " " + estadoTicket + " " + cantidadTicket);
 
                         if (estadoTicket) {

@@ -95,5 +95,71 @@ public class CestaCompraDBHelper extends SQLiteOpenHelper {
         return cursor;
     }
 
+    // Función para obtener la cantidad de un producto por nombre
+    public Cursor getProductoCantidad(String nombre) {
+        SQLiteDatabase db = getReadableDatabase();
+
+        String[] projection = {
+                COLUMN_ID,
+                COLUMN_CANTIDAD
+        };
+
+        String selection = COLUMN_NOMBRE + " = ?";
+        String[] selectionArgs = { nombre };
+
+        Cursor cursor = db.query(
+                TABLE_NAME, // Tabla a consultar
+                projection, // Columnas a devolver
+                selection, // Columnas para la cláusula WHERE
+                selectionArgs, // Valores para la cláusula WHERE
+                null, // GROUP BY
+                null, // HAVING
+                null // ORDER BY
+        );
+
+        return cursor;
+    }
+
+    // Función para actualizar la cantidad de un producto por nombre
+    public int actualizarCantidad(String nombre, int cantidadSumar) {
+        SQLiteDatabase db = getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_CANTIDAD, "CAST(" + COLUMN_CANTIDAD + " AS INTEGER) + " + cantidadSumar);
+
+        String selection = COLUMN_NOMBRE + " = ?";
+        String[] selectionArgs = { nombre };
+
+        int count = db.update(
+                TABLE_NAME,
+                values,
+                selection,
+                selectionArgs);
+
+        db.close();
+
+        return count;
+    }
+    // Función para actualizar la cantidad de un producto por nombre
+    public int actualizarCantidadPrueba(String nombre, int nuevaCantidad) {
+        SQLiteDatabase db = getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_CANTIDAD, nuevaCantidad);
+
+        String selection = COLUMN_NOMBRE + " = ?";
+        String[] selectionArgs = { nombre };
+
+        int count = db.update(
+                TABLE_NAME,
+                values,
+                selection,
+                selectionArgs);
+
+        db.close();
+
+        return count;
+    }
+
 
 }
