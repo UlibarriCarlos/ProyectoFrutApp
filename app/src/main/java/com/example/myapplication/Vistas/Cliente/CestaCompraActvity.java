@@ -181,6 +181,56 @@ public class CestaCompraActvity extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(listAdapter);
+
+        listAdapter.setOnItemClickListener(new ListAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                // Obtener los datos del producto seleccionado
+                String nombre = elementos.get(position).getNombreProducto();
+                String descripcion = elementos.get(position).getDescripcion();
+                double precio = Double.parseDouble(elementos.get(position).getPrecio());
+                double cantidad = 0;
+
+                // Crear el cuadro de diálogo y obtener el layout personalizado
+                LayoutInflater inflater = LayoutInflater.from(CestaCompraActvity.this);
+                View dialogView = inflater.inflate(R.layout.dialog_compra, null);
+
+                // Obtener las vistas del layout personalizado
+                nombreText = dialogView.findViewById(R.id.tv_nombre);
+                descripcionText = dialogView.findViewById(R.id.tv_descripcion);
+                precioText = dialogView.findViewById(R.id.tv_precio);
+                cantidadEditText = dialogView.findViewById(R.id.et_cantidad);
+
+                // Configurar el contenido de las vistas con los datos del producto
+                nombreText.setText(nombre);
+                descripcionText.setText(descripcion);
+                precioText.setText(String.format("%.2f €", precio));
+                cantidadEditText.setText(String.valueOf(cantidad));
+
+                // Crear el cuadro de diálogo con el layout personalizado
+                AlertDialog.Builder builder = new AlertDialog.Builder(CestaCompraActvity.this);
+                builder.setView(dialogView);
+                builder.setPositiveButton("Guardar cambios", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Lógica para guardar los cambios en la base de datos y actualizar la lista
+
+                      int  cantidad3 = (int) Double.parseDouble(String.valueOf(cantidadEditText.getText()));
+                     String nombre3= (String) nombreText.getText();
+                        CestaCompraDBHelper dbHelper = new CestaCompraDBHelper(getApplicationContext());
+                        dbHelper.actualizarCantidadPrueba(nombre3, cantidad3);
+
+
+                    }
+                }).setNegativeButton("Eliminar producto", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Lógica para eliminar el producto de la base de datos y actualizar la lista
+                    }
+                }).setNeutralButton("Cancelar", null);
+                builder.show();
+            }
+        });
     }
 
     @Override
