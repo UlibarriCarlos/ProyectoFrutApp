@@ -2,6 +2,7 @@ package com.example.myapplication.Vistas;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -11,6 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.Toolbar;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -57,6 +59,8 @@ public class UsuarioActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.usuario);
 
+        getSupportActionBar().setDisplayShowTitleEnabled(true); // Ocultar el título de la ActionBar
+       // getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT)); // Hacer la ActionBar transparente
         //Login
         et_nombre = findViewById(R.id.etNombreApellidos);
         et_contraseña = findViewById(R.id.etPassword);

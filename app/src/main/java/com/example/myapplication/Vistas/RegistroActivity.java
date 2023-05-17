@@ -2,6 +2,7 @@ package com.example.myapplication.Vistas;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -55,7 +56,8 @@ public class RegistroActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.registro);
-
+        getSupportActionBar().setDisplayShowTitleEnabled(false); // Ocultar el título de la ActionBar
+       /// getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         etNombreApellidos = findViewById(R.id.etNombreApellidos);
         etAlias = findViewById(R.id.etAlias);
         etDNI = findViewById(R.id.etDNI);

@@ -25,7 +25,8 @@ public class AdministradorActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.administrador);
-
+        getSupportActionBar().setDisplayShowTitleEnabled(false); // Ocultar el título de la ActionBar
+        /// getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         btnCompraStock = findViewById(R.id.btnCompraStock);
         btnAltaProducto = findViewById(R.id.btnAltaProducto);
         btnOtros = findViewById(R.id.btnOtros);

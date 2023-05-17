@@ -70,7 +70,8 @@ public class CestaCompraActvity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.cestacompra);
 
-
+        getSupportActionBar().setDisplayShowTitleEnabled(false); // Ocultar el título de la ActionBar
+        /// getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         // Crear el cuadro de diálogo y obtener el layout personalizado
         LayoutInflater inflater = LayoutInflater.from(this);
         View dialogView = inflater.inflate(R.layout.dialog_compra, null);

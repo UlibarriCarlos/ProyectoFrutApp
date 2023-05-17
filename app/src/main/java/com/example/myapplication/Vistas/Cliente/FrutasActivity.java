@@ -1,6 +1,8 @@
 package com.example.myapplication.Vistas.Cliente;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -29,7 +31,8 @@ public class FrutasActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.frutas);
         init();
-
+        getSupportActionBar().setDisplayShowTitleEnabled(false); // Ocultar el título de la ActionBar
+      //  getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
     }
 
 

@@ -1,8 +1,6 @@
-package com.example.myapplication.Vistas.Cliente;
+package com.example.myapplication.Vistas.Administrador;
 
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -17,30 +15,34 @@ import com.example.myapplication.Controlador.ListAdapter;
 import com.example.myapplication.Controlador.ListElement;
 import com.example.myapplication.Modelos.tbProducto;
 import com.example.myapplication.R;
+import com.example.myapplication.Vistas.Cliente.CestaCompraActvity;
+import com.example.myapplication.Vistas.Cliente.FrutasActivity;
+import com.example.myapplication.Vistas.Cliente.VariosActivity;
 import com.example.myapplication.Vistas.UsuarioActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class VariosActivity extends AppCompatActivity {
+public class AltaVerdurasActivity extends AppCompatActivity {
 
     List<ListElement> elements;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.varios);
+        setContentView(R.layout.altaverduras);
         init();
+        getSupportActionBar().setDisplayShowTitleEnabled(false); // Ocultar el título de la ActionBar
+        /// getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         //vList<tbProducto> productos = tbProducto.obtenerProductos();
         // Crear una instancia de ProductAdapter y pasar la lista de productos
-        getSupportActionBar().setDisplayShowTitleEnabled(false); // Ocultar el título de la ActionBar
-       // getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
     }
 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_varios, menu);
+        getMenuInflater().inflate(R.menu.menu_altafrutas, menu);
         return true;
 
     }
@@ -48,19 +50,20 @@ public class VariosActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.Frutas:
+            case R.id.AltaFrutas:
                 //Iniciamos la nueva actividad
-                Intent intentFrutas = new Intent(VariosActivity.this, FrutasActivity.class);
+                Intent intentFrutas = new Intent(AltaVerdurasActivity.this, FrutasActivity.class);
                 startActivity(intentFrutas);
                 break;
-            case R.id.Verduras:
+            case R.id.AltaVarios:
                 //Iniciamos la nueva actividad
-                Intent intentVerduras = new Intent(VariosActivity.this, VerdurasActivity.class);
-                startActivity(intentVerduras);
+                Intent intentVarios = new Intent(AltaVerdurasActivity.this, VariosActivity.class);
+                startActivity(intentVarios);
+
                 break;
             case R.id.Login:
                 //Iniciamos la nueva actividad
-                Intent intentAnadir = new Intent(VariosActivity.this, UsuarioActivity.class);
+                Intent intentAnadir = new Intent(AltaVerdurasActivity.this, UsuarioActivity.class);
                 startActivity(intentAnadir);
                 break;
             case R.id.Salir:
@@ -73,14 +76,14 @@ public class VariosActivity extends AppCompatActivity {
 
     public void init() {
 
-        List<tbProducto> listaProductos = new tbProducto().getListaVarios();
+        List<tbProducto> listaProductos = new tbProducto().getListaVerduras();
 
         Log.v("listaProductos", String.valueOf(listaProductos.size()));
 
         List<ListElement> elementos = new ArrayList<>();
         for (tbProducto producto : listaProductos) {
-            String color = "#03a9f4";
-            elementos.add(new ListElement( producto.getNombreProducto(), producto.getDescripcion(), String.valueOf(producto.getPrecio()),producto.getImagen(),producto.getEstado()));
+            String color = "#607d8b";
+            elementos.add(new ListElement(producto.getNombreProducto(), producto.getDescripcion(), String.valueOf(producto.getPrecio()),producto.getImagen(),producto.getEstado()));
         }
         ListAdapter listAdapter = new ListAdapter(elementos, this);
         RecyclerView recyclerView = findViewById(R.id.listRecyclerView);
@@ -96,7 +99,7 @@ public class VariosActivity extends AppCompatActivity {
                 ListElement elementoSeleccionado = elementos.get(position);
 
                 // Abrir el formulario de compra
-                Intent intent = new Intent(VariosActivity.this, CestaCompraActvity.class);
+                Intent intent = new Intent(AltaVerdurasActivity.this, CestaCompraActvity.class);
                 intent.putExtra("nombreProducto", elementoSeleccionado.getNombreProducto());
                 intent.putExtra("descripcionProducto", elementoSeleccionado.getDescripcion());
                 if (elementoSeleccionado.getEstado()) {
@@ -107,16 +110,16 @@ public class VariosActivity extends AppCompatActivity {
                 intent.putExtra("imagen", elementoSeleccionado.getImagen());
 
                 intent.putExtra("estado", elementoSeleccionado.getEstado());
-                        startActivity(intent);
+                startActivity(intent);
             }
         });
 
        /* elements = new ArrayList<>();
-        elements.add(new ListElement("#775447", "Pedro", "México", "Activo"));
-        elements.add(new ListElement("#607d8b", "Julio", "Tabasco", "Activo"));
-        elements.add(new ListElement("#03a9f4", "Alejandra", "Chihuahua", "Cancelado"));
-        elements.add(new ListElement("#f44336", "Jessica", "Durango", "Inactivo"));
-        elements.add(new ListElement("#009688", "Armando", "Yucatan", "Activo"));
+        elements.add(new ListElement("#775447", "", "", ""));
+        elements.add(new ListElement("#607d8b", "", "", ""));
+        elements.add(new ListElement("#03a9f4", "", "", ""));
+        elements.add(new ListElement("#f44336", "", "", ""));
+        elements.add(new ListElement("#009688", "", "", ""));
 
         ListAdapter listAdapter = new ListAdapter(elements, this);
         RecyclerView recyclerView = findViewById(R.id.listRecyclerView);

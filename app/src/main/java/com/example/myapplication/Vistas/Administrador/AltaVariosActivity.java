@@ -1,8 +1,6 @@
-package com.example.myapplication.Vistas.Cliente;
+package com.example.myapplication.Vistas.Administrador;
 
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -17,30 +15,34 @@ import com.example.myapplication.Controlador.ListAdapter;
 import com.example.myapplication.Controlador.ListElement;
 import com.example.myapplication.Modelos.tbProducto;
 import com.example.myapplication.R;
+import com.example.myapplication.Vistas.Cliente.CestaCompraActvity;
+import com.example.myapplication.Vistas.Cliente.FrutasActivity;
+import com.example.myapplication.Vistas.Cliente.VerdurasActivity;
 import com.example.myapplication.Vistas.UsuarioActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class VariosActivity extends AppCompatActivity {
+public class AltaVariosActivity extends AppCompatActivity {
 
     List<ListElement> elements;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.varios);
+        setContentView(R.layout.altavarios);
         init();
+        getSupportActionBar().setDisplayShowTitleEnabled(false); // Ocultar el título de la ActionBar
+        /// getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         //vList<tbProducto> productos = tbProducto.obtenerProductos();
         // Crear una instancia de ProductAdapter y pasar la lista de productos
-        getSupportActionBar().setDisplayShowTitleEnabled(false); // Ocultar el título de la ActionBar
-       // getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
     }
 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_varios, menu);
+        getMenuInflater().inflate(R.menu.menu_altafrutas, menu);
         return true;
 
     }
@@ -48,19 +50,19 @@ public class VariosActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.Frutas:
+            case R.id.AltaFrutas:
                 //Iniciamos la nueva actividad
-                Intent intentFrutas = new Intent(VariosActivity.this, FrutasActivity.class);
+                Intent intentFrutas = new Intent(AltaVariosActivity.this, AltaFrutasActivity.class);
                 startActivity(intentFrutas);
                 break;
-            case R.id.Verduras:
+            case R.id.AltaVerduras:
                 //Iniciamos la nueva actividad
-                Intent intentVerduras = new Intent(VariosActivity.this, VerdurasActivity.class);
+                Intent intentVerduras = new Intent(AltaVariosActivity.this, AltaVerdurasActivity.class);
                 startActivity(intentVerduras);
                 break;
             case R.id.Login:
                 //Iniciamos la nueva actividad
-                Intent intentAnadir = new Intent(VariosActivity.this, UsuarioActivity.class);
+                Intent intentAnadir = new Intent(AltaVariosActivity.this, UsuarioActivity.class);
                 startActivity(intentAnadir);
                 break;
             case R.id.Salir:
@@ -96,7 +98,7 @@ public class VariosActivity extends AppCompatActivity {
                 ListElement elementoSeleccionado = elementos.get(position);
 
                 // Abrir el formulario de compra
-                Intent intent = new Intent(VariosActivity.this, CestaCompraActvity.class);
+                Intent intent = new Intent(AltaVariosActivity.this, CestaCompraActvity.class);
                 intent.putExtra("nombreProducto", elementoSeleccionado.getNombreProducto());
                 intent.putExtra("descripcionProducto", elementoSeleccionado.getDescripcion());
                 if (elementoSeleccionado.getEstado()) {
