@@ -19,8 +19,7 @@ public class CompraStockActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.comprastock);
-        getSupportActionBar().setDisplayShowTitleEnabled(false); // Ocultar el título de la ActionBar
-        /// getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
 
     }
 }

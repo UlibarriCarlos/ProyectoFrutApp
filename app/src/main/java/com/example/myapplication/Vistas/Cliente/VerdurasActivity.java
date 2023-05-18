@@ -33,8 +33,7 @@ public class VerdurasActivity extends AppCompatActivity {
         init();
         //vList<tbProducto> productos = tbProducto.obtenerProductos();
         // Crear una instancia de ProductAdapter y pasar la lista de productos
-        getSupportActionBar().setDisplayShowTitleEnabled(true); // Ocultar el título de la ActionBar
-        //getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
     }
 
 

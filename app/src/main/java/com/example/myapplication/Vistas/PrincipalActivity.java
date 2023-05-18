@@ -27,8 +27,7 @@ public class PrincipalActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.principal);
-        getSupportActionBar().setDisplayShowTitleEnabled(false); // Ocultar el título de la ActionBar
-       // getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
         btnFrutas = findViewById(R.id.btnFrutas);
         btnVerduras = findViewById(R.id.btnVerduras);
         btnVarios = findViewById(R.id.btnVarios);

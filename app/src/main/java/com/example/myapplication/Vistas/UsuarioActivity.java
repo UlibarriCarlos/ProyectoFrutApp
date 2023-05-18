@@ -59,8 +59,7 @@ public class UsuarioActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.usuario);
 
-        getSupportActionBar().setDisplayShowTitleEnabled(true); // Ocultar el título de la ActionBar
-       // getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT)); // Hacer la ActionBar transparente
+
         //Login
         et_nombre = findViewById(R.id.etNombreApellidos);
         et_contraseña = findViewById(R.id.etPassword);

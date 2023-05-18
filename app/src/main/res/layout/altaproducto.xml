@@ -1,38 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
+    android:layout_height="match_parent"
+    android:gravity="center_vertical|center_horizontal"
+    android:orientation="vertical">
 
     <Button
         android:id="@+id/btnAltaFrutas"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="55dp"
-        android:layout_marginTop="68dp"
-        android:text="Alta Frutas"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_width="200dp"
+        android:layout_height="80dp"
+        android:text="Alta Frutas" />
 
     <Button
         android:id="@+id/btnAltaVerduras"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="58dp"
-        android:layout_marginTop="41dp"
-        android:text="Alta Verduras"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnAltaFrutas" />
+        android:layout_width="200dp"
+        android:layout_height="80dp"
+        android:text="Alta Verduras" />
 
     <Button
         android:id="@+id/btnAltaVarios"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="64dp"
-        android:layout_marginTop="46dp"
-        android:text="Alta Varios"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnAltaVerduras" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:layout_width="200dp"
+        android:layout_height="80dp"
+        android:text="Alta Varios" />
+
+</LinearLayout>

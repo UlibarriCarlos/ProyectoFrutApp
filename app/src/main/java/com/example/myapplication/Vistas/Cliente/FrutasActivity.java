@@ -31,8 +31,7 @@ public class FrutasActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.frutas);
         init();
-        getSupportActionBar().setDisplayShowTitleEnabled(false); // Ocultar el título de la ActionBar
-      //  getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
     }
 
 

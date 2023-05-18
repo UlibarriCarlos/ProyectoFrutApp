@@ -5,13 +5,15 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
+        android:screenOrientation="portrait"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@drawable/verduras"
-        android:label="Bienvenido a FrutApp"
+        android:label="FrutApp"
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication"
+
         tools:targetApi="31">
 
 

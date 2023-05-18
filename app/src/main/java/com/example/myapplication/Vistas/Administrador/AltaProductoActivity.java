@@ -19,8 +19,7 @@ public class AltaProductoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.altaproducto);
-        getSupportActionBar().setDisplayShowTitleEnabled(false); // Ocultar el título de la ActionBar
-        /// getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
         // Obtener la lista de nombres de productos
        // List<String> nombresProductos = new ArrayList<>();
        // List<tbProducto> listaProductos = new tbProducto().getListaEntera();

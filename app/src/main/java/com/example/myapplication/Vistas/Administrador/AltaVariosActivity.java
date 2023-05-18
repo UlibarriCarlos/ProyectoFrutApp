@@ -32,8 +32,7 @@ public class AltaVariosActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.altavarios);
         init();
-        getSupportActionBar().setDisplayShowTitleEnabled(false); // Ocultar el título de la ActionBar
-        /// getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
         //vList<tbProducto> productos = tbProducto.obtenerProductos();
         // Crear una instancia de ProductAdapter y pasar la lista de productos
 
