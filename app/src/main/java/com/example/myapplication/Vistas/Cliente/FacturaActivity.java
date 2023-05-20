@@ -27,9 +27,8 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.example.myapplication.Controlador.CestaCompraDBHelper;
-import com.example.myapplication.Controlador.GenerarPDF;
 import com.example.myapplication.Modelos.tbClientes;
-import com.example.myapplication.MyApplication;
+import com.example.myapplication.Controlador.UsuarioGlobal;
 import com.example.myapplication.R;
 
 import java.io.File;
@@ -111,7 +110,7 @@ public class FacturaActivity extends AppCompatActivity {
         CestaCompraDBHelper dbHelper = new CestaCompraDBHelper(getApplicationContext());
 
         tbClientes control = null;
-        MyApplication myApp = (MyApplication) getApplicationContext();
+        UsuarioGlobal myApp = (UsuarioGlobal) getApplicationContext();
         String NombreUsuario = myApp.getGlobalString();
         // Obtener el cliente
         tbClientes cliente = null;

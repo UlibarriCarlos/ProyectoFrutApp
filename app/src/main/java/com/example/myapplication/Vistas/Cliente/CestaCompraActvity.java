@@ -19,6 +19,7 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.LiveData;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -30,6 +31,7 @@ import com.example.myapplication.Vistas.UsuarioActivity;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observer;
 
 public class CestaCompraActvity extends AppCompatActivity {
 
@@ -102,8 +104,35 @@ public class CestaCompraActvity extends AppCompatActivity {
 
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                nombre = nombreText.getText().toString();
+                descripcion = descripcionText.getText().toString();
+                precioString = precioText.getText().toString().replaceAll("[^\\d.]", "");
+                imagen = getIntent().getStringExtra("imagen");
+                estado = getIntent().getBooleanExtra("estado", false);
+                precio = Double.parseDouble(precioString);
+                cantidad = Integer.parseInt(cantidadEditText.getText().toString());
+                // Objeto base de datos
+
+                CestaCompraDBHelper dbHelper = new CestaCompraDBHelper(getApplicationContext());
+
+                //Verificar si hay ya un producto en la tabla
+
+                cursor = dbHelper.getProductoCantidad(nombre);
+
+                if (cursor != null && cursor.moveToFirst()) {
+                    int cantidadPrueba = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_CANTIDAD));
+                    cursor.close();
+
+                    // Hacer algo con la cantidad del producto obtenida
+                    dbHelper.actualizarCantidad(nombre, cantidad + cantidadPrueba);
 
 
+                } else {
+                    // El producto no existe en la base de datos
+                    // Obtener guardar de la base de datos
+                    newRowId = dbHelper.insertProducto(nombre, precio, cantidad, imagen, estado);
+                }
+                elementos.clear();
                 refresca();
 
 
@@ -112,9 +141,9 @@ public class CestaCompraActvity extends AppCompatActivity {
         }).setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-
-                dialog.dismiss();
                 refresca();
+                dialog.dismiss();
+
             }
         });
         builder.show();
@@ -280,37 +309,12 @@ public class CestaCompraActvity extends AppCompatActivity {
     @SuppressLint("Range")
     public void refresca() {
 
-        nombre = nombreText.getText().toString();
-        descripcion = descripcionText.getText().toString();
-        precioString = precioText.getText().toString().replaceAll("[^\\d.]", "");
-        imagen = getIntent().getStringExtra("imagen");
-        estado = getIntent().getBooleanExtra("estado", false);
-        precio = Double.parseDouble(precioString);
-        cantidad = Integer.parseInt(cantidadEditText.getText().toString());
-        // Objeto base de datos
         CestaCompraDBHelper dbHelper = new CestaCompraDBHelper(getApplicationContext());
 
-        //Verificar si hay ya un producto en la tabla
-
-        cursor = dbHelper.getProductoCantidad(nombre);
-
-        if (cursor != null && cursor.moveToFirst()) {
-            int cantidadPrueba = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_CANTIDAD));
-            cursor.close();
-
-            // Hacer algo con la cantidad del producto obtenida
-            dbHelper.actualizarCantidad(nombre, cantidad + cantidadPrueba);
-
-
-        } else {
-            // El producto no existe en la base de datos
-            // Obtener guardar de la base de datos
-            newRowId = dbHelper.insertProducto(nombre, precio, cantidad, imagen, estado);
-        }
 
 
         // Obtener productos de la base de datos
-        cursor = dbHelper.getAllProductos();
+        cursor = dbHelper.getAllProductosLive().getValue();
 
 
         importeTotal = 0;
@@ -341,8 +345,54 @@ public class CestaCompraActvity extends AppCompatActivity {
         txtImporteTotal.setText(String.valueOf(importeTotal + " €"));
 
         // Cerrar el cursor y el dbHelper
+
         cursor.close();
         dbHelper.close();
     }
+    @SuppressLint("Range")
+    public void refrescalive() {
+        CestaCompraDBHelper dbHelper = new CestaCompraDBHelper(getApplicationContext());
+
+        // Obtener productos de la base de datos
+        Cursor cursor = dbHelper.getAllProductos();
+
+        // Limpiar los elementos existentes
+        elementos.clear();
+
+        // Recorrer el cursor y agregar los elementos
+        if (cursor.moveToFirst()) {
+            do {
+                id = cursor.getInt(cursor.getColumnIndex(CestaCompraDBHelper.COLUMN_ID));
+                nombreTicket = cursor.getString(cursor.getColumnIndex(CestaCompraDBHelper.COLUMN_NOMBRE));
+                precioTicket = cursor.getDouble(cursor.getColumnIndex(CestaCompraDBHelper.COLUMN_PRECIO));
+                imagenTicket = cursor.getString(cursor.getColumnIndex(CestaCompraDBHelper.COLUMN_IMAGEN));
+                estadoTicket = cursor.getInt(cursor.getColumnIndex(CestaCompraDBHelper.COLUMN_ESTADO)) == 1;
+                cantidadTicket = cursor.getDouble(cursor.getColumnIndex(CestaCompraDBHelper.COLUMN_CANTIDAD));
+
+                //En el log
+                Log.d("CestaCompraActivity", "Producto: " + id + " " + nombreTicket + " " + precioTicket + " " + imagenTicket + " " + estadoTicket + " " + cantidadTicket);
+
+                if (estadoTicket) {
+                    unidades = " Kg";
+                } else {
+                    unidades = " Uds";
+                }
+                importe = String.valueOf(precioTicket * cantidadTicket);
+                importeTotal = importeTotal + precioTicket * cantidadTicket;
+                elementos.add(new ListElement(nombreTicket, String.valueOf(cantidadTicket + unidades), importe, imagenTicket, null));
+            } while (cursor.moveToNext());
+        }
+
+        txtImporteTotal = findViewById(R.id.txtImporteTotal);
+        txtImporteTotal.setText(String.valueOf(importeTotal + " €"));
+
+        // Cerrar el cursor y el dbHelper
+        cursor.close();
+        dbHelper.close();
+    }
+
+
+
+
 
 }
