@@ -28,12 +28,13 @@ import com.example.myapplication.R;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 
 public class FacturaActivity extends AppCompatActivity {
 
     private Button btnGenerarPdf;
 
-    private String tituloText = "Este es el titulo del documento";
+    private String tituloText = "HELLOOOOO!!!";
 
     private String descripcionText = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. \n" +
             "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, \n" +
@@ -48,10 +49,8 @@ public class FacturaActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_factura);
-       boolean prueba= checkPermission();
-        if (prueba) {
-            Toast.makeText(this, "Permiso Aceptado", Toast.LENGTH_LONG).show();
-        } else {
+
+        if (!checkPermission()) {
             requestPermissions();
         }
 
@@ -103,17 +102,20 @@ public class FacturaActivity extends AppCompatActivity {
             directory.mkdirs();
         }
 
-        File file = new File(directory, "Ticket2.pdf");
-        ///File file = new File(Environment.getExternalStorageDirectory(), "Archivo.pdf");
+        File file = new File(directory, "Ticket.pdf");
+
         try {
-                       pdfDocument.writeTo(new FileOutputStream(file));
-           // pdfDocument.writeTo(new FileOutputStream(file, false));
+            FileOutputStream outputStream = new FileOutputStream(file);
+            pdfDocument.writeTo(outputStream);
+            outputStream.close();
+
             Toast.makeText(this, "Se creó el PDF correctamente", Toast.LENGTH_LONG).show();
-        } catch (Exception e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
 
         pdfDocument.close();
+
     }
 
     private boolean checkPermission() {

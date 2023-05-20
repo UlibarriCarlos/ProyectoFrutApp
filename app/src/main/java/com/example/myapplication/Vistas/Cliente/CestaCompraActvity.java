@@ -157,6 +157,7 @@ public class CestaCompraActvity extends AppCompatActivity {
                 builder.setPositiveButton("Guardar cambios", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+
                         // Lógica para guardar los cambios en la base de datos y actualizar la lista
 
                         int cantidadGuardarCambios = (int) Double.parseDouble(String.valueOf(cantidadEditText.getText()));
@@ -229,7 +230,9 @@ public class CestaCompraActvity extends AppCompatActivity {
         btnFactura.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 Intent intentVerduras = new Intent(CestaCompraActvity.this, FacturaActivity.class);
+                intentVerduras.putExtra("importeTotal", importeTotal);
                 startActivity(intentVerduras);
             }
         });
