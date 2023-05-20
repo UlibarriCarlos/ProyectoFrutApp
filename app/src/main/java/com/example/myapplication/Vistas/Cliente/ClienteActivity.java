@@ -11,7 +11,7 @@ public class ClienteActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.cliente);
+        setContentView(R.layout.activity_cliente);
 
     }
 }

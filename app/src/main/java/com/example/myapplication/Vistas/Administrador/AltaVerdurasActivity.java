@@ -30,7 +30,7 @@ public class AltaVerdurasActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.altaverduras);
+        setContentView(R.layout.activity_altaverduras);
         init();
 
         //vList<tbProducto> productos = tbProducto.obtenerProductos();

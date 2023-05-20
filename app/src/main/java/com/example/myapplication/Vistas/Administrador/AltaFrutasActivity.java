@@ -16,8 +16,6 @@ import com.example.myapplication.Controlador.ListElement;
 import com.example.myapplication.Modelos.tbProducto;
 import com.example.myapplication.R;
 import com.example.myapplication.Vistas.Cliente.CestaCompraActvity;
-import com.example.myapplication.Vistas.Cliente.VariosActivity;
-import com.example.myapplication.Vistas.Cliente.VerdurasActivity;
 import com.example.myapplication.Vistas.UsuarioActivity;
 
 import java.util.ArrayList;
@@ -30,7 +28,7 @@ public class AltaFrutasActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.altafrutas);
+        setContentView(R.layout.activity_altafrutas);
         init();
 
     }

@@ -2,7 +2,6 @@ package com.example.myapplication.Vistas;
 
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -12,12 +11,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.Toolbar;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.myapplication.Controlador.ControladorContraseñas;
 import com.example.myapplication.Controlador.Email;
 import com.example.myapplication.Modelos.tbClientes;
 import com.example.myapplication.R;
@@ -57,7 +54,7 @@ public class UsuarioActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.usuario);
+        setContentView(R.layout.activity_usuario);
 
 
         //Login

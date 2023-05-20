@@ -12,7 +12,7 @@ public class OtrosActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.otros);
+        setContentView(R.layout.activity_otros);
 
 
     }

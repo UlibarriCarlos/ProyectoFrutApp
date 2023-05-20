@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -65,10 +66,15 @@ public class CestaCompraActvity extends AppCompatActivity {
 
     private Cursor cursor;
 
+    private Button btnFactura;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.cestacompra);
+        setContentView(R.layout.activity_cestacompra);
+
+        //Obener Boton
+        btnFactura = findViewById(R.id.btnFactura);
 
 
         // Crear el cuadro de diálogo y obtener el layout personalizado
@@ -217,6 +223,14 @@ public class CestaCompraActvity extends AppCompatActivity {
                     }
                 }).setNeutralButton("Cancelar", null);
                 builder.show();
+            }
+        });
+
+        btnFactura.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intentVerduras = new Intent(CestaCompraActvity.this, FacturaActivity.class);
+                startActivity(intentVerduras);
             }
         });
     }

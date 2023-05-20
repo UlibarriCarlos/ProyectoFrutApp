@@ -2,7 +2,6 @@ package com.example.myapplication.Vistas;
 
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -55,7 +54,7 @@ public class RegistroActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.registro);
+        setContentView(R.layout.activity_registro);
 
         etNombreApellidos = findViewById(R.id.etNombreApellidos);
         etAlias = findViewById(R.id.etAlias);

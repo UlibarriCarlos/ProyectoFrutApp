@@ -18,7 +18,7 @@ public class AltaProductoActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.altaproducto);
+        setContentView(R.layout.activity_altaproducto);
 
         // Obtener la lista de nombres de productos
        // List<String> nombresProductos = new ArrayList<>();

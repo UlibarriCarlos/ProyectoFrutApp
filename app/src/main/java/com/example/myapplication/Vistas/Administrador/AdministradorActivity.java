@@ -9,11 +9,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.myapplication.Modelos.tbProducto;
 import com.example.myapplication.R;
-import com.example.myapplication.Vistas.Cliente.FrutasActivity;
-import com.example.myapplication.Vistas.Cliente.VerdurasActivity;
-import com.example.myapplication.Vistas.Cliente.VariosActivity;
-
-import java.sql.SQLException;
 
 public class AdministradorActivity extends AppCompatActivity {
     private Button btnCompraStock;
@@ -24,7 +19,7 @@ public class AdministradorActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.administrador);
+        setContentView(R.layout.activity_dministrador);
 
         btnCompraStock = findViewById(R.id.btnCompraStock);
         btnAltaProducto = findViewById(R.id.btnAltaProducto);
