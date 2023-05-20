@@ -14,7 +14,7 @@
         android:label="FrutApp"
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication"
-
+        android:name=".MyApplication"
         tools:targetApi="31">
 
 
