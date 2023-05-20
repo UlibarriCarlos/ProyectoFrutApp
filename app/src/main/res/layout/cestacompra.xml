@@ -71,4 +71,13 @@
         app:layout_constraintTop_toBottomOf="@+id/textView"
         app:layout_constraintVertical_bias="1.0" />
 
+    <Button
+        android:id="@+id/btnFactura"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Tramitar pedido"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/titleTextView"
+        app:layout_constraintTop_toBottomOf="@+id/txtImporteTotal" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

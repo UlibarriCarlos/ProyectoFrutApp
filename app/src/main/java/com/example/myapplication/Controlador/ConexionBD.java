@@ -25,6 +25,8 @@ public class ConexionBD {
             Class.forName("net.sourceforge.jtds.jdbc.Driver").newInstance();
             cnn = DriverManager.getConnection("jdbc:jtds:sqlserver://192.168.0.137;databaseName=FrutApp;user=sa;password=sa;"); //Portatil
             //cnn = DriverManager.getConnection("jdbc:jtds:sqlserver://192.168.52.1;databaseName=FrutApp;user=2222;password=1234;"); //PC
+            //10.9.2.42
+            //192.168.0.137
         } catch (Exception e) {
             Log.e("Error conexionBD", e.toString());
             throw new RuntimeException(e);

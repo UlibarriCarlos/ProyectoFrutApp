@@ -105,7 +105,7 @@ public class CestaCompraDBHelper extends SQLiteOpenHelper {
         };
 
         String selection = COLUMN_NOMBRE + " = ?";
-        String[] selectionArgs = { nombre };
+        String[] selectionArgs = {nombre};
 
         Cursor cursor = db.query(
                 TABLE_NAME, // Tabla a consultar
@@ -121,14 +121,14 @@ public class CestaCompraDBHelper extends SQLiteOpenHelper {
     }
 
     // Función para actualizar la cantidad de un producto por nombre
-    public int actualizarCantidad(String nombre, int cantidadSumar) {
+    public int actualizarCantidad(String nombre, int nuevaCantidad) {
         SQLiteDatabase db = getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put(COLUMN_CANTIDAD, "CAST(" + COLUMN_CANTIDAD + " AS INTEGER) + " + cantidadSumar);
+        values.put(COLUMN_CANTIDAD, nuevaCantidad);
 
         String selection = COLUMN_NOMBRE + " = ?";
-        String[] selectionArgs = { nombre };
+        String[] selectionArgs = {nombre};
 
         int count = db.update(
                 TABLE_NAME,
@@ -140,19 +140,15 @@ public class CestaCompraDBHelper extends SQLiteOpenHelper {
 
         return count;
     }
-    // Función para actualizar la cantidad de un producto por nombre
-    public int actualizarCantidadPrueba(String nombre, int nuevaCantidad) {
+    // Función para borrar un producto por nombre
+    public int borrarProductoPorNombre(String nombre) {
         SQLiteDatabase db = getWritableDatabase();
 
-        ContentValues values = new ContentValues();
-        values.put(COLUMN_CANTIDAD, nuevaCantidad);
-
         String selection = COLUMN_NOMBRE + " = ?";
-        String[] selectionArgs = { nombre };
+        String[] selectionArgs = {nombre};
 
-        int count = db.update(
+        int count = db.delete(
                 TABLE_NAME,
-                values,
                 selection,
                 selectionArgs);
 
