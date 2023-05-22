@@ -7,9 +7,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
-
 public class CestaCompraDBHelper extends SQLiteOpenHelper {
 
     // Información de la tabla
@@ -160,32 +157,5 @@ public class CestaCompraDBHelper extends SQLiteOpenHelper {
         return count;
     }
 
-    public LiveData<Cursor> getAllProductosLive() {
-        MutableLiveData<Cursor> mutableData = new MutableLiveData<>();
-        SQLiteDatabase db = getReadableDatabase();
-
-        String[] projection = {
-                COLUMN_ID,
-                COLUMN_NOMBRE,
-                COLUMN_PRECIO,
-                COLUMN_IMAGEN,
-                COLUMN_ESTADO,
-                COLUMN_CANTIDAD
-        };
-
-        Cursor cursor = db.query(
-                TABLE_NAME, // Tabla a consultar
-                projection, // Columnas a devolver
-                null, // Columnas para la cláusula WHERE
-                null, // Valores para la cláusula WHERE
-                null, // GROUP BY
-                null, // HAVING
-                null // ORDER BY
-        );
-
-        mutableData.setValue(cursor);
-
-        return mutableData;
-    }
 
 }

@@ -2,45 +2,53 @@ package com.example.myapplication.Controlador;
 
 import android.util.Base64;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 
 public class ControladorContraseñas {
+
+    private static final String KEY = "mySecretKey123"; // clave secreta para encriptación/desencriptación
     private static final int MAX_PASSWORD_LENGTH = 20; // longitud máxima de la contraseña
 
-    // Encriptar una cadena de texto utilizando MD5
+    // Encriptar una cadena de texto
     public static String encrypt(String password) {
         try {
-            MessageDigest md = MessageDigest.getInstance("MD5");
+            byte[] keyData = KEY.getBytes();
+            SecretKey secretKey = new SecretKeySpec(keyData, "AES");
+            Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
+            cipher.init(Cipher.ENCRYPT_MODE, secretKey);
             byte[] passwordBytes = password.getBytes();
-            byte[] hashBytes = md.digest(passwordBytes);
-            return bytesToHex(hashBytes);
-        } catch (NoSuchAlgorithmException e) {
+            if (passwordBytes.length > MAX_PASSWORD_LENGTH) {
+                byte[] truncatedBytes = new byte[MAX_PASSWORD_LENGTH];
+                System.arraycopy(passwordBytes, 0, truncatedBytes, 0, MAX_PASSWORD_LENGTH);
+                passwordBytes = truncatedBytes;
+            }
+            byte[] encryptedBytes = cipher.doFinal(passwordBytes);
+            return Base64.encodeToString(encryptedBytes, Base64.DEFAULT);
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
     }
 
-    // Desencriptar una cadena de texto utilizando MD5
+    // Desencriptar una cadena de texto
     public static String decrypt(String encryptedPassword) {
-        // No se puede desencriptar MD5, ya que es una función de hash unidireccional
-        return null;
-    }
-
-    // Método auxiliar para convertir un array de bytes a una cadena hexadecimal
-    private static String bytesToHex(byte[] bytes) {
-        StringBuilder hexString = new StringBuilder();
-        for (byte b : bytes) {
-            String hex = Integer.toHexString(0xFF & b);
-            if (hex.length() == 1) {
-                hexString.append('0');
+        try {
+            byte[] keyData = KEY.getBytes();
+            SecretKey secretKey = new SecretKeySpec(keyData, "AES");
+            Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
+            cipher.init(Cipher.DECRYPT_MODE, secretKey);
+            byte[] encryptedBytes = Base64.decode(encryptedPassword, Base64.DEFAULT);
+            byte[] decryptedBytes = cipher.doFinal(encryptedBytes);
+            String password = new String(decryptedBytes);
+            if (password.length() > MAX_PASSWORD_LENGTH) {
+                password = password.substring(0, MAX_PASSWORD_LENGTH);
             }
-            hexString.append(hex);
+            return password;
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        return hexString.toString();
+        return null;
     }
 }

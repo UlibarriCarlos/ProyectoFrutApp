@@ -126,7 +126,7 @@ public class RegistroActivity extends AppCompatActivity {
                         tbClientes cliente = new tbClientes();
                         try {
                             String contraseñaEncriptada = ControladorContraseñas.encrypt(etContraseña1.getText().toString());
-                            cliente.guardar(etAlias.getText().toString(), etDNI.getText().toString(), etDireccion.getText().toString(), etTelefono.getText().toString(), etEmail1.getText().toString(), contraseñaEncriptada);
+                            cliente.guardar(etAlias.getText().toString(), etDNI.getText().toString(), etDireccion.getText().toString(), etTelefono.getText().toString(), etEmail1.getText().toString(), etContraseña1.getText().toString());
 
                             Toast.makeText(RegistroActivity.this, "Los datos se han guardado correctamente, recibiras email para activarlo", Toast.LENGTH_LONG).show();
                             Intent intent1 = new Intent(RegistroActivity.this, UsuarioActivity.class);

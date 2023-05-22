@@ -1,8 +1,8 @@
-package com.example.myapplication.Controlador;
+package com.example.myapplication;
 
 import android.app.Application;
 
-public class UsuarioGlobal extends Application {
+public class MyApplication extends Application {
     private String globalString;
 
     public String getGlobalString() {
