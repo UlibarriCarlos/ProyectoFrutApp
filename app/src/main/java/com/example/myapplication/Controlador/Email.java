@@ -39,14 +39,14 @@ public class Email {
             message.setFrom(new InternetAddress(remitente));
             message.setRecipients(Message.RecipientType.TO,
                     InternetAddress.parse(destinatario));
-            message.setSubject("ALta en FrutAPP");
+            message.setSubject("Alta en FrutAPP");
             message.setText("Bienvenido a FrutApp");
 
             Transport.send(message);
 
             Log.d(TAG, "Correo electrónico enviado a " + destinatario);
 
-            return true; // Devuelve true si el correo electrónico se envió correctamente y asi podemos activar la cuenta.
+            return true; // Devuelve true si el correo electrónico se envió correctamente y así podemos activar la cuenta.
 
         } catch (MessagingException e) {
             Log.e(TAG, "Error al enviar el correo electrónico", e);

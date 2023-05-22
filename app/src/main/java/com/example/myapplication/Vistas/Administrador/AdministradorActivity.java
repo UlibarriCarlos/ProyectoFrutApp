@@ -19,7 +19,7 @@ public class AdministradorActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_dministrador);
+        setContentView(R.layout.activity_administrador);
 
         btnCompraStock = findViewById(R.id.btnCompraStock);
         btnAltaProducto = findViewById(R.id.btnAltaProducto);

@@ -7,6 +7,26 @@
     android:orientation="vertical"
     android:gravity="center_vertical|center_horizontal">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/zigzag"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:fontFamily="sans-serif-black"
+            android:text="Seleciona familia productos \n que deses comprar\n pulsando el boton"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+            android:textColor="@color/black"
+            android:textSize="20sp" />
+
+    </LinearLayout>
+
     <Button
         android:id="@+id/btnFrutas"
         android:layout_width="200dp"

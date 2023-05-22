@@ -1,11 +1,9 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center_vertical|center_horizontal"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:gravity="center">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="200dp"
@@ -18,7 +16,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:fontFamily="sans-serif-black"
-            android:text="Seleciona familia productos \n que deseas modificar\n pulsando el boton"
+            android:text="Seleciona opcion \n que deses realizar\n pulsando el boton"
             android:textAlignment="center"
             android:textAppearance="@style/TextAppearance.AppCompat.Display1"
             android:textColor="@color/black"
@@ -27,21 +25,21 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/btnAltaFrutas"
+        android:id="@+id/btnCompraStock"
         android:layout_width="200dp"
         android:layout_height="80dp"
-        android:text="Alta Frutas" />
+        android:text="Compra Stock" />
 
     <Button
-        android:id="@+id/btnAltaVerduras"
+        android:id="@+id/btnAltaProducto"
         android:layout_width="200dp"
         android:layout_height="80dp"
-        android:text="Alta Verduras" />
+        android:text="Alta Producto" />
 
     <Button
-        android:id="@+id/btnAltaVarios"
+        android:id="@+id/btnOtros"
         android:layout_width="200dp"
         android:layout_height="80dp"
-        android:text="Alta Varios" />
+        android:text="Otros" />
 
 </LinearLayout>

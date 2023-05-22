@@ -15,9 +15,10 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.myapplication.Controlador.ControladorContraseñas;
 import com.example.myapplication.Controlador.Email;
 import com.example.myapplication.Modelos.tbClientes;
-import com.example.myapplication.MyApplication;
+import com.example.myapplication.Controlador.UsuarioGlobal;
 import com.example.myapplication.R;
 import com.example.myapplication.Vistas.Administrador.AdministradorActivity;
 
@@ -99,11 +100,11 @@ public class UsuarioActivity extends AppCompatActivity {
                         if (cliente.getNombre().equals(et_nombre.getText().toString()) && cliente.getContraseña().equals(et_contraseña.getText().toString()) && et_nombre.getText().toString().equals("admin") && et_contraseña.getText().toString().equals("admin") && cliente.getEstado() == true) {
                             Intent intent1 = new Intent(UsuarioActivity.this, AdministradorActivity.class);
                             startActivity(intent1);
-                        } else if (cliente.getNombre().equals(et_nombre.getText().toString()) && cliente.getContraseña().equals(et_contraseña.getText().toString()) && cliente.getEstado() == true) {
-                        //} else if (cliente.getNombre().equals(et_nombre.getText().toString()) && cliente.getContraseña().equals(ControladorContraseñas.encrypt(et_contraseña.getText().toString())) && cliente.getEstado() == true) {
+                       // } else if (cliente.getNombre().equals(et_nombre.getText().toString()) && cliente.getContraseña().equals(et_contraseña.getText().toString()) && cliente.getEstado() == true) {
+                        } else if (cliente.getNombre().equals(et_nombre.getText().toString()) && cliente.getContraseña().equals(ControladorContraseñas.encrypt(et_contraseña.getText().toString())) && cliente.getEstado() == true) {
 
                            //Guardo en variable global el nombre del usuario
-                            MyApplication myApp = (MyApplication) getApplicationContext();
+                            UsuarioGlobal myApp = (UsuarioGlobal) getApplicationContext();
                             myApp.setGlobalString(cliente.getNombre());
                             Intent intent1 = new Intent(UsuarioActivity.this, PrincipalActivity.class);
                             startActivity(intent1);

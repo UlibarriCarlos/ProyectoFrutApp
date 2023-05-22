@@ -11,6 +11,7 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.graphics.pdf.PdfDocument;
@@ -27,10 +28,11 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.example.myapplication.Controlador.CestaCompraDBHelper;
-import com.example.myapplication.Controlador.GenerarPDF;
+import com.example.myapplication.Controlador.Email;
 import com.example.myapplication.Modelos.tbClientes;
-import com.example.myapplication.MyApplication;
+import com.example.myapplication.Controlador.UsuarioGlobal;
 import com.example.myapplication.R;
+import com.github.barteksc.pdfviewer.PDFView;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -38,9 +40,8 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 public class FacturaActivity extends AppCompatActivity {
-
+    private PDFView pdfView;
     private Button btnGenerarPdf;
-
     private String tituloText = "Su pedido ha sido tramitado, aqui tiene el importe:";
 
     private String descripcionText = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. \n" +
@@ -58,60 +59,51 @@ public class FacturaActivity extends AppCompatActivity {
         setContentView(R.layout.activity_factura);
 
 
-
-
         if (!checkPermission()) {
             requestPermissions();
         }
 
         btnGenerarPdf = findViewById(R.id.btnFactura);
+        pdfView = findViewById(R.id.pdfView);
+        generarPdf();
 
-        btnGenerarPdf.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                generarPdf();
-            }
-        });
     }
+
     @SuppressLint("Range")
     public void generarPdf() {
         // Crear un nuevo PdfDocument
         PdfDocument pdfDocument = new PdfDocument();
 
-        // Inicializar pinturas y estilos de texto
-        Paint paint = new Paint();
-        TextPaint titulo = new TextPaint();
-        TextPaint encabezado = new TextPaint();
-        TextPaint descripcion = new TextPaint();
-
-        // Crear bitmaps para las imágenes
-        Bitmap bitmap, bitmapEscala;
-
         // Crear PageInfo para la página del PDF
-        PdfDocument.PageInfo pageInfo = new PdfDocument.PageInfo.Builder(816, 1054, 1).create();
+        PdfDocument.PageInfo pageInfo = new PdfDocument.PageInfo.Builder(1632, 2116, 1).create();
         PdfDocument.Page page = pdfDocument.startPage(pageInfo);
 
         // Obtener el canvas de la página
         Canvas canvas = page.getCanvas();
 
         // Dibujar imágenes y texto
-        bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.verduras);
-        bitmapEscala = Bitmap.createScaledBitmap(bitmap, 80, 80, false);
-        canvas.drawBitmap(bitmapEscala, 368, 20, paint);
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.verduras);
+        Bitmap bitmapEscala = Bitmap.createScaledBitmap(bitmap, 160, 160, false);
+        Paint paint = new Paint();
+        canvas.drawBitmap(bitmapEscala, 736, 40, paint);
 
+        TextPaint titulo = new TextPaint();
         titulo.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
-        titulo.setTextSize(20);
-        canvas.drawText(tituloText, 10, 150, titulo);
+        titulo.setTextSize(40);
+        canvas.drawText(tituloText, 20, 300, titulo);
 
+        TextPaint encabezado = new TextPaint();
         encabezado.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
-        encabezado.setTextSize(14);
+        encabezado.setTextSize(40);
 
+        TextPaint descripcion = new TextPaint();
         descripcion.setTypeface(Typeface.defaultFromStyle(Typeface.NORMAL));
-        descripcion.setTextSize(14);
+        descripcion.setTextSize(40);
+
         CestaCompraDBHelper dbHelper = new CestaCompraDBHelper(getApplicationContext());
 
         tbClientes control = null;
-        MyApplication myApp = (MyApplication) getApplicationContext();
+        UsuarioGlobal myApp = (UsuarioGlobal) getApplicationContext();
         String NombreUsuario = myApp.getGlobalString();
         // Obtener el cliente
         tbClientes cliente = null;
@@ -121,37 +113,37 @@ public class FacturaActivity extends AppCompatActivity {
             throw new RuntimeException(e);
         }
 
-// Obtener los datos del cliente
+        // Obtener los datos del cliente
         String nombreCliente = cliente.getNombre();
         String direccionCliente = cliente.getDireccion();
         String telefonoCliente = cliente.getTelefono();
         String emailCliente = cliente.getEmail();
 
-// Dibujar los datos del cliente en el PDF
-        canvas.drawText("Nombre: " + nombreCliente, 500, 100, descripcion);
-        canvas.drawText("Dirección: " + direccionCliente, 500, 130, descripcion);
-        canvas.drawText("Teléfono: " + telefonoCliente, 500, 160, descripcion);
-        canvas.drawText("Email: " + emailCliente, 500, 190, descripcion);
-
+        // Dibujar los datos del cliente en el PDF
+        canvas.drawText("Nombre: " + nombreCliente, 1000, 200, descripcion);
+        canvas.drawText("Dirección: " + direccionCliente, 1000, 260, descripcion);
+        canvas.drawText("Teléfono: " + telefonoCliente, 1000, 320, descripcion);
+        canvas.drawText("Email: " + emailCliente, 1000, 380, descripcion);
 
         // Obtener los productos de la base de datos
         Cursor cursor = dbHelper.getAllProductos();
 
         double importeTotal = 0;
-        int y = 200;
+        int y = 500;
 
         // Dibujar el encabezado de las columnas
         String encabezadoNombre = "Nombre Producto";
         String encabezadoCantidad = "Cantidad";
         String encabezadoImporte = "Importe";
-        canvas.drawText(encabezadoNombre, 10, y, encabezado);
-        canvas.drawText(encabezadoCantidad, 200, y, encabezado);
-        canvas.drawText(encabezadoImporte, 300, y, encabezado);
-        y += 5;
+        canvas.drawText(encabezadoNombre, 20, y, encabezado);
+        canvas.drawText(encabezadoCantidad, 500, y, encabezado);
+        canvas.drawText(encabezadoImporte, 900, y, encabezado);
+        y += 10;
 
         // Dibujar una línea divisoria
-        canvas.drawLine(10, y, 350, y, paint);
-        y += 20;
+        paint.setColor(Color.BLACK);
+        canvas.drawLine(20, y, 1550, y, paint);
+        y += 50;
 
         // Recorrer el cursor y dibujar el texto para cada producto
         if (cursor.moveToFirst()) {
@@ -174,10 +166,10 @@ public class FacturaActivity extends AppCompatActivity {
                 String lineaImporte = String.valueOf(importe);
 
                 // Dibujar las líneas del producto en el canvas
-                canvas.drawText(lineaNombre, 10, y, descripcion);
-                canvas.drawText(lineaCantidad, 200, y, descripcion);
-                canvas.drawText(lineaImporte + " €", 300, y, descripcion);
-                y += 15;
+                canvas.drawText(lineaNombre, 20, y, descripcion);
+                canvas.drawText(lineaCantidad, 500, y, descripcion);
+                canvas.drawText(lineaImporte + " €", 900, y, descripcion);
+                y += 40;
             } while (cursor.moveToNext());
         }
 
@@ -186,8 +178,8 @@ public class FacturaActivity extends AppCompatActivity {
         dbHelper.close();
 
         // Dibujar el importe total
-        String importeTotalTexto = "Importe Total: " + importeTotal + " €";
-        canvas.drawText(importeTotalTexto, 10, y + 20, descripcion);
+        String totalText = "Importe total: " + String.valueOf(importeTotal) + " €";
+        canvas.drawText(totalText, 900, y + 50, descripcion);
 
         pdfDocument.finishPage(page);
 
@@ -200,19 +192,37 @@ public class FacturaActivity extends AppCompatActivity {
         File file = new File(directory, "Ticket.pdf");
 
         try {
+
             // Escribir el contenido del PDF en el archivo
             FileOutputStream outputStream = new FileOutputStream(file);
             pdfDocument.writeTo(outputStream);
             outputStream.close();
 
             Toast.makeText(this, "Se creó el PDF correctamente", Toast.LENGTH_LONG).show();
+            // Mostrar el PDF en el visor
+            pdfView.fromFile(file).load();
         } catch (IOException e) {
             e.printStackTrace();
         }
 
         pdfDocument.close();
-    }
+        btnGenerarPdf.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Enviar el PDF por correo electrónico
+                // Enviar el PDF por correo electrónico
+                String destinatario = "ejemplo@example.com";  // Reemplaza con el correo electrónico del destinatario
+               Email enviarCorreo = new Email();
+                boolean correoEnviado =   enviarCorreo.enviarCorreo(destinatario);
 
+                if (correoEnviado) {
+                    Toast.makeText(FacturaActivity.this, "Correo electrónico enviado", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(FacturaActivity.this, "Error al enviar el correo electrónico", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
 
 
     private boolean checkPermission() {
