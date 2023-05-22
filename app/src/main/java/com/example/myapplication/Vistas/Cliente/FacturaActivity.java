@@ -211,7 +211,7 @@ public class FacturaActivity extends AppCompatActivity {
             public void onClick(View view) {
                 // Enviar el PDF por correo electrónico
                 // Enviar el PDF por correo electrónico
-                String destinatario = "ejemplo@example.com";  // Reemplaza con el correo electrónico del destinatario
+                String destinatario = "uliferio@gmail.com";  // Reemplaza con el correo electrónico del destinatario
                Email enviarCorreo = new Email();
                 boolean correoEnviado =   enviarCorreo.enviarCorreo(destinatario);
 
