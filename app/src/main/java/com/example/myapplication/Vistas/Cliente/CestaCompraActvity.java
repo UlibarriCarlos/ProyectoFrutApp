@@ -132,7 +132,7 @@ public class CestaCompraActvity extends AppCompatActivity {
                     // Obtener guardar de la base de datos
                     newRowId = dbHelper.insertProducto(nombre, precio, cantidad, imagen, estado);
                 }
-                elementos.clear();
+
                 refresca();
 
 

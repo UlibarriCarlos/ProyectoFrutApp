@@ -16,55 +16,74 @@
         android:theme="@style/Theme.MyApplication"
         android:name=".Controlador.UsuarioGlobal"
         tools:targetApi="31">
-
+        <activity
+            android:name=".Vistas.Cliente.FinCompraActivity"
+            android:screenOrientation="portrait"
+            android:exported="true" />
 
         <activity
             android:name=".Vistas.Administrador.CompraStockActivity"
+            android:screenOrientation="portrait"
             android:exported="true" />
         <activity
             android:name=".Vistas.Administrador.AltaFrutasActivity"
+            android:screenOrientation="portrait"
             android:exported="true" />
         <activity
             android:name=".Vistas.Administrador.AltaVerdurasActivity"
+            android:screenOrientation="portrait"
             android:exported="true" />
         <activity
             android:name=".Vistas.Administrador.AltaVariosActivity"
+            android:screenOrientation="portrait"
             android:exported="true" />
         <activity
         android:name=".Vistas.Administrador.AltaProductoActivity"
+            android:screenOrientation="portrait"
         android:exported="true" />
         <activity
             android:name=".Vistas.Administrador.OtrosActivity"
+            android:screenOrientation="portrait"
             android:exported="true" />
         <activity
             android:name=".Vistas.Cliente.FrutasActivity"
+            android:screenOrientation="portrait"
             android:exported="true" />
         <activity
             android:name=".Vistas.Administrador.AdministradorActivity"
+            android:screenOrientation="portrait"
             android:exported="true" />
         <activity
             android:name=".Vistas.Cliente.CestaCompraActvity"
+            android:screenOrientation="portrait"
             android:exported="true" />
         <activity
             android:name=".Vistas.PrincipalActivity"
+            android:screenOrientation="portrait"
             android:exported="true" />
         <activity
             android:name=".Vistas.RegistroActivity"
+            android:screenOrientation="portrait"
             android:exported="true" />
         <activity
             android:name=".Vistas.UsuarioActivity"
+            android:screenOrientation="portrait"
             android:exported="true" />
         <activity
             android:name=".Vistas.Cliente.VerdurasActivity"
+            android:screenOrientation="portrait"
             android:exported="true" />
         <activity
             android:name=".Vistas.Cliente.VariosActivity"
+            android:screenOrientation="portrait"
             android:exported="true" />
         <activity
             android:name=".Vistas.Cliente.FacturaActivity"
+            android:screenOrientation="portrait"
             android:exported="true" />
         <activity
             android:name=".Vistas.MainActivity"
+            android:screenOrientation="portrait"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

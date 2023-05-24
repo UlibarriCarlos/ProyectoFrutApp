@@ -6,6 +6,8 @@ import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 import static com.example.myapplication.Controlador.CestaCompraDBHelper.COLUMN_CANTIDAD;
 
 import android.annotation.SuppressLint;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -18,11 +20,15 @@ import android.graphics.pdf.PdfDocument;
 import android.os.Bundle;
 import android.os.Environment;
 import android.text.TextPaint;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -32,6 +38,8 @@ import com.example.myapplication.Controlador.Email;
 import com.example.myapplication.Modelos.tbClientes;
 import com.example.myapplication.Controlador.UsuarioGlobal;
 import com.example.myapplication.R;
+import com.example.myapplication.Vistas.PrincipalActivity;
+import com.example.myapplication.Vistas.UsuarioActivity;
 import com.github.barteksc.pdfviewer.PDFView;
 
 import java.io.File;
@@ -68,6 +76,45 @@ public class FacturaActivity extends AppCompatActivity {
         generarPdf();
 
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_factura, menu);
+        return true;
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.Frutas:
+                //Iniciamos la nueva actividad
+                Intent intentFrutas = new Intent(FacturaActivity.this, VerdurasActivity.class);
+                startActivity(intentFrutas);
+                break;
+            case R.id.Verduras:
+                //Iniciamos la nueva actividad
+                Intent intentVerduras = new Intent(FacturaActivity.this, VerdurasActivity.class);
+                startActivity(intentVerduras);
+                break;
+            case R.id.Varios:
+                //Iniciamos la nueva actividad
+                Intent intentVarios = new Intent(FacturaActivity.this, VariosActivity.class);
+                startActivity(intentVarios);
+                break;
+            case R.id.Login:
+                //Iniciamos la nueva actividad
+                Intent intentAnadir = new Intent(FacturaActivity.this, UsuarioActivity.class);
+                startActivity(intentAnadir);
+                break;
+            case R.id.Salir:
+                finishAffinity(); // Cierra todas las actividades
+                System.exit(0); // Cierra el proceso de la aplicación
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
 
     @SuppressLint("Range")
     public void generarPdf() {
@@ -184,10 +231,23 @@ public class FacturaActivity extends AppCompatActivity {
         pdfDocument.finishPage(page);
 
         // Crear un archivo para el PDF
-        String filePath = Environment.getExternalStorageDirectory().getPath() + "/Documents/";
-        File directory = new File(filePath);
+        // Obtén la ruta del directorio Documents
+       // String directoryPath = Environment.getExternalStorageDirectory().getPath() + "/storage/emulated/0/Documents/";
+        String directoryPath = Environment.getExternalStorageDirectory().getPath() + "/Documents/";
+
+// Crea un objeto File con la ruta del directorio
+        File directory = new File(directoryPath);
+
+// Verifica si el directorio no existe
         if (!directory.exists()) {
-            directory.mkdirs();
+            // Intenta crear el directorio
+            boolean isDirectoryCreated = directory.mkdirs();
+
+            if (!isDirectoryCreated) {
+                // Si no se pudo crear el directorio, muestra un mensaje de error o realiza alguna otra acción
+                Toast.makeText(this, "Error al crear el directorio", Toast.LENGTH_SHORT).show();
+                return;
+            }
         }
         File file = new File(directory, "Ticket.pdf");
 
@@ -205,21 +265,49 @@ public class FacturaActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
+        LayoutInflater inflater = LayoutInflater.from(this);
+        View dialogView = inflater.inflate(R.layout.dialog_compra, null);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setView(dialogView);
+
         pdfDocument.close();
         btnGenerarPdf.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Enviar el PDF por correo electrónico
-                // Enviar el PDF por correo electrónico
-                String destinatario = "uliferio@gmail.com";  // Reemplaza con el correo electrónico del destinatario
-               Email enviarCorreo = new Email();
-                boolean correoEnviado =   enviarCorreo.enviarCorreo(destinatario);
+// Crear el cuadro de diálogo con el layout personalizado
+                // Crear el cuadro de diálogo y obtener el layout personalizado
+                AlertDialog.Builder confirmDialogBuilder = new AlertDialog.Builder(FacturaActivity.this);
+                confirmDialogBuilder.setMessage("¿Estás seguro de que quieres confirmar este pedido?");
+                confirmDialogBuilder.setPositiveButton("Sí", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Lógica para eliminar el producto de la base de datos y actualizar la lista
+                        // Enviar el PDF por correo electrónico
+                        String destinatario = "uliferio@gmail.com";  // Reemplaza con el correo electrónico del destinatario
+                        Email enviarCorreo = new Email();
+                        boolean correoEnviado = enviarCorreo.enviarCorreo(destinatario);
 
-                if (correoEnviado) {
-                    Toast.makeText(FacturaActivity.this, "Correo electrónico enviado", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(FacturaActivity.this, "Error al enviar el correo electrónico", Toast.LENGTH_SHORT).show();
-                }
+                        if (correoEnviado) {
+                            Toast.makeText(FacturaActivity.this, "Correo electrónico enviado", Toast.LENGTH_SHORT).show();
+                            Intent intent1 = new Intent(FacturaActivity.this, FinCompraActivity.class);
+                            startActivity(intent1);
+                        } else {
+                            Toast.makeText(FacturaActivity.this, "Error al enviar el correo electrónico", Toast.LENGTH_SHORT).show();
+                        }
+
+                        dialog.dismiss();
+                    }
+                }).setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+
+                AlertDialog confirmDialog = confirmDialogBuilder.create();
+                confirmDialog.show();
+
+
             }
         });
     }

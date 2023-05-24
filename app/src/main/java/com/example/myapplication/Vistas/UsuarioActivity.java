@@ -97,7 +97,7 @@ public class UsuarioActivity extends AppCompatActivity {
                         Toast.makeText(UsuarioActivity.this, "No existe usuario o contraseña mal introducida", Toast.LENGTH_LONG).show();
 
                     } else {
-                        if (cliente.getNombre().equals(et_nombre.getText().toString()) && cliente.getContraseña().equals(et_contraseña.getText().toString()) && et_nombre.getText().toString().equals("admin") && et_contraseña.getText().toString().equals("admin") && cliente.getEstado() == true) {
+                        if (cliente.getNombre().equals(et_nombre.getText().toString()) && cliente.getContraseña().equals(ControladorContraseñas.encrypt(et_contraseña.getText().toString())) && et_nombre.getText().toString().equals("admin") && cliente.getContraseña().equals(ControladorContraseñas.encrypt(et_contraseña.getText().toString())) && cliente.getEstado() == true) {
                             Intent intent1 = new Intent(UsuarioActivity.this, AdministradorActivity.class);
                             startActivity(intent1);
                        // } else if (cliente.getNombre().equals(et_nombre.getText().toString()) && cliente.getContraseña().equals(et_contraseña.getText().toString()) && cliente.getEstado() == true) {

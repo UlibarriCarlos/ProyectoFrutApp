@@ -23,7 +23,8 @@ public class ConexionBD {
             StrictMode.ThreadPolicy politica = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(politica);
             Class.forName("net.sourceforge.jtds.jdbc.Driver").newInstance();
-            cnn = DriverManager.getConnection("jdbc:jtds:sqlserver://192.168.0.137;databaseName=FrutApp;user=sa;password=sa;"); //Portatil
+            cnn = DriverManager.getConnection("jdbc:jtds:sqlserver://82.223.29.223:1435;databaseName=FrutApp;user=sa;password=Fruit@pp2023!;");
+            //cnn = DriverManager.getConnection("jdbc:jtds:sqlserver://192.168.0.137;databaseName=FrutApp;user=sa;password=sa;"); //Portatil
             //cnn = DriverManager.getConnection("jdbc:jtds:sqlserver://192.168.52.1;databaseName=FrutApp;user=2222;password=1234;"); //PC
             //10.9.2.42
             //192.168.0.137

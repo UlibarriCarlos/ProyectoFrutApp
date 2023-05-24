@@ -17,9 +17,9 @@
         android:id="@+id/btnFactura"
         android:layout_width="200dp"
         android:layout_height="80dp"
-        android:text="Factura"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="0dp" />
+        android:layout_marginBottom="0dp"
+        android:text="Confirmar Pedido" />
 
 </RelativeLayout>

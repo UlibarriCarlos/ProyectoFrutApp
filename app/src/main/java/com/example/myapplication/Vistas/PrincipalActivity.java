@@ -26,7 +26,7 @@ public class PrincipalActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_principal);
 
-        btnFrutas = findViewById(R.id.btnFrutas);
+        btnFrutas = findViewById(R.id.btnSalir);
         btnVerduras = findViewById(R.id.btnVerduras);
         btnVarios = findViewById(R.id.btnVarios);
 

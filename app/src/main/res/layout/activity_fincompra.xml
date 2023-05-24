@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:fontFamily="sans-serif-black"
-            android:text="Seleciona familia productos \n que deses comprar\n pulsando el boton"
+            android:text="Su pedido ha sido aceptado,\n recibira email confirmacion\n par a pasara recogerlo\n cuando este listo"
             android:textAlignment="center"
             android:textAppearance="@style/TextAppearance.AppCompat.Display1"
             android:textColor="@color/black"
@@ -31,18 +31,6 @@
         android:id="@+id/btnSalir"
         android:layout_width="200dp"
         android:layout_height="80dp"
-        android:text="Frutas" />
-
-    <Button
-        android:id="@+id/btnVerduras"
-        android:layout_width="200dp"
-        android:layout_height="80dp"
-        android:text="Verduras" />
-
-    <Button
-        android:id="@+id/btnVarios"
-        android:layout_width="200dp"
-        android:layout_height="80dp"
-        android:text="Varios" />
+        android:text="Salir" />
 
 </LinearLayout>
