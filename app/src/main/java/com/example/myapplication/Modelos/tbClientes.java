@@ -238,7 +238,7 @@ public class tbClientes {
             statement.setString(4, telefono);
             statement.setString(5, email);
             statement.setString(6, contraseña);
-            statement.setBoolean(7, false);
+            statement.setBoolean(7, true);
             statement.executeUpdate();
             ConexionBD.conexionBD().close();
         } catch (SQLException ex) {

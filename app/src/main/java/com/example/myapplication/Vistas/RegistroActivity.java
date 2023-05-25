@@ -15,8 +15,11 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.myapplication.Controlador.ControladorContraseñas;
+import com.example.myapplication.Controlador.Email;
 import com.example.myapplication.Modelos.tbClientes;
 import com.example.myapplication.R;
+import com.example.myapplication.Vistas.Cliente.FacturaActivity;
+import com.example.myapplication.Vistas.Cliente.FinCompraActivity;
 
 import java.sql.SQLException;
 
@@ -25,7 +28,10 @@ public class RegistroActivity extends AppCompatActivity {
     private EditText etNombreApellidos, etAlias, etDNI, etDireccion, etTelefono, etEmail1, etEmail2, etContraseña1, etContraseña2;
     private Button btnAltaUsuario;
 
-    private Boolean datosRepetidos = false;
+    private Boolean comprobarAlias = false;
+    private Boolean comprobarDNI = false;
+    private Boolean comprobarContraseña = false;
+    private Boolean comprobarEmail = false;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -84,7 +90,7 @@ public class RegistroActivity extends AppCompatActivity {
                 Log.i("Cliente", "Contraseña: " + cliente.getContraseña());
                 Log.i("Cliente", "Estado: " + cliente.getEstado());*/
 
-
+//Comprobacion si algun campo esta vacio, repetido o ya xiste en la BBDD
                 if (etNombreApellidos.getText().toString().equals("")
                         || etAlias.getText().toString().equals("")
                         || etDireccion.getText().toString().equals("")
@@ -100,16 +106,57 @@ public class RegistroActivity extends AppCompatActivity {
                     try {
                         tbClientes control = null;
                         if (control.obtenerClientePorNombre(etAlias.getText().toString()) != null) {
-                            etAlias.setTextColor(Color.RED);
-                            datosRepetidos = true;
+                            etAlias.setText(null);
+                            etAlias.setHintTextColor(Color.RED);
+                            etAlias.setHint("Alias ya existe, cambialo");
+                            comprobarAlias = true;
+                        } else {
+                            etAlias.setTextColor(Color.WHITE);
+                            comprobarAlias = false;
                         }
                         if (control.obtenerClientePorDNI(etDNI.getText().toString()) != null) {
-                            etDNI.setTextColor(Color.RED);
-                            datosRepetidos = true;
+                            etDNI.setText(null);
+                            etDNI.setHintTextColor(Color.RED);
+                            etDNI.setHint("DNI ya existe, cambialo");
+                            comprobarDNI = true;
+                        } else {
+                            etAlias.setTextColor(Color.WHITE);
+                            comprobarDNI = false;
                         }
-                        if (control.obtenerClientePoremail(etEmail1.getText().toString()) != null) {
-                            etEmail1.setTextColor(Color.RED);
-                            datosRepetidos = true;
+                        if (etEmail1.getText().toString().equals(etEmail2.getText().toString())) {
+                            comprobarAlias = false;
+                            if (control.obtenerClientePoremail(etEmail1.getText().toString()) != null) {
+                                etEmail1.setText(null);
+                                etEmail2.setText(null);
+                                etEmail1.setHintTextColor(Color.RED);
+                                etEmail2.setHintTextColor(Color.RED);
+                                etEmail1.setHint("Email ya existe, cambialo");
+                                etEmail2.setHint("Email ya existe, cambialo");
+                                comprobarEmail = true;
+                            } else {
+                                etAlias.setTextColor(Color.WHITE);
+                                comprobarEmail = false;
+                            }
+
+                        } else {
+                            etEmail1.setText(null);
+                            etEmail2.setText(null);
+                            etEmail1.setHintTextColor(Color.RED);
+                            etEmail2.setHintTextColor(Color.RED);
+                            etEmail1.setHint("Los emails no coinciden");
+                            etEmail2.setHint("Los emails no coinciden");
+                            comprobarEmail = true;
+                        }
+                        if (etContraseña1.getText().toString().equals(etContraseña2.getText().toString())) {
+                            comprobarContraseña = false;
+                        } else {
+                            etContraseña1.setText(null);
+                            etContraseña2.setText(null);
+                            etContraseña1.setHintTextColor(Color.RED);
+                            etContraseña2.setHintTextColor(Color.RED);
+                            etContraseña1.setHint("Las contrseñas no coinciden");
+                            etContraseña2.setHint("Los contrseñas no coinciden");
+                            comprobarContraseña = true;
                         }
 
                     } catch (SQLException e) {
@@ -117,20 +164,43 @@ public class RegistroActivity extends AppCompatActivity {
                         throw new RuntimeException(e);
                     }
 
-                    if (datosRepetidos) {
+                    if (comprobarAlias || comprobarDNI || comprobarContraseña || comprobarEmail) {
 
-                        Toast.makeText(RegistroActivity.this, "Nombre, Email o DNI repetidos en BBDD revisa datos", Toast.LENGTH_LONG).show();
-                        datosRepetidos = false;
+                        Toast.makeText(RegistroActivity.this, "Revisa los datos introducidos ", Toast.LENGTH_LONG).show();
+                        comprobarAlias = false;
+                        comprobarDNI = false;
+                        comprobarContraseña = false;
+                        comprobarEmail = false;
 
                     } else {
                         tbClientes cliente = new tbClientes();
                         try {
-                            String contraseñaEncriptada = ControladorContraseñas.encrypt(etContraseña1.getText().toString());
-                            cliente.guardar(etAlias.getText().toString(), etDNI.getText().toString(), etDireccion.getText().toString(), etTelefono.getText().toString(), etEmail1.getText().toString(), contraseñaEncriptada);
 
-                            Toast.makeText(RegistroActivity.this, "Los datos se han guardado correctamente, recibiras email para activarlo", Toast.LENGTH_LONG).show();
-                            Intent intent1 = new Intent(RegistroActivity.this, UsuarioActivity.class);
-                            startActivity(intent1);
+
+                            // Lógica para eliminar el producto de la base de datos y actualizar la lista
+
+                            String destinatario =  etEmail1.getText().toString();  // Reemplaza con el correo electrónico del destinatario
+                            Email enviarCorreo = new Email();
+                            boolean correoEnviado = enviarCorreo.enviarCorreo(destinatario);
+
+                            if (correoEnviado) {
+                                //Encriptamos contraseña
+                                String contraseñaEncriptada = ControladorContraseñas.encrypt(etContraseña1.getText().toString());
+                                //Guardamos datos del cliente despues las comprobaciones
+                                cliente.guardar(etAlias.getText().toString(), etDNI.getText().toString(), etDireccion.getText().toString(), etTelefono.getText().toString(), etEmail1.getText().toString(), contraseñaEncriptada);
+                                Toast.makeText(RegistroActivity.this, "Los datos se han guardado correctamente, recibiras email de bienvenida", Toast.LENGTH_LONG).show();
+                                Intent intent1 = new Intent(RegistroActivity.this, UsuarioActivity.class);
+                                startActivity(intent1);
+                            } else {
+                                Toast.makeText(RegistroActivity.this, "Error al enviar el correo, revisalo", Toast.LENGTH_SHORT).show();
+                                etEmail1.setText(null);
+                                etEmail2.setText(null);
+                                etEmail1.setHintTextColor(Color.RED);
+                                etEmail2.setHintTextColor(Color.RED);
+                                etEmail1.setHint("Los emails no validos");
+                                etEmail2.setHint("Los emails no validos");
+                            }
+
                         } catch (SQLException e) {
                             throw new RuntimeException(e);
                         }

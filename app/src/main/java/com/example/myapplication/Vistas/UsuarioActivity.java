@@ -29,9 +29,8 @@ public class UsuarioActivity extends AppCompatActivity {
     private EditText et_nombre, et_contraseña;
     private Button btn_loginUsuario;
     private TextView tv_registrarse;
-    private TextView textView;
 
-    // Llamar al método obtenerUltimoRegistro()
+
     tbClientes cliente = null;
 
     @Override
@@ -91,7 +90,7 @@ public class UsuarioActivity extends AppCompatActivity {
 
                 //Verificacion de usuario
                 if (et_nombre.getText().toString().equals("") || et_contraseña.getText().toString().equals("")) {
-                    Toast.makeText(UsuarioActivity.this, "No has intrducido usuario o contraseña", Toast.LENGTH_LONG).show();
+                    Toast.makeText(UsuarioActivity.this, "No has introducido usuario o contraseña", Toast.LENGTH_LONG).show();
                 } else {
                     if (cliente == null) {
                         Toast.makeText(UsuarioActivity.this, "No existe usuario o contraseña mal introducida", Toast.LENGTH_LONG).show();
@@ -100,7 +99,6 @@ public class UsuarioActivity extends AppCompatActivity {
                         if (cliente.getNombre().equals(et_nombre.getText().toString()) && cliente.getContraseña().equals(ControladorContraseñas.encrypt(et_contraseña.getText().toString())) && et_nombre.getText().toString().equals("admin") && cliente.getContraseña().equals(ControladorContraseñas.encrypt(et_contraseña.getText().toString())) && cliente.getEstado() == true) {
                             Intent intent1 = new Intent(UsuarioActivity.this, AdministradorActivity.class);
                             startActivity(intent1);
-                       // } else if (cliente.getNombre().equals(et_nombre.getText().toString()) && cliente.getContraseña().equals(et_contraseña.getText().toString()) && cliente.getEstado() == true) {
                         } else if (cliente.getNombre().equals(et_nombre.getText().toString()) && cliente.getContraseña().equals(ControladorContraseñas.encrypt(et_contraseña.getText().toString())) && cliente.getEstado() == true) {
 
                            //Guardo en variable global el nombre del usuario
@@ -108,8 +106,6 @@ public class UsuarioActivity extends AppCompatActivity {
                             myApp.setGlobalString(cliente.getNombre());
                             Intent intent1 = new Intent(UsuarioActivity.this, PrincipalActivity.class);
                             startActivity(intent1);
-                            Email correo = new Email();
-                            //correo.enviarCorreo("uliferio@gmail.com");
 
                         } else if (cliente.getNombre().equals(et_nombre.getText().toString()) && cliente.getContraseña().equals(et_contraseña.getText().toString()) && cliente.getEstado() == false) {
                             Toast.makeText(UsuarioActivity.this, "Tienes que activar usuario, mira tu correo", Toast.LENGTH_LONG).show();
