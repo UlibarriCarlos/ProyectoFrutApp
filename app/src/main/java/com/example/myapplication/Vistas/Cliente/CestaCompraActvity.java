@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
@@ -110,33 +111,36 @@ public class CestaCompraActvity extends AppCompatActivity {
                 imagen = getIntent().getStringExtra("imagen");
                 estado = getIntent().getBooleanExtra("estado", false);
                 precio = Double.parseDouble(precioString);
-                cantidad = Integer.parseInt(cantidadEditText.getText().toString());
-                // Objeto base de datos
 
-                CestaCompraDBHelper dbHelper = new CestaCompraDBHelper(getApplicationContext());
+                String cantidadText = cantidadEditText.getText().toString().trim();
+                if (!cantidadText.isEmpty() && !cantidadText.equals("0")) {
+                    cantidad = Integer.parseInt(cantidadText);
 
-                //Verificar si hay ya un producto en la tabla
+                    // Objeto base de datos
+                    CestaCompraDBHelper dbHelper = new CestaCompraDBHelper(getApplicationContext());
 
-                cursor = dbHelper.getProductoCantidad(nombre);
+                    // Verificar si hay ya un producto en la tabla
+                    cursor = dbHelper.getProductoCantidad(nombre);
 
-                if (cursor != null && cursor.moveToFirst()) {
-                    int cantidadPrueba = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_CANTIDAD));
-                    cursor.close();
+                    if (cursor != null && cursor.moveToFirst()) {
+                        int cantidadPrueba = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_CANTIDAD));
+                        cursor.close();
 
-                    // Hacer algo con la cantidad del producto obtenida
-                    dbHelper.actualizarCantidad(nombre, cantidad + cantidadPrueba);
+                        // Hacer algo con la cantidad del producto obtenida
+                        dbHelper.actualizarCantidad(nombre, cantidad + cantidadPrueba);
+                    } else {
+                        // El producto no existe en la base de datos
+                        // Insertar el nuevo producto en la base de datos
+                        newRowId = dbHelper.insertProducto(nombre, precio, cantidad, imagen, estado);
+                    }
 
-
+                    refresca();
                 } else {
-                    // El producto no existe en la base de datos
-                    // Obtener guardar de la base de datos
-                    newRowId = dbHelper.insertProducto(nombre, precio, cantidad, imagen, estado);
+                    // Mostrar un mensaje de error indicando que la cantidad no es válida
+                    Toast.makeText(CestaCompraActvity.this, "Ingrese una cantidad válida", Toast.LENGTH_SHORT).show();
                 }
-
-                refresca();
-
-
             }
+
 
         }).setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
             @Override
@@ -329,8 +333,7 @@ public class CestaCompraActvity extends AppCompatActivity {
             } while (cursor.moveToNext());
         }
         txtImporteTotal = findViewById(R.id.txtImporteTotal);
-        txtImporteTotal.setText(String.valueOf(importeTotal + " €"));
-
+        txtImporteTotal.setText(String.format("%.2f €", importeTotal));
         // Cerrar el cursor y el dbHelper
 
         cursor.close();

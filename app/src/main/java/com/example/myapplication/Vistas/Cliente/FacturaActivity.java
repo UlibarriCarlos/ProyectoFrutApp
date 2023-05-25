@@ -216,7 +216,7 @@ public class FacturaActivity extends AppCompatActivity {
                 String unidades = estadoTicket ? " Kg" : " Uds";
                 String lineaNombre = nombreTicket;
                 String lineaCantidad = String.valueOf(cantidadTicket) + unidades;
-                String lineaImporte = String.valueOf(importe);
+                String lineaImporte =  String.format("%.2f",importe);
 
                 // Dibujar las líneas del producto en el canvas
                 canvas.drawText(lineaNombre, 20, y, descripcion);
@@ -231,15 +231,16 @@ public class FacturaActivity extends AppCompatActivity {
         dbHelper.close();
 
         // Dibujar el importe total
-        String totalText = "Importe total: " + String.valueOf(importeTotal) + " €";
+        String totalText = "Importe total: " +  String.format("%.2f",importeTotal) + " €";
         canvas.drawText(totalText, 900, y + 50, descripcion);
 
         pdfDocument.finishPage(page);
 
         // Crear un archivo para el PDF
         // Obtén la ruta del directorio Documents
-        // String directoryPath = Environment.getExternalStorageDirectory().getPath() + "/storage/emulated/0/Documents/";
-        directoryPath = Environment.getExternalStorageDirectory().getPath() + "/Documents/";
+        //directoryPath = Environment.getExternalStorageDirectory().getPath();
+       // directoryPath = Environment.getExternalStorageDirectory().getPath() + "/storage/emulated/0/Documents/";
+       directoryPath = Environment.getExternalStorageDirectory().getPath() + "/Documents/";
 
 // Crea un objeto File con la ruta del directorio
         File directory = new File(directoryPath);
