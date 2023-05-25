@@ -3,6 +3,8 @@ package com.example.myapplication.Vistas;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
@@ -20,6 +22,29 @@ public class PrincipalActivity extends AppCompatActivity {
     private Button btnVarios;
 
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_principal, menu);
+        return true;
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.Login:
+                Intent intent1 = new Intent(PrincipalActivity.this, UsuarioActivity.class);
+                startActivity(intent1);
+                finish();
+                return true;
+            case R.id.Salir:
+                finishAffinity(); // Cierra todas las actividades
+                System.exit(0); // Cierra el proceso de la aplicación
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

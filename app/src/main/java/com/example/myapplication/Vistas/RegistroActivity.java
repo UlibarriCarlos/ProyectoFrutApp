@@ -27,7 +27,6 @@ public class RegistroActivity extends AppCompatActivity {
 
     private EditText etNombreApellidos, etAlias, etDNI, etDireccion, etTelefono, etEmail1, etEmail2, etContraseña1, etContraseña2;
     private Button btnAltaUsuario;
-
     private Boolean comprobarAlias = false;
     private Boolean comprobarDNI = false;
     private Boolean comprobarContraseña = false;
@@ -90,7 +89,7 @@ public class RegistroActivity extends AppCompatActivity {
                 Log.i("Cliente", "Contraseña: " + cliente.getContraseña());
                 Log.i("Cliente", "Estado: " + cliente.getEstado());*/
 
-//Comprobacion si algun campo esta vacio, repetido o ya xiste en la BBDD
+                //Comprobacion si algun campo esta vacio, repetido o ya xiste en la BBDD
                 if (etNombreApellidos.getText().toString().equals("")
                         || etAlias.getText().toString().equals("")
                         || etDireccion.getText().toString().equals("")
@@ -175,14 +174,13 @@ public class RegistroActivity extends AppCompatActivity {
                     } else {
                         tbClientes cliente = new tbClientes();
                         try {
+                            //Si todo esta ok enviamos email Bienvenida
 
-
-                            // Lógica para eliminar el producto de la base de datos y actualizar la lista
-
-                            String destinatario =  etEmail1.getText().toString();  // Reemplaza con el correo electrónico del destinatario
+                            String destinatario = etEmail1.getText().toString();
                             Email enviarCorreo = new Email();
                             boolean correoEnviado = enviarCorreo.enviarCorreo(destinatario);
 
+                            //Comporbamos que el email es real y se puede enviar , asi guardamos cliente.
                             if (correoEnviado) {
                                 //Encriptamos contraseña
                                 String contraseñaEncriptada = ControladorContraseñas.encrypt(etContraseña1.getText().toString());
@@ -205,13 +203,8 @@ public class RegistroActivity extends AppCompatActivity {
                             throw new RuntimeException(e);
                         }
                     }
-
                 }
             }
         });
-
-
     }
-
-
 }

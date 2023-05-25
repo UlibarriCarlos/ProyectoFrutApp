@@ -60,6 +60,12 @@ public class FacturaActivity extends AppCompatActivity {
             " sheets containing Lorem Ipsum passages, and more recently with desktop publishing software\n" +
             " like Aldus PageMaker including versions of Lorem Ipsum.\n";
 
+    private String nombreCliente;
+    private String direccionCliente;
+    private String telefonoCliente;
+    private String emailCliente;
+
+
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -161,10 +167,10 @@ public class FacturaActivity extends AppCompatActivity {
         }
 
         // Obtener los datos del cliente
-        String nombreCliente = cliente.getNombre();
-        String direccionCliente = cliente.getDireccion();
-        String telefonoCliente = cliente.getTelefono();
-        String emailCliente = cliente.getEmail();
+        nombreCliente = cliente.getNombre();
+        direccionCliente = cliente.getDireccion();
+        telefonoCliente = cliente.getTelefono();
+        emailCliente = cliente.getEmail();
 
         // Dibujar los datos del cliente en el PDF
         canvas.drawText("Nombre: " + nombreCliente, 1000, 200, descripcion);
@@ -232,7 +238,7 @@ public class FacturaActivity extends AppCompatActivity {
 
         // Crear un archivo para el PDF
         // Obtén la ruta del directorio Documents
-       // String directoryPath = Environment.getExternalStorageDirectory().getPath() + "/storage/emulated/0/Documents/";
+        // String directoryPath = Environment.getExternalStorageDirectory().getPath() + "/storage/emulated/0/Documents/";
         String directoryPath = Environment.getExternalStorageDirectory().getPath() + "/Documents/";
 
 // Crea un objeto File con la ruta del directorio
@@ -283,7 +289,7 @@ public class FacturaActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         // Lógica para eliminar el producto de la base de datos y actualizar la lista
                         // Enviar el PDF por correo electrónico
-                        String destinatario = "uliferio@gmail.com";  // Reemplaza con el correo electrónico del destinatario
+                        String destinatario = emailCliente;  // Reemplaza con el correo electrónico del destinatario
                         Email enviarCorreo = new Email();
                         boolean correoEnviado = enviarCorreo.enviarCorreo(destinatario);
 

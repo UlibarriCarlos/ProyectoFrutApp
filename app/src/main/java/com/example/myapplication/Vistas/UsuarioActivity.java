@@ -16,7 +16,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.myapplication.Controlador.ControladorContraseñas;
-import com.example.myapplication.Controlador.Email;
 import com.example.myapplication.Modelos.tbClientes;
 import com.example.myapplication.Controlador.UsuarioGlobal;
 import com.example.myapplication.R;
@@ -67,7 +66,7 @@ public class UsuarioActivity extends AppCompatActivity {
         btn_loginUsuario.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Registarmos acciones click en Logcat
+                //Registramos acciones click en Logcat
                 Log.i("LogUsuario", "Boton Login usuario pulsado");
 
                 try {
@@ -101,7 +100,7 @@ public class UsuarioActivity extends AppCompatActivity {
                             startActivity(intent1);
                         } else if (cliente.getNombre().equals(et_nombre.getText().toString()) && cliente.getContraseña().equals(ControladorContraseñas.encrypt(et_contraseña.getText().toString())) && cliente.getEstado() == true) {
 
-                           //Guardo en variable global el nombre del usuario
+                            //Guardo en variable global el nombre del usuario
                             UsuarioGlobal myApp = (UsuarioGlobal) getApplicationContext();
                             myApp.setGlobalString(cliente.getNombre());
                             Intent intent1 = new Intent(UsuarioActivity.this, PrincipalActivity.class);
@@ -116,15 +115,11 @@ public class UsuarioActivity extends AppCompatActivity {
                     }
                 }
 
-
                 if (cliente != null) {
                     // La conexión fue exitosa
-                    //Toast.makeText(UsuarioActivity.this, "Conexión satisfactoria", Toast.LENGTH_LONG).show();
                     Log.v("Conexion", "Conexión satisfactoria");
-
                 } else {
                     // La conexión falló
-                    //Toast.makeText(UsuarioActivity.this, "Conexión Fallida", Toast.LENGTH_LONG).show();
                     Log.v("Conexion", "Conexión fallida");
                 }
 
