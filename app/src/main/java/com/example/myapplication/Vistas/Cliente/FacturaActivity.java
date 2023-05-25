@@ -64,7 +64,7 @@ public class FacturaActivity extends AppCompatActivity {
     private String direccionCliente;
     private String telefonoCliente;
     private String emailCliente;
-
+    private String directoryPath;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -239,7 +239,7 @@ public class FacturaActivity extends AppCompatActivity {
         // Crear un archivo para el PDF
         // Obtén la ruta del directorio Documents
         // String directoryPath = Environment.getExternalStorageDirectory().getPath() + "/storage/emulated/0/Documents/";
-        String directoryPath = Environment.getExternalStorageDirectory().getPath() + "/Documents/";
+        directoryPath = Environment.getExternalStorageDirectory().getPath() + "/Documents/";
 
 // Crea un objeto File con la ruta del directorio
         File directory = new File(directoryPath);
@@ -289,12 +289,18 @@ public class FacturaActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         // Lógica para eliminar el producto de la base de datos y actualizar la lista
                         // Enviar el PDF por correo electrónico
-                        String destinatario = emailCliente;  // Reemplaza con el correo electrónico del destinatario
-                        Email enviarCorreo = new Email();
-                        boolean correoEnviado = enviarCorreo.enviarCorreo(destinatario);
 
+                        Email enviarCorreo = new Email();
+                        String destinatario = emailCliente;  // Reemplaza con el correo electrónico del destinatario
+                        String asunto = "Pedido FrutApp";
+                        String texto = "Su pedido se esta en curso.\n Le avisaremos en breve cuando este listo para recoger.";
+                        String adjuntoRuta = directoryPath + "Ticket.pdf"; // O puedes simplemente omitir el parámetro adjuntoRuta
+
+                        boolean correoEnviado = enviarCorreo.enviarCorreo(destinatario, asunto, texto, adjuntoRuta);
                         if (correoEnviado) {
                             Toast.makeText(FacturaActivity.this, "Correo electrónico enviado", Toast.LENGTH_SHORT).show();
+                            CestaCompraDBHelper dbHelper = new CestaCompraDBHelper(getApplicationContext());
+                            dbHelper.borrarTodosProductos();
                             Intent intent1 = new Intent(FacturaActivity.this, FinCompraActivity.class);
                             startActivity(intent1);
                         } else {

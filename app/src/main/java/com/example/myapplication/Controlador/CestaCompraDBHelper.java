@@ -187,5 +187,14 @@ public class CestaCompraDBHelper extends SQLiteOpenHelper {
 
         return mutableData;
     }
+    public int borrarTodosProductos() {
+        SQLiteDatabase db = getWritableDatabase();
+
+        int count = db.delete(TABLE_NAME, null, null);
+
+        db.close();
+
+        return count;
+    }
 
 }

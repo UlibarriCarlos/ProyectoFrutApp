@@ -18,8 +18,6 @@ import com.example.myapplication.Controlador.ControladorContraseñas;
 import com.example.myapplication.Controlador.Email;
 import com.example.myapplication.Modelos.tbClientes;
 import com.example.myapplication.R;
-import com.example.myapplication.Vistas.Cliente.FacturaActivity;
-import com.example.myapplication.Vistas.Cliente.FinCompraActivity;
 
 import java.sql.SQLException;
 
@@ -61,7 +59,7 @@ public class RegistroActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registro);
 
-        etNombreApellidos = findViewById(R.id.etNombreApellidos);
+        etNombreApellidos = findViewById(R.id.etUsuario);
         etAlias = findViewById(R.id.etAlias);
         etDNI = findViewById(R.id.etDNI);
         etDireccion = findViewById(R.id.etDireccion);
@@ -104,7 +102,7 @@ public class RegistroActivity extends AppCompatActivity {
 
                     try {
                         tbClientes control = null;
-                        if (control.obtenerClientePorNombre(etAlias.getText().toString()) != null) {
+                        if (control.obtenerClienteAlias(etAlias.getText().toString()) != null) {
                             etAlias.setText(null);
                             etAlias.setHintTextColor(Color.RED);
                             etAlias.setHint("Alias ya existe, cambialo");
@@ -178,14 +176,18 @@ public class RegistroActivity extends AppCompatActivity {
 
                             String destinatario = etEmail1.getText().toString();
                             Email enviarCorreo = new Email();
-                            boolean correoEnviado = enviarCorreo.enviarCorreo(destinatario);
+                            // Reemplaza con el correo electrónico del destinatario
+                            String asunto = "Bienvenido FrutApp";
+                            String texto = "Bienvenido a FrutAPP.\n Le agradecemos que confie en nosotros para realizar sus compras.";
+                            String adjuntoRuta =null; // O puedes simplemente omitir el parámetro adjuntoRuta
+                            boolean correoEnviado =  enviarCorreo.enviarCorreo(destinatario, asunto, texto, adjuntoRuta);
 
                             //Comporbamos que el email es real y se puede enviar , asi guardamos cliente.
                             if (correoEnviado) {
                                 //Encriptamos contraseña
                                 String contraseñaEncriptada = ControladorContraseñas.encrypt(etContraseña1.getText().toString());
                                 //Guardamos datos del cliente despues las comprobaciones
-                                cliente.guardar(etAlias.getText().toString(), etDNI.getText().toString(), etDireccion.getText().toString(), etTelefono.getText().toString(), etEmail1.getText().toString(), contraseñaEncriptada);
+                                cliente.guardar(etNombreApellidos.getText().toString(),etAlias.getText().toString(), etDNI.getText().toString(), etDireccion.getText().toString(), etTelefono.getText().toString(), etEmail1.getText().toString(), contraseñaEncriptada);
                                 Toast.makeText(RegistroActivity.this, "Los datos se han guardado correctamente, recibiras email de bienvenida", Toast.LENGTH_LONG).show();
                                 Intent intent1 = new Intent(RegistroActivity.this, UsuarioActivity.class);
                                 startActivity(intent1);

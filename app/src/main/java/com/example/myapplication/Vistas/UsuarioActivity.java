@@ -25,7 +25,7 @@ import java.sql.SQLException;
 
 
 public class UsuarioActivity extends AppCompatActivity {
-    private EditText et_nombre, et_contraseña;
+    private EditText et_alias, et_contraseña;
     private Button btn_loginUsuario;
     private TextView tv_registrarse;
 
@@ -58,7 +58,7 @@ public class UsuarioActivity extends AppCompatActivity {
 
 
         //Login
-        et_nombre = findViewById(R.id.etNombreApellidos);
+        et_alias = findViewById(R.id.etUsuario);
         et_contraseña = findViewById(R.id.etPassword);
         btn_loginUsuario = findViewById(R.id.btnLogin);
         tv_registrarse = findViewById(R.id.tvSignUp);
@@ -71,7 +71,8 @@ public class UsuarioActivity extends AppCompatActivity {
 
                 try {
 
-                    cliente = cliente.obtenerClientePorNombre(et_nombre.getText().toString());
+
+                    cliente = cliente.obtenerClienteAlias(et_alias.getText().toString());
                 } catch (SQLException e) {
                     Log.e("Error onClick btn_loginUsuario", e.toString());
                     throw new RuntimeException(e);
@@ -88,17 +89,17 @@ public class UsuarioActivity extends AppCompatActivity {
                 Log.i("Cliente", "Estado: " + cliente.getEstado());*/
 
                 //Verificacion de usuario
-                if (et_nombre.getText().toString().equals("") || et_contraseña.getText().toString().equals("")) {
+                if (et_alias.getText().toString().equals("") || et_contraseña.getText().toString().equals("")) {
                     Toast.makeText(UsuarioActivity.this, "No has introducido usuario o contraseña", Toast.LENGTH_LONG).show();
                 } else {
                     if (cliente == null) {
                         Toast.makeText(UsuarioActivity.this, "No existe usuario o contraseña mal introducida", Toast.LENGTH_LONG).show();
 
                     } else {
-                        if (cliente.getNombre().equals(et_nombre.getText().toString()) && cliente.getContraseña().equals(ControladorContraseñas.encrypt(et_contraseña.getText().toString())) && et_nombre.getText().toString().equals("admin") && cliente.getContraseña().equals(ControladorContraseñas.encrypt(et_contraseña.getText().toString())) && cliente.getEstado() == true) {
+                        if (cliente.getAlias().equals(et_alias.getText().toString()) && cliente.getContraseña().equals(ControladorContraseñas.encrypt(et_contraseña.getText().toString())) && et_alias.getText().toString().equals("admin") && cliente.getContraseña().equals(ControladorContraseñas.encrypt(et_contraseña.getText().toString())) && cliente.getEstado() == true) {
                             Intent intent1 = new Intent(UsuarioActivity.this, AdministradorActivity.class);
                             startActivity(intent1);
-                        } else if (cliente.getNombre().equals(et_nombre.getText().toString()) && cliente.getContraseña().equals(ControladorContraseñas.encrypt(et_contraseña.getText().toString())) && cliente.getEstado() == true) {
+                        } else if (cliente.getAlias().equals(et_alias.getText().toString()) && cliente.getContraseña().equals(ControladorContraseñas.encrypt(et_contraseña.getText().toString())) && cliente.getEstado() == true) {
 
                             //Guardo en variable global el nombre del usuario
                             UsuarioGlobal myApp = (UsuarioGlobal) getApplicationContext();
@@ -106,7 +107,7 @@ public class UsuarioActivity extends AppCompatActivity {
                             Intent intent1 = new Intent(UsuarioActivity.this, PrincipalActivity.class);
                             startActivity(intent1);
 
-                        } else if (cliente.getNombre().equals(et_nombre.getText().toString()) && cliente.getContraseña().equals(et_contraseña.getText().toString()) && cliente.getEstado() == false) {
+                        } else if (cliente.getAlias().equals(et_alias.getText().toString()) && cliente.getContraseña().equals(et_contraseña.getText().toString()) && cliente.getEstado() == false) {
                             Toast.makeText(UsuarioActivity.this, "Tienes que activar usuario, mira tu correo", Toast.LENGTH_LONG).show();
 
                         } else {

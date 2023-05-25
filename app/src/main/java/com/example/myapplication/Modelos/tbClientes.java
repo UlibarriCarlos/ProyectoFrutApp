@@ -11,6 +11,7 @@ import java.sql.Statement;
 public class tbClientes {
     private int idCliente;
     private String nombreUsuario;
+    private  String Alias;
     private String DNI;
     private String direccion;
     private String telefono;
@@ -21,9 +22,10 @@ public class tbClientes {
     public tbClientes() {
     }
 
-    public tbClientes(int idCliente, String nombreUsuario, String DNI, String direccion, String telefono, String email, String contraseña, boolean estado) {
+    public tbClientes(int idCliente, String nombreUsuario,String Alias, String DNI, String direccion, String telefono, String email, String contraseña, boolean estado) {
         this.idCliente = idCliente;
         this.nombreUsuario = nombreUsuario;
+        this.Alias = Alias;
         this.DNI = DNI;
         this.direccion = direccion;
         this.telefono = telefono;
@@ -48,6 +50,13 @@ public class tbClientes {
         this.nombreUsuario = nombre;
     }
 
+    public String getAlias() {
+        return Alias;
+    }
+
+    public void setAlias(String Alias) {
+        this.Alias = Alias;
+    }
     public String getDNI() {
         return DNI;
     }
@@ -109,6 +118,7 @@ public class tbClientes {
                 cliente = new tbClientes(
                         resultSet.getInt("idCliente"),
                         resultSet.getString("nombreUsuario"),
+                        resultSet.getString("Alias"),
                         resultSet.getString("DNI"),
                         resultSet.getString("direccion"),
                         resultSet.getString("telefono"),
@@ -133,6 +143,7 @@ public class tbClientes {
                     cliente = new tbClientes(
                             resultSet.getInt("idCliente"),
                             resultSet.getString("nombreUsuario"),
+                            resultSet.getString("Alias"),
                             resultSet.getString("DNI"),
                             resultSet.getString("direccion"),
                             resultSet.getString("telefono"),
@@ -159,6 +170,33 @@ public class tbClientes {
                     cliente = new tbClientes(
                             resultSet.getInt("idCliente"),
                             resultSet.getString("nombreUsuario"),
+                            resultSet.getString("Alias"),
+                            resultSet.getString("DNI"),
+                            resultSet.getString("direccion"),
+                            resultSet.getString("telefono"),
+                            resultSet.getString("email"),
+                            resultSet.getString("contraseña"),
+                            resultSet.getBoolean("estado")
+                    );
+                }
+            }
+            ConexionBD.conexionBD().close();
+        } catch (SQLException ex) {
+            throw new SQLException(ex);
+        }
+        return cliente;
+    }
+    public static tbClientes obtenerClienteAlias(String nombreUsuario) throws SQLException {
+        tbClientes cliente = null;
+        String query = "SELECT * FROM tbCliente WHERE Alias = ?";
+        try (Connection connection = ConexionBD.conexionBD(); PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, nombreUsuario);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    cliente = new tbClientes(
+                            resultSet.getInt("idCliente"),
+                            resultSet.getString("nombreUsuario"),
+                            resultSet.getString("Alias"),
                             resultSet.getString("DNI"),
                             resultSet.getString("direccion"),
                             resultSet.getString("telefono"),
@@ -185,6 +223,7 @@ public class tbClientes {
                     cliente = new tbClientes(
                             resultSet.getInt("idCliente"),
                             resultSet.getString("nombreUsuario"),
+                            resultSet.getString("Alias"),
                             resultSet.getString("DNI"),
                             resultSet.getString("direccion"),
                             resultSet.getString("telefono"),
@@ -211,6 +250,7 @@ public class tbClientes {
                     cliente = new tbClientes(
                             resultSet.getInt("idCliente"),
                             resultSet.getString("nombreUsuario"),
+                            resultSet.getString("Alias"),
                             resultSet.getString("DNI"),
                             resultSet.getString("direccion"),
                             resultSet.getString("telefono"),
@@ -228,17 +268,18 @@ public class tbClientes {
     }
 
     // Método para guardar un registro
-    public void guardar(String nombre, String DNI, String direccion, String telefono, String email, String contraseña) throws SQLException {
+    public void guardar(String nombre,String alias, String DNI, String direccion, String telefono, String email, String contraseña) throws SQLException {
 
-        String query = "INSERT INTO tbCliente(nombreUsuario, DNI, direccion, telefono, email, contraseña, estado) VALUES(?,?,?,?,?,?,?)";
+        String query = "INSERT INTO tbCliente(nombreUsuario,Alias, DNI, direccion, telefono, email, contraseña, estado) VALUES(?,?,?,?,?,?,?,?)";
         try (Connection connection = ConexionBD.conexionBD(); PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setString(1, nombre);
-            statement.setString(2, DNI);
-            statement.setString(3, direccion);
-            statement.setString(4, telefono);
-            statement.setString(5, email);
-            statement.setString(6, contraseña);
-            statement.setBoolean(7, true);
+            statement.setString(2, alias);
+            statement.setString(3, DNI);
+            statement.setString(4, direccion);
+            statement.setString(5, telefono);
+            statement.setString(6, email);
+            statement.setString(7, contraseña);
+            statement.setBoolean(8, true);
             statement.executeUpdate();
             ConexionBD.conexionBD().close();
         } catch (SQLException ex) {

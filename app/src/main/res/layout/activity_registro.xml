@@ -6,7 +6,7 @@
     android:layout_height="match_parent">
 
     <EditText
-        android:id="@+id/etNombreApellidos"
+        android:id="@+id/etUsuario"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:autofillHints=""
@@ -34,7 +34,7 @@
         app:layout_constraintBottom_toTopOf="@id/etDNI"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/etNombreApellidos"
+        app:layout_constraintTop_toBottomOf="@id/etUsuario"
         android:autofillHints="" />
 
     <EditText

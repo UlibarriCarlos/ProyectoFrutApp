@@ -4,20 +4,26 @@ import android.util.Log;
 
 import java.util.Properties;
 
+import javax.activation.DataHandler;
 import javax.activation.DataSource;
+import javax.activation.FileDataSource;
+import javax.mail.BodyPart;
 import javax.mail.Message;
 import javax.mail.MessagingException;
+import javax.mail.Multipart;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
 
 public class Email {
 
     private static final String TAG = Email.class.getSimpleName();
 
-    public boolean enviarCorreo(String destinatario) {
+    public boolean enviarCorreo(String destinatario, String asunto, String texto, String adjuntoRuta) {
         String remitente = "carlos@appinformaticas.com";
         String clave = "FrutApp1234";
 
@@ -39,18 +45,36 @@ public class Email {
             message.setFrom(new InternetAddress(remitente));
             message.setRecipients(Message.RecipientType.TO,
                     InternetAddress.parse(destinatario));
-            message.setSubject("Alta en FrutAPP");
-            message.setText("Bienvenido a FrutApp");
+            message.setSubject(asunto);
 
+            // Configurar el contenido del correo
+            MimeBodyPart mimeBodyPart = new MimeBodyPart();
+            mimeBodyPart.setText(texto);
+
+            Multipart multipart = new MimeMultipart();
+            multipart.addBodyPart(mimeBodyPart);
+
+            // Adjuntar archivo, si se proporciona una ruta de adjunto válida
+            if (adjuntoRuta != null && !adjuntoRuta.isEmpty()) {
+                BodyPart adjuntoBodyPart = new MimeBodyPart();
+                DataSource source = new FileDataSource(adjuntoRuta);
+                adjuntoBodyPart.setDataHandler(new DataHandler(source));
+                adjuntoBodyPart.setFileName(source.getName());
+                multipart.addBodyPart(adjuntoBodyPart);
+            }
+
+            message.setContent(multipart);
+
+            // Enviar el correo
             Transport.send(message);
 
             Log.d(TAG, "Correo electrónico enviado a " + destinatario);
 
-            return true; // Devuelve true si el correo electrónico se envió correctamente y así podemos activar la cuenta.
+            return true; // Devuelve true si el correo electrónico se envió correctamente.
 
         } catch (MessagingException e) {
             Log.e(TAG, "Error al enviar el correo electrónico", e);
-            return false; // Devuelve false si hubo un error al enviar el correo electrónico y la cuenta queda desactivada.
+            return false; // Devuelve false si hubo un error al enviar el correo electrónico.
         }
     }
 }
