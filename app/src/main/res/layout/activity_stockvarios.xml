@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Vistas.Cliente.FrutasActivity">
+    tools:context=".Vistas.Cliente.VariosActivity">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/listRecyclerView"
@@ -28,7 +28,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:background="#43A047"
-        android:text="Alta Frutas"
+        android:text="Stock Varios"
         android:textColor="@android:color/white"
         android:textSize="36sp"
         android:textStyle="bold"

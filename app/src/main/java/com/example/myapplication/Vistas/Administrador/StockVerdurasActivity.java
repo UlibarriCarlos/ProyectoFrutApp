@@ -23,16 +23,15 @@ import com.example.myapplication.Vistas.UsuarioActivity;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AltaVerdurasActivity extends AppCompatActivity {
+public class StockVerdurasActivity extends AppCompatActivity {
 
     List<ListElement> elements;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_altaverduras);
+        setContentView(R.layout.activity_stockverduras);
         init();
-
         //vList<tbProducto> productos = tbProducto.obtenerProductos();
         // Crear una instancia de ProductAdapter y pasar la lista de productos
 
@@ -41,7 +40,7 @@ public class AltaVerdurasActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_altafrutas, menu);
+        getMenuInflater().inflate(R.menu.menu_stockverduras, menu);
         return true;
 
     }
@@ -49,20 +48,20 @@ public class AltaVerdurasActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.AltaFrutas:
+            case R.id.Frutas:
                 //Iniciamos la nueva actividad
-                Intent intentFrutas = new Intent(AltaVerdurasActivity.this, FrutasActivity.class);
+                Intent intentFrutas = new Intent(StockVerdurasActivity.this, StockFrutasActivity.class);
                 startActivity(intentFrutas);
                 break;
-            case R.id.AltaVarios:
+            case R.id.Varios:
                 //Iniciamos la nueva actividad
-                Intent intentVarios = new Intent(AltaVerdurasActivity.this, VariosActivity.class);
+                Intent intentVarios = new Intent(StockVerdurasActivity.this, StockVariosActivity.class);
                 startActivity(intentVarios);
 
                 break;
             case R.id.Login:
                 //Iniciamos la nueva actividad
-                Intent intentAnadir = new Intent(AltaVerdurasActivity.this, UsuarioActivity.class);
+                Intent intentAnadir = new Intent(StockVerdurasActivity.this, UsuarioActivity.class);
                 startActivity(intentAnadir);
                 break;
             case R.id.Salir:
@@ -98,7 +97,7 @@ public class AltaVerdurasActivity extends AppCompatActivity {
                 ListElement elementoSeleccionado = elementos.get(position);
 
                 // Abrir el formulario de compra
-                Intent intent = new Intent(AltaVerdurasActivity.this, CestaCompraActvity.class);
+                Intent intent = new Intent(StockVerdurasActivity.this, CestaCompraActvity.class);
                 intent.putExtra("nombreProducto", elementoSeleccionado.getNombreProducto());
                 intent.putExtra("descripcionProducto", elementoSeleccionado.getDescripcion());
                 if (elementoSeleccionado.getEstado()) {

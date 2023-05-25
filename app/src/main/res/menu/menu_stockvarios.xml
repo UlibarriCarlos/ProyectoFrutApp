@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".Vistas.Cliente.FrutasActivity">
+    <item
+        android:id="@+id/Frutas"
+        android:title="Frutas"></item>
+    <item
+        android:id="@+id/Verduras"
+        android:title="Verduras"></item>
+    <item
+        android:id="@+id/Login"
+        android:title="Login"></item>
+    <item
+        android:id="@+id/Salir"
+        android:title="Salir"></item>
+</menu>

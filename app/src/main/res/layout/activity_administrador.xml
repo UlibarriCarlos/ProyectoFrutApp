@@ -28,13 +28,13 @@
         android:id="@+id/btnCompraStock"
         android:layout_width="200dp"
         android:layout_height="80dp"
-        android:text="Compra Stock" />
+        android:text="Stock/\n Compra Almacen " />
 
     <Button
         android:id="@+id/btnAltaProducto"
         android:layout_width="200dp"
         android:layout_height="80dp"
-        android:text="Alta Producto" />
+        android:text="Crear Producto" />
 
     <Button
         android:id="@+id/btnOtros"

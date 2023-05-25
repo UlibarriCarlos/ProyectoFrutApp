@@ -22,25 +22,25 @@
             android:exported="true" />
 
         <activity
-            android:name=".Vistas.Administrador.CompraStockActivity"
+            android:name=".Vistas.Administrador.NuevoProductoActivity"
             android:screenOrientation="portrait"
             android:exported="true" />
         <activity
-            android:name=".Vistas.Administrador.AltaFrutasActivity"
+            android:name=".Vistas.Administrador.StockPrincipalActivity"
             android:screenOrientation="portrait"
             android:exported="true" />
         <activity
-            android:name=".Vistas.Administrador.AltaVerdurasActivity"
+            android:name=".Vistas.Administrador.StockFrutasActivity"
             android:screenOrientation="portrait"
             android:exported="true" />
         <activity
-            android:name=".Vistas.Administrador.AltaVariosActivity"
+            android:name=".Vistas.Administrador.StockVariosActivity"
             android:screenOrientation="portrait"
             android:exported="true" />
         <activity
-        android:name=".Vistas.Administrador.AltaProductoActivity"
+            android:name=".Vistas.Administrador.StockVerdurasActivity"
             android:screenOrientation="portrait"
-        android:exported="true" />
+            android:exported="true" />
         <activity
             android:name=".Vistas.Administrador.OtrosActivity"
             android:screenOrientation="portrait"

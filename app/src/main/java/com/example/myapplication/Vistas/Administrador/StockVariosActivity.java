@@ -16,27 +16,31 @@ import com.example.myapplication.Controlador.ListElement;
 import com.example.myapplication.Modelos.tbProducto;
 import com.example.myapplication.R;
 import com.example.myapplication.Vistas.Cliente.CestaCompraActvity;
+import com.example.myapplication.Vistas.Cliente.FrutasActivity;
+import com.example.myapplication.Vistas.Cliente.VerdurasActivity;
 import com.example.myapplication.Vistas.UsuarioActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class AltaFrutasActivity extends AppCompatActivity {
+public class StockVariosActivity extends AppCompatActivity {
 
     List<ListElement> elements;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_altafrutas);
+        setContentView(R.layout.activity_stockvarios);
         init();
+        //vList<tbProducto> productos = tbProducto.obtenerProductos();
+        // Crear una instancia de ProductAdapter y pasar la lista de productos
 
     }
 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_altafrutas, menu);
+        getMenuInflater().inflate(R.menu.menu_stockvarios, menu);
         return true;
 
     }
@@ -44,19 +48,19 @@ public class AltaFrutasActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.AltaVerduras:
+            case R.id.Frutas:
                 //Iniciamos la nueva actividad
-                Intent intentVerduras = new Intent(AltaFrutasActivity.this, AltaVerdurasActivity.class);
-                startActivity(intentVerduras);
+                Intent intentFrutas = new Intent(StockVariosActivity.this, StockFrutasActivity.class);
+                startActivity(intentFrutas);
                 break;
-            case R.id.AltaVarios:
+            case R.id.Verduras:
                 //Iniciamos la nueva actividad
-                Intent intentVarios = new Intent(AltaFrutasActivity.this, AltaVariosActivity.class);
-                startActivity(intentVarios);
+                Intent intentVerduras = new Intent(StockVariosActivity.this, StockVerdurasActivity.class);
+                startActivity(intentVerduras);
                 break;
             case R.id.Login:
                 //Iniciamos la nueva actividad
-                Intent intentAnadir = new Intent(AltaFrutasActivity.this, UsuarioActivity.class);
+                Intent intentAnadir = new Intent(StockVariosActivity.this, UsuarioActivity.class);
                 startActivity(intentAnadir);
                 break;
             case R.id.Salir:
@@ -69,13 +73,14 @@ public class AltaFrutasActivity extends AppCompatActivity {
 
     public void init() {
 
-        List<tbProducto> listaProductos = new tbProducto().getListaFrutas();
+        List<tbProducto> listaProductos = new tbProducto().getListaVarios();
 
         Log.v("listaProductos", String.valueOf(listaProductos.size()));
 
         List<ListElement> elementos = new ArrayList<>();
         for (tbProducto producto : listaProductos) {
-            elementos.add(new ListElement(producto.getNombreProducto(), producto.getDescripcion(), String.valueOf(producto.getPrecio()), producto.getImagen(), producto.getEstado()));
+            String color = "#03a9f4";
+            elementos.add(new ListElement( producto.getNombreProducto(), producto.getDescripcion(), String.valueOf(producto.getPrecio()),producto.getImagen(),producto.getEstado()));
         }
         ListAdapter listAdapter = new ListAdapter(elementos, this);
         RecyclerView recyclerView = findViewById(R.id.listRecyclerView);
@@ -91,19 +96,18 @@ public class AltaFrutasActivity extends AppCompatActivity {
                 ListElement elementoSeleccionado = elementos.get(position);
 
                 // Abrir el formulario de compra
-                Intent intent = new Intent(AltaFrutasActivity.this, CestaCompraActvity.class);
+                Intent intent = new Intent(StockVariosActivity.this, CestaCompraActvity.class);
                 intent.putExtra("nombreProducto", elementoSeleccionado.getNombreProducto());
                 intent.putExtra("descripcionProducto", elementoSeleccionado.getDescripcion());
                 if (elementoSeleccionado.getEstado()) {
-                    intent.putExtra("precio", elementoSeleccionado.getPrecio() + " €/Kg");
-                } else {
-                    intent.putExtra("precio", elementoSeleccionado.getPrecio() + " €/Und");
+                    intent.putExtra("precio", elementoSeleccionado.getPrecio()+" €/Kg");
+                }else {
+                    intent.putExtra("precio", elementoSeleccionado.getPrecio()+" €/Und");
                 }
                 intent.putExtra("imagen", elementoSeleccionado.getImagen());
 
                 intent.putExtra("estado", elementoSeleccionado.getEstado());
-
-                startActivity(intent);
+                        startActivity(intent);
             }
         });
 
