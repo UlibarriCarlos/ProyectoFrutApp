@@ -26,16 +26,16 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:textColorHint="@android:color/white"
-        android:hint="Alias"
+        android:autofillHints=""
+        android:hint="Usuario"
         android:inputType="textPersonName"
         android:minHeight="48dp"
         android:textColor="@color/white"
+        android:textColorHint="@android:color/white"
         app:layout_constraintBottom_toTopOf="@id/etDNI"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/etUsuario"
-        android:autofillHints="" />
+        app:layout_constraintTop_toBottomOf="@id/etUsuario" />
 
     <EditText
         android:id="@+id/etDNI"
@@ -59,7 +59,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:textColorHint="@android:color/white"
-        android:hint="Direccion"
+        android:hint="Dirección"
         android:inputType="text"
         android:minHeight="48dp"
         android:textColor="@color/white"
@@ -75,7 +75,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:textColorHint="@android:color/white"
-        android:hint="Telefono"
+        android:hint="Teléfono"
         android:inputType="phone"
         android:textColor="@color/white"
         android:minHeight="48dp"

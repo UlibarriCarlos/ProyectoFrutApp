@@ -32,7 +32,7 @@ public class RegistroActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_frutas, menu);
+        getMenuInflater().inflate(R.menu.menu_registro, menu);
         return true;
 
     }
@@ -97,7 +97,7 @@ public class RegistroActivity extends AppCompatActivity {
                         || etEmail2.getText().toString().equals("")
                         || etContraseña2.getText().toString().equals("")
                         || etContraseña1.getText().toString().equals("")) {
-                    Toast.makeText(RegistroActivity.this, "Faltan datos de por introducir", Toast.LENGTH_LONG).show();
+                    Toast.makeText(RegistroActivity.this, "Faltan datos por introducir", Toast.LENGTH_LONG).show();
                 } else {
 
                     try {
@@ -105,7 +105,7 @@ public class RegistroActivity extends AppCompatActivity {
                         if (control.obtenerClienteAlias(etAlias.getText().toString()) != null) {
                             etAlias.setText(null);
                             etAlias.setHintTextColor(Color.RED);
-                            etAlias.setHint("Alias ya existe, cambialo");
+                            etAlias.setHint("Este Alias ya existe.");
                             comprobarAlias = true;
                         } else {
                             etAlias.setTextColor(Color.WHITE);
@@ -114,7 +114,7 @@ public class RegistroActivity extends AppCompatActivity {
                         if (control.obtenerClientePorDNI(etDNI.getText().toString()) != null) {
                             etDNI.setText(null);
                             etDNI.setHintTextColor(Color.RED);
-                            etDNI.setHint("DNI ya existe, cambialo");
+                            etDNI.setHint("Este DNI ya existe");
                             comprobarDNI = true;
                         } else {
                             etAlias.setTextColor(Color.WHITE);
@@ -127,8 +127,8 @@ public class RegistroActivity extends AppCompatActivity {
                                 etEmail2.setText(null);
                                 etEmail1.setHintTextColor(Color.RED);
                                 etEmail2.setHintTextColor(Color.RED);
-                                etEmail1.setHint("Email ya existe, cambialo");
-                                etEmail2.setHint("Email ya existe, cambialo");
+                                etEmail1.setHint("Este Email ya existe");
+                                etEmail2.setHint("Este Email ya existe");
                                 comprobarEmail = true;
                             } else {
                                 etAlias.setTextColor(Color.WHITE);
@@ -151,8 +151,8 @@ public class RegistroActivity extends AppCompatActivity {
                             etContraseña2.setText(null);
                             etContraseña1.setHintTextColor(Color.RED);
                             etContraseña2.setHintTextColor(Color.RED);
-                            etContraseña1.setHint("Las contrseñas no coinciden");
-                            etContraseña2.setHint("Los contrseñas no coinciden");
+                            etContraseña1.setHint("Las contraseñas no coinciden");
+                            etContraseña2.setHint("Las contraseñas no coinciden");
                             comprobarContraseña = true;
                         }
 
@@ -177,8 +177,17 @@ public class RegistroActivity extends AppCompatActivity {
                             String destinatario = etEmail1.getText().toString();
                             Email enviarCorreo = new Email();
                             // Reemplaza con el correo electrónico del destinatario
-                            String asunto = "Bienvenido FrutApp";
-                            String texto = "Bienvenido a FrutAPP.\n Le agradecemos que confie en nosotros para realizar sus compras.";
+                            String asunto = "Bienvenid@ FrutApp";
+                            String texto = "Bienvenid@ a FrutAPP.\n" +
+                                    "\n" +
+                                    "\n" +
+                                    " Tus datos se han guardado correctamente.\n" +
+                                    " Ya puedes ingresar con tu usuario y contraseña para hacer tus próximas compras.\n" +
+                                    " Te agradecemos que confíes en FrutApp para realizar tus compras. Esperamos verte pronto. \n" +
+                                    "\n" +
+                                    "\n" +
+                                    "\n" +
+                                    "Equipo FrutApp";
                             String adjuntoRuta =null; // O puedes simplemente omitir el parámetro adjuntoRuta
                             boolean correoEnviado =  enviarCorreo.enviarCorreo(destinatario, asunto, texto, adjuntoRuta);
 
@@ -188,7 +197,7 @@ public class RegistroActivity extends AppCompatActivity {
                                 String contraseñaEncriptada = ControladorContraseñas.encrypt(etContraseña1.getText().toString());
                                 //Guardamos datos del cliente despues las comprobaciones
                                 cliente.guardar(etNombreApellidos.getText().toString(),etAlias.getText().toString(), etDNI.getText().toString(), etDireccion.getText().toString(), etTelefono.getText().toString(), etEmail1.getText().toString(), contraseñaEncriptada);
-                                Toast.makeText(RegistroActivity.this, "Los datos se han guardado correctamente, recibiras email de bienvenida", Toast.LENGTH_LONG).show();
+                                Toast.makeText(RegistroActivity.this, "Datos guardados correctamente.", Toast.LENGTH_LONG).show();
                                 Intent intent1 = new Intent(RegistroActivity.this, UsuarioActivity.class);
                                 startActivity(intent1);
                             } else {
@@ -197,8 +206,8 @@ public class RegistroActivity extends AppCompatActivity {
                                 etEmail2.setText(null);
                                 etEmail1.setHintTextColor(Color.RED);
                                 etEmail2.setHintTextColor(Color.RED);
-                                etEmail1.setHint("Los emails no validos");
-                                etEmail2.setHint("Los emails no validos");
+                                etEmail1.setHint("Email no válido");
+                                etEmail2.setHint("Email no válidos");
                             }
 
                         } catch (SQLException e) {

@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:fontFamily="sans-serif-black"
-            android:text="Seleciona familia productos \n que deses comprar\n pulsando el boton"
+            android:text="\n Estamos encantados de verte por aquí. \n ¿Qué deseas comprar hoy?"
             android:textAlignment="center"
             android:textAppearance="@style/TextAppearance.AppCompat.Display1"
             android:textColor="@color/black"

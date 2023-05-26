@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:fontFamily="sans-serif-black"
-            android:text="Su pedido ha sido aceptado,\n recibira email confirmacion\n par a pasara recogerlo\n cuando este listo"
+            android:text="Tu pedido ha sido aceptado.\n Recibirás un email de confirmación\n con los datos de tu compra.\n "
             android:textAlignment="center"
             android:textAppearance="@style/TextAppearance.AppCompat.Display1"
             android:textColor="@color/black"

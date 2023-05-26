@@ -50,16 +50,8 @@ import java.sql.SQLException;
 public class FacturaActivity extends AppCompatActivity {
     private PDFView pdfView;
     private Button btnGenerarPdf;
-    private String tituloText = "Su pedido ha sido tramitado, aqui tiene el importe:";
-
-    private String descripcionText = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. \n" +
-            "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, \n" +
-            "when an unknown printer took a galley of type and scrambled it to make a type specimen book. \n" +
-            "It has survived not only five centuries, but also the leap into electronic typesetting, \n" +
-            "remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset\n" +
-            " sheets containing Lorem Ipsum passages, and more recently with desktop publishing software\n" +
-            " like Aldus PageMaker including versions of Lorem Ipsum.\n";
-
+    private String tituloText = "Su pedido ha sido tramitado:\n" +
+            "Gracias por confiar en nosotros.";
     private String nombreCliente;
     private String direccionCliente;
     private String telefonoCliente;
@@ -216,7 +208,7 @@ public class FacturaActivity extends AppCompatActivity {
                 String unidades = estadoTicket ? " Kg" : " Uds";
                 String lineaNombre = nombreTicket;
                 String lineaCantidad = String.valueOf(cantidadTicket) + unidades;
-                String lineaImporte =  String.format("%.2f",importe);
+                String lineaImporte = String.format("%.2f", importe);
 
                 // Dibujar las líneas del producto en el canvas
                 canvas.drawText(lineaNombre, 20, y, descripcion);
@@ -231,7 +223,7 @@ public class FacturaActivity extends AppCompatActivity {
         dbHelper.close();
 
         // Dibujar el importe total
-        String totalText = "Importe total: " +  String.format("%.2f",importeTotal) + " €";
+        String totalText = "Importe total: " + String.format("%.2f", importeTotal) + " €";
         canvas.drawText(totalText, 900, y + 50, descripcion);
 
         pdfDocument.finishPage(page);
@@ -239,8 +231,8 @@ public class FacturaActivity extends AppCompatActivity {
         // Crear un archivo para el PDF
         // Obtén la ruta del directorio Documents
         //directoryPath = Environment.getExternalStorageDirectory().getPath();
-       // directoryPath = Environment.getExternalStorageDirectory().getPath() + "/storage/emulated/0/Documents/";
-       directoryPath = Environment.getExternalStorageDirectory().getPath() + "/Documents/";
+        // directoryPath = Environment.getExternalStorageDirectory().getPath() + "/storage/emulated/0/Documents/";
+        directoryPath = Environment.getExternalStorageDirectory().getPath() + "/Documents/";
 
 // Crea un objeto File con la ruta del directorio
         File directory = new File(directoryPath);
@@ -294,7 +286,8 @@ public class FacturaActivity extends AppCompatActivity {
                         Email enviarCorreo = new Email();
                         String destinatario = emailCliente;  // Reemplaza con el correo electrónico del destinatario
                         String asunto = "Pedido FrutApp";
-                        String texto = "Su pedido se esta en curso.\n Le avisaremos en breve cuando este listo para recoger.";
+                        String texto = "Su pedido está siendo preparado por nuestro equipo.\n " +
+                                " Te avisaremos cuando esté listo para que puedas pasar a recogerlo por nuestra tienda.";
                         String adjuntoRuta = directoryPath + "Ticket.pdf"; // O puedes simplemente omitir el parámetro adjuntoRuta
 
                         boolean correoEnviado = enviarCorreo.enviarCorreo(destinatario, asunto, texto, adjuntoRuta);

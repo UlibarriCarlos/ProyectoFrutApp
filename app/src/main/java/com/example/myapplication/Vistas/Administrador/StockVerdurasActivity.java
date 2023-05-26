@@ -87,10 +87,7 @@ public class StockVerdurasActivity extends AppCompatActivity {
 
         List<ListElement> elementos = new ArrayList<>();
         for (tbProducto producto : listaProductos) {
-            String unidad="";
-            if (producto.getEstado()){ unidad=" Kg";}
-
-            else{ unidad=" Uds";}
+            String unidad = producto.getEstado() ? " Kg" : " Uds";
             elementos.add(new ListElement(producto.getNombreProducto(), String.valueOf(producto.getCantidad())+unidad, String.valueOf(producto.getPrecio()), producto.getImagen(), producto.getEstado()));
         }
          listAdapter = new ListAdapter(elementos, this);

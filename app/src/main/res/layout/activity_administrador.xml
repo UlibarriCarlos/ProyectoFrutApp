@@ -16,7 +16,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:fontFamily="sans-serif-black"
-            android:text="Seleciona opcion \n que deses realizar\n pulsando el boton"
+            android:text="\nSelecciona la opción \n que deseas realizar."
             android:textAlignment="center"
             android:textAppearance="@style/TextAppearance.AppCompat.Display1"
             android:textColor="@color/black"

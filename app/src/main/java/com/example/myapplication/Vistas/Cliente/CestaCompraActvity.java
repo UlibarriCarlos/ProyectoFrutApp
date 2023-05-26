@@ -203,7 +203,7 @@ public class CestaCompraActvity extends AppCompatActivity {
                         CestaCompraDBHelper dbHelper = new CestaCompraDBHelper(getApplicationContext());
                         if (cantidadGuardarCambios <= 0) {
                             AlertDialog.Builder confirmDialogBuilder = new AlertDialog.Builder(CestaCompraActvity.this);
-                            confirmDialogBuilder.setMessage("No has introducido una cantidad válida. Por favor, ingresa una cantidad mayor a cero.");
+                            confirmDialogBuilder.setMessage("No has introducido una cantidad válida. Por favor, ingresa una cantidad válida.");
                             confirmDialogBuilder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {

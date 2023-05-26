@@ -93,7 +93,7 @@ public class UsuarioActivity extends AppCompatActivity {
                     Toast.makeText(UsuarioActivity.this, "No has introducido usuario o contraseña", Toast.LENGTH_LONG).show();
                 } else {
                     if (cliente == null) {
-                        Toast.makeText(UsuarioActivity.this, "No existe usuario o contraseña mal introducida", Toast.LENGTH_LONG).show();
+                        Toast.makeText(UsuarioActivity.this, "Error al introducir usuario o contraseña", Toast.LENGTH_LONG).show();
 
                     } else {
                         if (cliente.getAlias().equals(et_alias.getText().toString()) && cliente.getContraseña().equals(ControladorContraseñas.encrypt(et_contraseña.getText().toString())) && et_alias.getText().toString().equals("admin") && cliente.getContraseña().equals(ControladorContraseñas.encrypt(et_contraseña.getText().toString())) && cliente.getEstado() == true) {
@@ -108,10 +108,10 @@ public class UsuarioActivity extends AppCompatActivity {
                             startActivity(intent1);
 
                         } else if (cliente.getAlias().equals(et_alias.getText().toString()) && cliente.getContraseña().equals(et_contraseña.getText().toString()) && cliente.getEstado() == false) {
-                            Toast.makeText(UsuarioActivity.this, "Tienes que activar usuario, mira tu correo", Toast.LENGTH_LONG).show();
+                            Toast.makeText(UsuarioActivity.this, "Usuario activado.", Toast.LENGTH_LONG).show();
 
                         } else {
-                            Toast.makeText(UsuarioActivity.this, "Usuarioy/o contraseña erroneo", Toast.LENGTH_LONG).show();
+                            Toast.makeText(UsuarioActivity.this, "Usuario y/o contraseña erróneo", Toast.LENGTH_LONG).show();
                         }
                     }
                 }
