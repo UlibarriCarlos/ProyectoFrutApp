@@ -1,12 +1,17 @@
 package com.example.myapplication.Vistas.Administrador;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -25,7 +30,9 @@ import java.util.List;
 
 public class StockVerdurasActivity extends AppCompatActivity {
 
-    List<ListElement> elements;
+    private  List<ListElement> elements;
+    private ListAdapter listAdapter;
+    private  List<ListElement> elementos = new ArrayList<>();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -80,10 +87,13 @@ public class StockVerdurasActivity extends AppCompatActivity {
 
         List<ListElement> elementos = new ArrayList<>();
         for (tbProducto producto : listaProductos) {
-            String color = "#607d8b";
-            elementos.add(new ListElement(producto.getNombreProducto(), producto.getDescripcion(), String.valueOf(producto.getPrecio()),producto.getImagen(),producto.getEstado()));
+            String unidad="";
+            if (producto.getEstado()){ unidad=" Kg";}
+
+            else{ unidad=" Uds";}
+            elementos.add(new ListElement(producto.getNombreProducto(), String.valueOf(producto.getCantidad())+unidad, String.valueOf(producto.getPrecio()), producto.getImagen(), producto.getEstado()));
         }
-        ListAdapter listAdapter = new ListAdapter(elementos, this);
+         listAdapter = new ListAdapter(elementos, this);
         RecyclerView recyclerView = findViewById(R.id.listRecyclerView);
 
         recyclerView.setHasFixedSize(true);
@@ -94,37 +104,59 @@ public class StockVerdurasActivity extends AppCompatActivity {
             @Override
             public void onItemClick(int position) {
                 // Obtener el elemento seleccionado
-                ListElement elementoSeleccionado = elementos.get(position);
+                ListElement elemento = elementos.get(position);
+                String nombreProducto = elemento.nombreProducto;
+                String cantidad = elemento.getDescripcion();
+                String precio = elemento.getPrecio();
 
-                // Abrir el formulario de compra
-                Intent intent = new Intent(StockVerdurasActivity.this, CestaCompraActvity.class);
-                intent.putExtra("nombreProducto", elementoSeleccionado.getNombreProducto());
-                intent.putExtra("descripcionProducto", elementoSeleccionado.getDescripcion());
-                if (elementoSeleccionado.getEstado()) {
-                    intent.putExtra("precio", elementoSeleccionado.getPrecio()+" €/Kg");
-                }else {
-                    intent.putExtra("precio", elementoSeleccionado.getPrecio()+" €/Und");
-                }
-                intent.putExtra("imagen", elementoSeleccionado.getImagen());
-
-                intent.putExtra("estado", elementoSeleccionado.getEstado());
-                startActivity(intent);
+                mostrarDialogoCantidadPrecio(nombreProducto, cantidad, precio);
             }
         });
 
-       /* elements = new ArrayList<>();
-        elements.add(new ListElement("#775447", "", "", ""));
-        elements.add(new ListElement("#607d8b", "", "", ""));
-        elements.add(new ListElement("#03a9f4", "", "", ""));
-        elements.add(new ListElement("#f44336", "", "", ""));
-        elements.add(new ListElement("#009688", "", "", ""));
 
-        ListAdapter listAdapter = new ListAdapter(elements, this);
-        RecyclerView recyclerView = findViewById(R.id.listRecyclerView);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(listAdapter);*/
     }
+    private void mostrarDialogoCantidadPrecio(String nombreProducto, String cantidad, String precio) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(StockVerdurasActivity.this);
+        View dialogView = getLayoutInflater().inflate(R.layout.dialog_stockcompra, null);
+
+        TextView tvNombre = dialogView.findViewById(R.id.tv_nombre);
+        EditText etCantidad = dialogView.findViewById(R.id.et_cantidad);
+        EditText etPrecio = dialogView.findViewById(R.id.et_precio);
+
+        tvNombre.setText(nombreProducto);
+        etCantidad.setText(cantidad);
+        etPrecio.setText(precio);
+
+        builder.setView(dialogView)
+                .setTitle("Modificar cantidad y precio")
+                .setPositiveButton("Guardar", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Obtener los nuevos valores de cantidad y precio
+                        String NombreProducto = tvNombre.getText().toString();
+                        int nuevaCantidad = Integer.parseInt(etCantidad.getText().toString());
+                        Double nuevaPrecio = Double.parseDouble( etPrecio.getText().toString());
+                        // Guardar los nuevos valores en la base de datos del producto
+                        tbProducto cambio =new tbProducto();
+                        cambio.modificarProducto(nuevaCantidad,nuevaPrecio,NombreProducto);
+
+
+                        // Actualizar el adaptador con los datos actualizados
+                        List<tbProducto> listaProductosActualizada = new tbProducto().getListaVerduras();
+                        elementos.clear();
+                        for (tbProducto producto : listaProductosActualizada) {
+                            String unidad = producto.getEstado() ? " Kg" : " Uds";
+                            elementos.add(new ListElement(producto.getNombreProducto(), String.valueOf(producto.getCantidad()) + unidad, String.valueOf(producto.getPrecio()), producto.getImagen(), producto.getEstado()));
+                        }
+                        listAdapter.notifyDataSetChanged();
+
+                    }
+                })
+                .setNegativeButton("Cancelar", null)
+                .create()
+                .show();
+    }
+
 
 
 }

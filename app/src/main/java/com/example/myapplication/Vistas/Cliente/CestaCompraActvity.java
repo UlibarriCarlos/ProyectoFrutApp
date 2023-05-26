@@ -57,7 +57,10 @@ public class CestaCompraActvity extends AppCompatActivity {
     //Variables para Recyclerview
     private String unidades;
     private double importeTotal;
-    List<ListElement> elementos = new ArrayList<>();
+
+    private  List<ListElement> elements;
+    private ListAdapter listAdapter;
+    private  List<ListElement> elementos = new ArrayList<>();
 
     private int id;
     private String nombreTicket;
@@ -123,13 +126,13 @@ public class CestaCompraActvity extends AppCompatActivity {
                     cursor = dbHelper.getProductoCantidad(nombre);
 
                     if (cursor != null && cursor.moveToFirst()) {
-                        int cantidadPrueba = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_CANTIDAD));
+                        int cantidadInterna = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_CANTIDAD));
                         cursor.close();
 
-                        // Hacer algo con la cantidad del producto obtenida
-                        dbHelper.actualizarCantidad(nombre, cantidad + cantidadPrueba);
+                        // Actualizar cantidad del producto obtenida +cantidad columna
+                        dbHelper.actualizarCantidad(nombre, cantidad + cantidadInterna);
                     } else {
-                        // El producto no existe en la base de datos
+
                         // Insertar el nuevo producto en la base de datos
                         newRowId = dbHelper.insertProducto(nombre, precio, cantidad, imagen, estado);
                     }
@@ -152,7 +155,7 @@ public class CestaCompraActvity extends AppCompatActivity {
         });
         builder.show();
 
-        ListAdapter listAdapter = new ListAdapter(elementos, this);
+         listAdapter = new ListAdapter(elementos, this);
         RecyclerView recyclerView = findViewById(R.id.listRecyclerView);
 
         recyclerView.setHasFixedSize(true);
@@ -198,7 +201,7 @@ public class CestaCompraActvity extends AppCompatActivity {
                         }
                         String nombreGuardarCambios = (String) nombreText.getText();
                         CestaCompraDBHelper dbHelper = new CestaCompraDBHelper(getApplicationContext());
-                        if (cantidadGuardarCambios >= 0) {
+                        if (cantidadGuardarCambios <= 0) {
                             AlertDialog.Builder confirmDialogBuilder = new AlertDialog.Builder(CestaCompraActvity.this);
                             confirmDialogBuilder.setMessage("No has introducido una cantidad válida. Por favor, ingresa una cantidad mayor a cero.");
                             confirmDialogBuilder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
@@ -214,6 +217,7 @@ public class CestaCompraActvity extends AppCompatActivity {
                         } else {
                             // Realizar la lógica para guardar los cambios en la base de datos y actualizar la lista
                             dbHelper.actualizarCantidad(nombreGuardarCambios, cantidadGuardarCambios);
+                            refresca();
                         }
                     }
                 }).setNegativeButton("Eliminar producto", new DialogInterface.OnClickListener() {
@@ -229,6 +233,7 @@ public class CestaCompraActvity extends AppCompatActivity {
                                 String nombreEliminarProducto = (String) nombreText.getText();
                                 CestaCompraDBHelper dbHelper = new CestaCompraDBHelper(getApplicationContext());
                                 dbHelper.borrarProductoPorNombre(nombreEliminarProducto);
+                                refresca();
                                 dialog.dismiss();
                             }
                         }).setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -306,7 +311,7 @@ public class CestaCompraActvity extends AppCompatActivity {
         // Obtener productos de la base de datos
         cursor = dbHelper.getAllProductosLive().getValue();
 
-
+        elementos.clear();
         importeTotal = 0;
         // Mostrar los productos
         if (cursor.moveToFirst()) {
@@ -338,6 +343,14 @@ public class CestaCompraActvity extends AppCompatActivity {
 
         cursor.close();
         dbHelper.close();
+
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                listAdapter.notifyDataSetChanged();
+            }
+        });
+
     }
 
     @SuppressLint("Range")

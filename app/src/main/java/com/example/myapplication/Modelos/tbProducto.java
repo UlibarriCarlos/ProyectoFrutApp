@@ -147,7 +147,7 @@ public class tbProducto {
 
         try {
             cn = ConexionBD.conexionBD();
-            pst = cn.prepareStatement("SELECT * FROM tbProducto WHERE idCategoria = 1");
+            pst = cn.prepareStatement("SELECT * FROM tbProducto WHERE idCategoria = 1 AND stock > 0");
             rs = pst.executeQuery();
             while (rs.next()) {
                 tbProducto producto = new tbProducto(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getString(4), rs.getDouble(5), rs.getInt(6), rs.getString(7), rs.getString(8), rs.getBoolean(9));
@@ -175,7 +175,7 @@ public class tbProducto {
 
         try {
             cn = ConexionBD.conexionBD();
-            pst = cn.prepareStatement("SELECT * FROM tbProducto WHERE idCategoria = 2");
+            pst = cn.prepareStatement("SELECT * FROM tbProducto WHERE idCategoria = 2 AND stock > 0");
             rs = pst.executeQuery();
             while (rs.next()) {
                 tbProducto producto = new tbProducto(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getString(4), rs.getDouble(5), rs.getInt(6), rs.getString(7), rs.getString(8), rs.getBoolean(9));
@@ -202,7 +202,7 @@ public class tbProducto {
 
         try {
             cn = ConexionBD.conexionBD();
-            pst = cn.prepareStatement("SELECT * FROM tbProducto WHERE idCategoria = 3");
+            pst = cn.prepareStatement("SELECT * FROM tbProducto WHERE idCategoria = 3 AND stock > 0");
             rs = pst.executeQuery();
             while (rs.next()) {
                 tbProducto producto = new tbProducto(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getString(4), rs.getDouble(5), rs.getInt(6), rs.getString(7), rs.getString(8), rs.getBoolean(9));
@@ -306,6 +306,31 @@ public class tbProducto {
             throw new SQLException(ex);
         }
     }
+
+    public void modificarProducto( int nuevaCantidad, double nuevoPrecio,String nombreProducto) {
+        Connection cn = null;
+        PreparedStatement pst = null;
+
+        try {
+            cn = ConexionBD.conexionBD();
+            pst = cn.prepareStatement("UPDATE tbProducto SET stock = ?, precio_Venta = ? WHERE nombre = ?");
+
+            pst.setInt(1, nuevaCantidad);
+            pst.setDouble(2, nuevoPrecio);
+            pst.setString(3, nombreProducto);
+            pst.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (pst != null) pst.close();
+                if (cn != null) cn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
 
 
 }
