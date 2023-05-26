@@ -21,7 +21,7 @@
         <activity
             android:name=".Vistas.Cliente.FinCompraActivity"
             android:screenOrientation="portrait"
-            android:exported="true" />
+                    android:exported="true" />
 
         <activity
             android:name=".Vistas.Administrador.NuevoProductoActivity"

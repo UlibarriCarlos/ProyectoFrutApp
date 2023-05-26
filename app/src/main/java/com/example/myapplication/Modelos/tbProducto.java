@@ -132,6 +132,7 @@ public class tbProducto {
                 if (rs != null) rs.close();
                 if (pst != null) pst.close();
                 if (cn != null) cn.close();
+                ConexionBD.conexionBD().close();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -160,6 +161,7 @@ public class tbProducto {
                 if (rs != null) rs.close();
                 if (pst != null) pst.close();
                 if (cn != null) cn.close();
+                ConexionBD.conexionBD().close();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -188,6 +190,7 @@ public class tbProducto {
                 if (rs != null) rs.close();
                 if (pst != null) pst.close();
                 if (cn != null) cn.close();
+                ConexionBD.conexionBD().close();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -215,6 +218,7 @@ public class tbProducto {
                 if (rs != null) rs.close();
                 if (pst != null) pst.close();
                 if (cn != null) cn.close();
+                ConexionBD.conexionBD().close();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -243,6 +247,7 @@ public class tbProducto {
                 if (rs != null) rs.close();
                 if (pst != null) pst.close();
                 if (cn != null) cn.close();
+                ConexionBD.conexionBD().close();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
