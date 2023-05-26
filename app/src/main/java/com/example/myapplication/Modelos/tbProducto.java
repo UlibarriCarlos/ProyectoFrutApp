@@ -325,11 +325,45 @@ public class tbProducto {
             try {
                 if (pst != null) pst.close();
                 if (cn != null) cn.close();
+                ConexionBD.conexionBD().close();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
         }
     }
+    public void crearProductoNuevo(int nuevoCategoria, String nuevoCodigoTienda, String nuevoNombreProducto, double nuevoPrecio, int nuevoCantidad, String nuevoDescripcion, boolean nuevoEstado ) {
+
+        // Guardar el nuevo producto en la base de datos
+        Connection cn = null;
+        PreparedStatement pst = null;
+
+        try {
+            cn = ConexionBD.conexionBD();
+            pst = cn.prepareStatement("INSERT INTO tbProducto (idCategoria, codigoTienda, nombre, precio_Venta, stock, descripcion, imagen, estado) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+
+            pst.setInt(1, nuevoCategoria);
+            pst.setString(2, nuevoCodigoTienda);
+            pst.setString(3, nuevoNombreProducto);
+            pst.setDouble(4, nuevoPrecio);
+            pst.setInt(5, nuevoCantidad);
+            pst.setString(6, nuevoDescripcion);
+            pst.setString(7, "verduras");
+            pst.setBoolean(8, nuevoEstado);
+
+            pst.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (pst != null) pst.close();
+                if (cn != null) cn.close();
+                ConexionBD.conexionBD().close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
 
 
 

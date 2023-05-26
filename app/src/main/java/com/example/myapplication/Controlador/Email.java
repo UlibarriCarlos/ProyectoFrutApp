@@ -24,8 +24,8 @@ public class Email {
     private static final String TAG = Email.class.getSimpleName();
 
     public boolean enviarCorreo(String destinatario, String asunto, String texto, String adjuntoRuta) {
-        String remitente = "carlos@appinformaticas.com";
-        String clave = "FrutApp1234";
+        String remitente = "frutapp@appinformaticas.com";
+        String clave = "FrutApp2023!";
 
         Properties props = new Properties();
         props.put("mail.smtp.auth", "true");

@@ -64,7 +64,7 @@ public class AdministradorActivity extends AppCompatActivity {
         btnAltaProducto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent2 = new Intent(AdministradorActivity.this, StockPrincipalActivity.class);
+                Intent intent2 = new Intent(AdministradorActivity.this, NuevoProductoActivity.class);
                 startActivity(intent2);
             }
         });
