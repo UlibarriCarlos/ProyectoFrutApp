@@ -20,6 +20,7 @@ import com.example.myapplication.Modelos.tbClientes;
 import com.example.myapplication.Controlador.UsuarioGlobal;
 import com.example.myapplication.R;
 import com.example.myapplication.Vistas.Administrador.AdministradorActivity;
+import com.example.myapplication.Vistas.Cliente.PrincipalActivity;
 
 import java.sql.SQLException;
 

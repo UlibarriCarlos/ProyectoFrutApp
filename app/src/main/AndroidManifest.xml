@@ -60,7 +60,7 @@
             android:screenOrientation="portrait"
             android:exported="true" />
         <activity
-            android:name=".Vistas.PrincipalActivity"
+            android:name=".Vistas.Cliente.PrincipalActivity"
             android:screenOrientation="portrait"
             android:exported="true" />
         <activity

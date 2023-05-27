@@ -38,7 +38,6 @@ import com.example.myapplication.Controlador.Email;
 import com.example.myapplication.Modelos.tbClientes;
 import com.example.myapplication.Controlador.UsuarioGlobal;
 import com.example.myapplication.R;
-import com.example.myapplication.Vistas.PrincipalActivity;
 import com.example.myapplication.Vistas.UsuarioActivity;
 import com.github.barteksc.pdfviewer.PDFView;
 
@@ -286,8 +285,11 @@ public class FacturaActivity extends AppCompatActivity {
                         Email enviarCorreo = new Email();
                         String destinatario = emailCliente;  // Reemplaza con el correo electrónico del destinatario
                         String asunto = "Pedido FrutApp";
-                        String texto = "Su pedido está siendo preparado por nuestro equipo.\n " +
-                                " Te avisaremos cuando esté listo para que puedas pasar a recogerlo por nuestra tienda.";
+                        String texto = "Tu pedido está siendo preparado por nuestro equipo.\n " +
+                                "Te avisaremos cuando esté listo para que puedas pasar a recogerlo por nuestra tienda.\n" +
+                                "\n" +
+                                "\n" +
+                                "Atentamente, equipo FrutApp.";
                         String adjuntoRuta = directoryPath + "Ticket.pdf"; // O puedes simplemente omitir el parámetro adjuntoRuta
 
                         boolean correoEnviado = enviarCorreo.enviarCorreo(destinatario, asunto, texto, adjuntoRuta);

@@ -181,13 +181,13 @@ public class RegistroActivity extends AppCompatActivity {
                             String texto = "Bienvenid@ a FrutAPP.\n" +
                                     "\n" +
                                     "\n" +
-                                    " Tus datos se han guardado correctamente.\n" +
-                                    " Ya puedes ingresar con tu usuario y contraseña para hacer tus próximas compras.\n" +
-                                    " Te agradecemos que confíes en FrutApp para realizar tus compras. Esperamos verte pronto. \n" +
+                                    "Tus datos se han guardado correctamente.\n" +
+                                    "Ya puedes ingresar con tu usuario y contraseña para hacer tu próximo pedido.\n" +
+                                    "Te agradecemos que confíes en FrutApp para realizar tus compras. Esperamos verte pronto. \n" +
                                     "\n" +
                                     "\n" +
                                     "\n" +
-                                    "Equipo FrutApp";
+                                    "Atentamente, equipo FrutApp";
                             String adjuntoRuta =null; // O puedes simplemente omitir el parámetro adjuntoRuta
                             boolean correoEnviado =  enviarCorreo.enviarCorreo(destinatario, asunto, texto, adjuntoRuta);
 

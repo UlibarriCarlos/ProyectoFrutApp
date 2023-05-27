@@ -1,4 +1,4 @@
-package com.example.myapplication.Vistas;
+package com.example.myapplication.Vistas.Cliente;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -12,9 +12,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.myapplication.R;
-import com.example.myapplication.Vistas.Cliente.FrutasActivity;
-import com.example.myapplication.Vistas.Cliente.VariosActivity;
-import com.example.myapplication.Vistas.Cliente.VerdurasActivity;
+import com.example.myapplication.Vistas.UsuarioActivity;
 
 public class PrincipalActivity extends AppCompatActivity {
     private Button btnFrutas;
