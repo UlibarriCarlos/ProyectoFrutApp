@@ -49,8 +49,7 @@ import java.sql.SQLException;
 public class FacturaActivity extends AppCompatActivity {
     private PDFView pdfView;
     private Button btnGenerarPdf;
-    private String tituloText = "Su pedido ha sido tramitado:\n" +
-            "Gracias por confiar en nosotros.";
+    private String tituloText = "Su pedido ha sido tramitado:";
     private String nombreCliente;
     private String direccionCliente;
     private String telefonoCliente;
