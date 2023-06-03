@@ -16,23 +16,18 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.LiveData;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.myapplication.Controlador.CestaCompraDBHelper;
 import com.example.myapplication.Controlador.ListAdapter;
 import com.example.myapplication.Controlador.ListElement;
 import com.example.myapplication.R;
 import com.example.myapplication.Vistas.UsuarioActivity;
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Observer;
 
 public class CestaCompraActvity extends AppCompatActivity {
 
@@ -79,7 +74,7 @@ public class CestaCompraActvity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cestacompra);
 
-        //Obener Boton
+        //Obtener Boton
         btnFactura = findViewById(R.id.btnFactura);
 
 
@@ -170,17 +165,17 @@ public class CestaCompraActvity extends AppCompatActivity {
                 double precio = Double.parseDouble(elementos.get(position).getPrecio());
                 String cantidad = null;
 
-// Crear el cuadro de diálogo y obtener el layout personalizado
+                // Cuadro de diálogo y obtener el layout personalizado
                 LayoutInflater inflater = LayoutInflater.from(CestaCompraActvity.this);
                 View dialogView = inflater.inflate(R.layout.dialog_compra, null);
 
-// Obtener las vistas del layout personalizado
+                // Obtener las vistas del layout personalizado
                 nombreText = dialogView.findViewById(R.id.tv_nombre);
                 descripcionText = dialogView.findViewById(R.id.tv_descripcion);
                 precioText = dialogView.findViewById(R.id.tv_precio);
                 cantidadEditText = dialogView.findViewById(R.id.et_cantidad);
 
-// Configurar el contenido de las vistas con los datos del producto
+                // Configurar el contenido de las vistas con los datos del producto
                 nombreText.setText(nombre);
                 descripcionText.setText(descripcion);
                 precioText.setText(String.format("%.2f €", precio));
@@ -207,7 +202,7 @@ public class CestaCompraActvity extends AppCompatActivity {
                             confirmDialogBuilder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    // No realizar ninguna acción adicional
+
                                     dialog.dismiss();
                                 }
                             });
@@ -215,7 +210,8 @@ public class CestaCompraActvity extends AppCompatActivity {
                             AlertDialog confirmDialog = confirmDialogBuilder.create();
                             confirmDialog.show();
                         } else {
-                            // Realizar la lógica para guardar los cambios en la base de datos y actualizar la lista
+
+                            //Guarda los cambios en la base de datos y actualizar la lista
                             dbHelper.actualizarCantidad(nombreGuardarCambios, cantidadGuardarCambios);
                             refresca();
                         }
@@ -223,13 +219,15 @@ public class CestaCompraActvity extends AppCompatActivity {
                 }).setNegativeButton("Eliminar producto", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        // Lógica para eliminar el producto de la base de datos y actualizar la lista
+
+                        //Elimina el producto de la base de datos y actualizar la lista
                         AlertDialog.Builder confirmDialogBuilder = new AlertDialog.Builder(CestaCompraActvity.this);
                         confirmDialogBuilder.setMessage("¿Estás seguro de que quieres eliminar este producto?");
                         confirmDialogBuilder.setPositiveButton("Sí", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                // Lógica para eliminar el producto de la base de datos y actualizar la lista
+
+                                // Elimina el producto de la base de datos y actualizar la lista
                                 String nombreEliminarProducto = (String) nombreText.getText();
                                 CestaCompraDBHelper dbHelper = new CestaCompraDBHelper(getApplicationContext());
                                 dbHelper.borrarProductoPorNombre(nombreEliminarProducto);
@@ -274,23 +272,18 @@ public class CestaCompraActvity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.Frutas:
-                //Iniciamos la nueva actividad
                 Intent intentFrutas = new Intent(CestaCompraActvity.this, FrutasActivity.class);
                 startActivity(intentFrutas);
                 break;
             case R.id.Verduras:
-                //Iniciamos la nueva actividad
                 Intent intentVerduras = new Intent(CestaCompraActvity.this, VerdurasActivity.class);
                 startActivity(intentVerduras);
                 break;
             case R.id.Varios:
-                //Iniciamos la nueva actividad
-
                 Intent intentVarios = new Intent(CestaCompraActvity.this, VariosActivity.class);
                 startActivity(intentVarios);
                 break;
             case R.id.Login:
-                //Iniciamos la nueva actividad
                 Intent intentAnadir = new Intent(CestaCompraActvity.this, UsuarioActivity.class);
                 startActivity(intentAnadir);
                 break;
@@ -307,10 +300,8 @@ public class CestaCompraActvity extends AppCompatActivity {
 
         CestaCompraDBHelper dbHelper = new CestaCompraDBHelper(getApplicationContext());
 
-
         // Obtener productos de la base de datos
         cursor = dbHelper.getAllProductosLive().getValue();
-
         elementos.clear();
         importeTotal = 0;
         // Mostrar los productos
@@ -322,10 +313,8 @@ public class CestaCompraActvity extends AppCompatActivity {
                 imagenTicket = cursor.getString(cursor.getColumnIndex(CestaCompraDBHelper.COLUMN_IMAGEN));
                 estadoTicket = cursor.getInt(cursor.getColumnIndex(CestaCompraDBHelper.COLUMN_ESTADO)) == 1;
                 cantidadTicket = cursor.getDouble(cursor.getColumnIndex(COLUMN_CANTIDAD));
-
                 //En el log
                 Log.d("CestaCompraActivity", "Producto: " + id + " " + nombreTicket + " " + precioTicket + " " + imagenTicket + " " + estadoTicket + " " + cantidadTicket);
-
                 if (estadoTicket) {
                     unidades = " Kg";
                 } else {
@@ -339,11 +328,8 @@ public class CestaCompraActvity extends AppCompatActivity {
         }
         txtImporteTotal = findViewById(R.id.txtImporteTotal);
         txtImporteTotal.setText(String.format("%.2f €", importeTotal));
-        // Cerrar el cursor y el dbHelper
-
         cursor.close();
         dbHelper.close();
-
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -373,7 +359,6 @@ public class CestaCompraActvity extends AppCompatActivity {
                 estadoTicket = cursor.getInt(cursor.getColumnIndex(CestaCompraDBHelper.COLUMN_ESTADO)) == 1;
                 cantidadTicket = cursor.getDouble(cursor.getColumnIndex(CestaCompraDBHelper.COLUMN_CANTIDAD));
 
-                //En el log
                 Log.d("CestaCompraActivity", "Producto: " + id + " " + nombreTicket + " " + precioTicket + " " + imagenTicket + " " + estadoTicket + " " + cantidadTicket);
 
                 if (estadoTicket) {
@@ -390,7 +375,6 @@ public class CestaCompraActvity extends AppCompatActivity {
         txtImporteTotal = findViewById(R.id.txtImporteTotal);
         txtImporteTotal.setText(String.valueOf(importeTotal + " €"));
 
-        // Cerrar el cursor y el dbHelper
         cursor.close();
         dbHelper.close();
     }

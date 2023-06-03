@@ -11,17 +11,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.example.myapplication.Controlador.ControladorContraseñas;
 import com.example.myapplication.Modelos.tbClientes;
 import com.example.myapplication.Controlador.UsuarioGlobal;
 import com.example.myapplication.R;
 import com.example.myapplication.Vistas.Administrador.AdministradorActivity;
 import com.example.myapplication.Vistas.Cliente.PrincipalActivity;
-
 import java.sql.SQLException;
 
 
@@ -67,7 +64,6 @@ public class UsuarioActivity extends AppCompatActivity {
         btn_loginUsuario.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Registramos acciones click en Logcat
                 Log.i("LogUsuario", "Boton Login usuario pulsado");
 
                 try {

@@ -9,23 +9,16 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
-
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.myapplication.Controlador.ListAdapter;
 import com.example.myapplication.Controlador.ListElement;
-import com.example.myapplication.Modelos.tbClientes;
 import com.example.myapplication.Modelos.tbProducto;
 import com.example.myapplication.R;
-import com.example.myapplication.Vistas.Cliente.CestaCompraActvity;
-import com.example.myapplication.Vistas.Cliente.VariosActivity;
-import com.example.myapplication.Vistas.Cliente.VerdurasActivity;
 import com.example.myapplication.Vistas.UsuarioActivity;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,18 +46,20 @@ public class StockFrutasActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case R.id.Administrador:
+                Intent intent0 = new Intent(StockFrutasActivity.this, AdministradorActivity.class);
+                startActivity(intent0);
+                finish();
+                return true;
             case R.id.Verduras:
-                //Iniciamos la nueva actividad
                 Intent intentVerduras = new Intent(StockFrutasActivity.this, StockVerdurasActivity.class);
                 startActivity(intentVerduras);
                 break;
             case R.id.Varios:
-                //Iniciamos la nueva actividad
                 Intent intentVarios = new Intent(StockFrutasActivity.this, StockVariosActivity.class);
                 startActivity(intentVarios);
                 break;
             case R.id.Login:
-                //Iniciamos la nueva actividad
                 Intent intentAnadir = new Intent(StockFrutasActivity.this, UsuarioActivity.class);
                 startActivity(intentAnadir);
                 break;

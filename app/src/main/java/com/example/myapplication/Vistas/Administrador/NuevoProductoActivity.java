@@ -7,13 +7,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 import android.widget.ToggleButton;
-
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.example.myapplication.Modelos.tbProducto;
 import com.example.myapplication.R;
 import com.example.myapplication.Vistas.UsuarioActivity;
@@ -38,6 +35,11 @@ public class NuevoProductoActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case R.id.Administrador:
+                Intent intent0 = new Intent(NuevoProductoActivity.this, AdministradorActivity.class);
+                startActivity(intent0);
+                finish();
+                return true;
             case R.id.Login:
                 Intent intent1 = new Intent(NuevoProductoActivity.this, UsuarioActivity.class);
                 startActivity(intent1);

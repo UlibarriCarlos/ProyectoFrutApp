@@ -3,6 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".Vistas.Cliente.FrutasActivity">
     <item
+        android:id="@+id/Administrador"
+        android:title="Menu Admin"></item>
+    <item
         android:id="@+id/Verduras"
         android:title="Verduras"></item>
     <item

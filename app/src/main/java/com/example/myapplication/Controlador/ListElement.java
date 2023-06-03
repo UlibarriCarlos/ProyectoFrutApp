@@ -1,7 +1,4 @@
 package com.example.myapplication.Controlador;
-
-import android.graphics.drawable.Drawable;
-
 public class ListElement {
     public String nombreProducto;
     public String Descripcion;

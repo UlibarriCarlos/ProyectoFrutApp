@@ -2,9 +2,7 @@ package com.example.myapplication.Vistas.Cliente;
 
 import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
-
 import static com.example.myapplication.Controlador.CestaCompraDBHelper.COLUMN_CANTIDAD;
-
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -26,13 +24,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-
 import com.example.myapplication.Controlador.CestaCompraDBHelper;
 import com.example.myapplication.Controlador.Email;
 import com.example.myapplication.Modelos.tbClientes;
@@ -40,7 +36,6 @@ import com.example.myapplication.Controlador.UsuarioGlobal;
 import com.example.myapplication.R;
 import com.example.myapplication.Vistas.UsuarioActivity;
 import com.github.barteksc.pdfviewer.PDFView;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -84,22 +79,18 @@ public class FacturaActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.Frutas:
-                //Iniciamos la nueva actividad
                 Intent intentFrutas = new Intent(FacturaActivity.this, VerdurasActivity.class);
                 startActivity(intentFrutas);
                 break;
             case R.id.Verduras:
-                //Iniciamos la nueva actividad
                 Intent intentVerduras = new Intent(FacturaActivity.this, VerdurasActivity.class);
                 startActivity(intentVerduras);
                 break;
             case R.id.Varios:
-                //Iniciamos la nueva actividad
                 Intent intentVarios = new Intent(FacturaActivity.this, VariosActivity.class);
                 startActivity(intentVarios);
                 break;
             case R.id.Login:
-                //Iniciamos la nueva actividad
                 Intent intentAnadir = new Intent(FacturaActivity.this, UsuarioActivity.class);
                 startActivity(intentAnadir);
                 break;
@@ -148,6 +139,7 @@ public class FacturaActivity extends AppCompatActivity {
         tbClientes control = null;
         UsuarioGlobal myApp = (UsuarioGlobal) getApplicationContext();
         String NombreUsuario = myApp.getGlobalString();
+
         // Obtener el cliente
         tbClientes cliente = null;
         try {
@@ -271,14 +263,14 @@ public class FacturaActivity extends AppCompatActivity {
         btnGenerarPdf.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-// Crear el cuadro de diálogo con el layout personalizado
+
                 // Crear el cuadro de diálogo y obtener el layout personalizado
                 AlertDialog.Builder confirmDialogBuilder = new AlertDialog.Builder(FacturaActivity.this);
                 confirmDialogBuilder.setMessage("¿Estás seguro de que quieres confirmar este pedido?");
                 confirmDialogBuilder.setPositiveButton("Sí", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        // Lógica para eliminar el producto de la base de datos y actualizar la lista
+
                         // Enviar el PDF por correo electrónico
 
                         Email enviarCorreo = new Email();

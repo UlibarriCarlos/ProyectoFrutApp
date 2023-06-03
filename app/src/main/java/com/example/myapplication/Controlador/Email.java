@@ -47,14 +47,14 @@ public class Email {
                     InternetAddress.parse(destinatario));
             message.setSubject(asunto);
 
-            // Configurar el contenido del correo
+            // Configuraracion contenido correo
             MimeBodyPart mimeBodyPart = new MimeBodyPart();
             mimeBodyPart.setText(texto);
 
             Multipart multipart = new MimeMultipart();
             multipart.addBodyPart(mimeBodyPart);
 
-            // Adjuntar archivo, si se proporciona una ruta de adjunto válida
+            // Ruta de adjunto válida
             if (adjuntoRuta != null && !adjuntoRuta.isEmpty()) {
                 BodyPart adjuntoBodyPart = new MimeBodyPart();
                 DataSource source = new FileDataSource(adjuntoRuta);

@@ -1,9 +1,7 @@
 package com.example.myapplication.Vistas.Administrador;
 
 import android.os.Bundle;
-
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.example.myapplication.R;
 
 public class OtrosActivity extends AppCompatActivity {

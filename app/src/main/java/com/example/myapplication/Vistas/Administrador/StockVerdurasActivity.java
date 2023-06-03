@@ -20,9 +20,6 @@ import com.example.myapplication.Controlador.ListAdapter;
 import com.example.myapplication.Controlador.ListElement;
 import com.example.myapplication.Modelos.tbProducto;
 import com.example.myapplication.R;
-import com.example.myapplication.Vistas.Cliente.CestaCompraActvity;
-import com.example.myapplication.Vistas.Cliente.FrutasActivity;
-import com.example.myapplication.Vistas.Cliente.VariosActivity;
 import com.example.myapplication.Vistas.UsuarioActivity;
 
 import java.util.ArrayList;
@@ -30,9 +27,8 @@ import java.util.List;
 
 public class StockVerdurasActivity extends AppCompatActivity {
 
-    private  List<ListElement> elements;
     private ListAdapter listAdapter;
-    private  List<ListElement> elementos = new ArrayList<>();
+    private List<ListElement> elementos = new ArrayList<>();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -55,19 +51,21 @@ public class StockVerdurasActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case R.id.Administrador:
+                Intent intent0 = new Intent(StockVerdurasActivity.this, AdministradorActivity.class);
+                startActivity(intent0);
+                finish();
+                return true;
             case R.id.Frutas:
-                //Iniciamos la nueva actividad
                 Intent intentFrutas = new Intent(StockVerdurasActivity.this, StockFrutasActivity.class);
                 startActivity(intentFrutas);
                 break;
             case R.id.Varios:
-                //Iniciamos la nueva actividad
                 Intent intentVarios = new Intent(StockVerdurasActivity.this, StockVariosActivity.class);
                 startActivity(intentVarios);
 
                 break;
             case R.id.Login:
-                //Iniciamos la nueva actividad
                 Intent intentAnadir = new Intent(StockVerdurasActivity.this, UsuarioActivity.class);
                 startActivity(intentAnadir);
                 break;
@@ -85,12 +83,11 @@ public class StockVerdurasActivity extends AppCompatActivity {
 
         Log.v("listaProductos", String.valueOf(listaProductos.size()));
 
-        List<ListElement> elementos = new ArrayList<>();
         for (tbProducto producto : listaProductos) {
             String unidad = producto.getEstado() ? " Kg" : " Uds";
-            elementos.add(new ListElement(producto.getNombreProducto(), String.valueOf(producto.getCantidad())+unidad, String.valueOf(producto.getPrecio()), producto.getImagen(), producto.getEstado()));
+            elementos.add(new ListElement(producto.getNombreProducto(), String.valueOf(producto.getCantidad()) + unidad, String.valueOf(producto.getPrecio()), producto.getImagen(), producto.getEstado()));
         }
-         listAdapter = new ListAdapter(elementos, this);
+        listAdapter = new ListAdapter(elementos, this);
         RecyclerView recyclerView = findViewById(R.id.listRecyclerView);
 
         recyclerView.setHasFixedSize(true);
@@ -112,6 +109,7 @@ public class StockVerdurasActivity extends AppCompatActivity {
 
 
     }
+
     private void mostrarDialogoCantidadPrecio(String nombreProducto, String cantidad, String precio) {
         AlertDialog.Builder builder = new AlertDialog.Builder(StockVerdurasActivity.this);
         View dialogView = getLayoutInflater().inflate(R.layout.dialog_stockcompra, null);
@@ -132,10 +130,10 @@ public class StockVerdurasActivity extends AppCompatActivity {
                         // Obtener los nuevos valores de cantidad y precio
                         String NombreProducto = tvNombre.getText().toString();
                         int nuevaCantidad = Integer.parseInt(etCantidad.getText().toString());
-                        Double nuevaPrecio = Double.parseDouble( etPrecio.getText().toString());
+                        Double nuevaPrecio = Double.parseDouble(etPrecio.getText().toString());
                         // Guardar los nuevos valores en la base de datos del producto
-                        tbProducto cambio =new tbProducto();
-                        cambio.modificarProducto(nuevaCantidad,nuevaPrecio,NombreProducto);
+                        tbProducto cambio = new tbProducto();
+                        cambio.modificarProducto(nuevaCantidad, nuevaPrecio, NombreProducto);
 
 
                         // Actualizar el adaptador con los datos actualizados
@@ -153,7 +151,6 @@ public class StockVerdurasActivity extends AppCompatActivity {
                 .create()
                 .show();
     }
-
 
 
 }

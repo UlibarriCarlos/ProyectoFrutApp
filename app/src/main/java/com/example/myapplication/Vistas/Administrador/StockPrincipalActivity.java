@@ -7,14 +7,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.example.myapplication.R;
-import com.example.myapplication.Vistas.Cliente.FrutasActivity;
-import com.example.myapplication.Vistas.Cliente.VariosActivity;
-import com.example.myapplication.Vistas.Cliente.VerdurasActivity;
 import com.example.myapplication.Vistas.UsuarioActivity;
 
 public class StockPrincipalActivity extends AppCompatActivity {
@@ -33,6 +28,11 @@ public class StockPrincipalActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case R.id.Administrador:
+                Intent intent0 = new Intent(StockPrincipalActivity.this, AdministradorActivity.class);
+                startActivity(intent0);
+                finish();
+                return true;
             case R.id.Login:
                 Intent intent1 = new Intent(StockPrincipalActivity.this, UsuarioActivity.class);
                 startActivity(intent1);

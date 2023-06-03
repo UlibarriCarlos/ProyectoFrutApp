@@ -10,15 +10,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.example.myapplication.Controlador.ControladorContraseñas;
 import com.example.myapplication.Controlador.Email;
 import com.example.myapplication.Modelos.tbClientes;
 import com.example.myapplication.R;
-
 import java.sql.SQLException;
 
 public class RegistroActivity extends AppCompatActivity {
@@ -188,10 +185,10 @@ public class RegistroActivity extends AppCompatActivity {
                                     "\n" +
                                     "\n" +
                                     "Atentamente, equipo FrutApp";
-                            String adjuntoRuta =null; // O puedes simplemente omitir el parámetro adjuntoRuta
+                            String adjuntoRuta =null;
                             boolean correoEnviado =  enviarCorreo.enviarCorreo(destinatario, asunto, texto, adjuntoRuta);
 
-                            //Comporbamos que el email es real y se puede enviar , asi guardamos cliente.
+                            //Comprobamos que el email es real y se puede enviar , asi guardamos cliente.
                             if (correoEnviado) {
                                 //Encriptamos contraseña
                                 String contraseñaEncriptada = ControladorContraseñas.encrypt(etContraseña1.getText().toString());

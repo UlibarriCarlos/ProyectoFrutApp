@@ -27,7 +27,6 @@ public class ControladorContraseñas {
 
     // Desencriptar una cadena de texto utilizando MD5
     public static String decrypt(String encryptedPassword) {
-        // No se puede desencriptar MD5, ya que es una función de hash unidireccional
         return null;
     }
 

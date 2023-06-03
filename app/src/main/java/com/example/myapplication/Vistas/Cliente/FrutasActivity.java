@@ -5,18 +5,15 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.myapplication.Controlador.ListAdapter;
 import com.example.myapplication.Controlador.ListElement;
 import com.example.myapplication.Modelos.tbProducto;
 import com.example.myapplication.R;
 import com.example.myapplication.Vistas.UsuarioActivity;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,17 +41,14 @@ public class FrutasActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.Verduras:
-                //Iniciamos la nueva actividad
                 Intent intentVerduras = new Intent(FrutasActivity.this, VerdurasActivity.class);
                 startActivity(intentVerduras);
                 break;
             case R.id.Varios:
-                //Iniciamos la nueva actividad
                 Intent intentVarios = new Intent(FrutasActivity.this, VariosActivity.class);
                 startActivity(intentVarios);
                 break;
             case R.id.Login:
-                //Iniciamos la nueva actividad
                 Intent intentAnadir = new Intent(FrutasActivity.this, UsuarioActivity.class);
                 startActivity(intentAnadir);
                 break;

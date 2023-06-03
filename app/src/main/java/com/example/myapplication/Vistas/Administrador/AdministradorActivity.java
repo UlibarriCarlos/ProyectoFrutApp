@@ -6,12 +6,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.example.myapplication.Modelos.tbProducto;
 import com.example.myapplication.R;
-import com.example.myapplication.Vistas.RegistroActivity;
 import com.example.myapplication.Vistas.UsuarioActivity;
 
 public class AdministradorActivity extends AppCompatActivity {

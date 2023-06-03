@@ -49,7 +49,6 @@ public class CestaCompraDBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        // No hacemos nada en esta implementación
     }
 
     // Función para insertar un nuevo producto
